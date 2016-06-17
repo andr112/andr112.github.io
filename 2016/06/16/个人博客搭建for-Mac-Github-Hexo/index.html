@@ -13,7 +13,7 @@
 <meta property="og:site_name" content="简单的我，简单生活">
 <meta property="og:description" content="几年开发下，总觉得自己知识零零散散的，没有什么经验、学习研究、知识梳理概括等相关文字性的输出；很多遇到过解决掉的问题、学过的或者做过的，时间一久，自己都忘了；再则，工作中直来直去的交流，语言组织能力也是下降了不少。弄个博客写写，既可以把一些有用的东西分享给他人，也方便自己随时翻来看看。
 为什么是Github+HexoGitHub是一个利用Git进行版本控制、专门用于存放软件代码与内容的共享虚拟主机">
-<meta property="og:updated_time" content="2016-06-16T17:19:37.000Z">
+<meta property="og:updated_time" content="2016-06-17T11:31:21.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="个人博客搭建for Mac (Github+Hexo)">
 <meta name="twitter:description" content="几年开发下，总觉得自己知识零零散散的，没有什么经验、学习研究、知识梳理概括等相关文字性的输出；很多遇到过解决掉的问题、学过的或者做过的，时间一久，自己都忘了；再则，工作中直来直去的交流，语言组织能力也是下降了不少。弄个博客写写，既可以把一些有用的东西分享给他人，也方便自己随时翻来看看。
@@ -90,14 +90,18 @@
       
         <p>几年开发下，总觉得自己知识零零散散的，没有什么经验、学习研究、知识梳理概括等相关文字性的输出；很多遇到过解决掉的问题、学过的或者做过的，时间一久，自己都忘了；再则，工作中直来直去的交流，语言组织能力也是下降了不少。弄个博客写写，既可以把一些有用的东西分享给他人，也方便自己随时翻来看看。</p>
 <h2 id="为什么是Github-Hexo"><a href="#为什么是Github-Hexo" class="headerlink" title="为什么是Github+Hexo"></a>为什么是Github+Hexo</h2><p>GitHub是一个利用Git进行版本控制、专门用于存放软件代码与内容的共享虚拟主机服务。<br>Hexo是一个基于Node.js的静态博客程序，可以方便的生成静态网页托管在github上。<br>这里我们可以通俗简单地理解为GitHub是博客容器，Hexo是帮助我们制作博客的工具。</p>
-<h2 id="如何搭建"><a href="#如何搭建" class="headerlink" title="如何搭建"></a>如何搭建</h2><h2 id="Homebrew安装"><a href="#Homebrew安装" class="headerlink" title="Homebrew安装"></a>Homebrew安装</h2><p>Homebrew是一款自由及开放源代码的软件包管理系统，用以简化Mac OS X系统上的软件安装过程。<br>终端运行 ：<em> ruby -e “$(curl -fsSL <a href="https://raw.githubusercontent.com/Homebrew/install/master/install" target="_blank" rel="external">https://raw.githubusercontent.com/Homebrew/install/master/install</a>)” </em><br>，回车键。SO EASY！<br>    1.<a href="http://brew.sh/" target="_blank" rel="external">Honebrew官网</a><br>    2.<a href="https://github.com/Homebrew/brew/blob/master/share/doc/homebrew/README.md#readme" target="_blank" rel="external">安装详细文档</a></p>
+<h2 id="如何搭建"><a href="#如何搭建" class="headerlink" title="如何搭建"></a>如何搭建</h2><h2 id="Homebrew安装"><a href="#Homebrew安装" class="headerlink" title="Homebrew安装"></a>Homebrew安装</h2><p>Homebrew是一款自由及开放源代码的软件包管理系统，用以简化Mac OS X系统上的软件安装过程。<br>终端运行 ：<em> ruby -e “$(curl -fsSL <a href="https://raw.githubusercontent.com/Homebrew/install/master/install" target="_blank" rel="external">https://raw.githubusercontent.com/Homebrew/install/master/install</a>)” </em><br>，回车键。SO EASY！</p>
+<ol>
+<li><a href="http://brew.sh/" target="_blank" rel="external">Honebrew官网</a></li>
+<li><a href="https://github.com/Homebrew/brew/blob/master/share/doc/homebrew/README.md#readme" target="_blank" rel="external">安装详细文档</a></li>
+</ol>
 <h2 id="利用Homebrew安装Node-js"><a href="#利用Homebrew安装Node-js" class="headerlink" title="利用Homebrew安装Node.js"></a>利用Homebrew安装Node.js</h2><p>终端运行：<em> brew install node </em></p>
 <h2 id="利用Homebrew安装Hexo官网链接"><a href="#利用Homebrew安装Hexo官网链接" class="headerlink" title="利用Homebrew安装Hexo官网链接"></a>利用Homebrew安装Hexo<a href="https://hexo.io/zh-cn/" target="_blank" rel="external">官网链接</a></h2><p>终端运行：<em> npm install hexo -g </em></p>
 <h3 id="安装成功后，创建博客所属的文件夹"><a href="#安装成功后，创建博客所属的文件夹" class="headerlink" title="安装成功后，创建博客所属的文件夹"></a>安装成功后，创建博客所属的文件夹</h3><p>终端运行：<em> hexo init “YourDirName” </em><br>//执行init命令初始化hexo到你指定的目录</p>
 <h3 id="生成静态网页"><a href="#生成静态网页" class="headerlink" title="生成静态网页"></a>生成静态网页</h3><p>终端运行：<em> hexo generate </em><br>//自动根据当前目录下文件,生成静态网页， (hexo g也行)</p>
 <h3 id="将该静态网页运行在本地服务器"><a href="#将该静态网页运行在本地服务器" class="headerlink" title="将该静态网页运行在本地服务器"></a>将该静态网页运行在本地服务器</h3><p>终端运行：<em> hexo server </em><br>//运行本地服务 (hexo s也行)<br>在浏览器里面输入 <em> <a href="http://localhost:4000" target="_blank" rel="external">http://localhost:4000</a> </em><br>//就能看到有一篇Hello World博文在上面，是hexo安装后自动生成的。</p>
 <p><strong>以上，我们已经把Hexo帮助我们制作博客的工具环境搭建好，我们已经可以利用工具生产自己的本地静态（自己电脑上能看见，别人还访问不到）博文。</strong></p>
-<h3 id="创建新博文"><a href="#创建新博文" class="headerlink" title="创建新博文"></a>创建新博文</h3><p>终端运行：<em> hexo new “YourPostName” </em><br>//YourPostName为你创建的博文名称。<br>创建成功后，终端提示：INFO Created: ~/source/_posts/YourPostName.md的提示。<br>open ~/source/_posts/  可以找到 YourPostName.md文件，这个文件就是我们博文的原始文件，好比画纸，我们在上面画什么我们的博文就展示什么。可以用Xcode打开和编辑该文件，或者用软件sublimetext。博客编写有一定的格式规则，如<strong>Markdown</strong>,<a href="http://wowubuntu.com/markdown/basic.html" target="_blank" rel="external">学习参考链接</a><br>每次编辑完后，终端运行：<em> hexo generate </em><br>//生成静态网页<br>终端运行：<em> hexo server </em><br>//运行本地服务<br>在浏览器里面输入 <em> <a href="http://localhost:4000" target="_blank" rel="external">http://localhost:4000</a> </em><br>//就能看到新编辑的博文</p>
+<h3 id="创建新博文"><a href="#创建新博文" class="headerlink" title="创建新博文"></a>创建新博文</h3><p>终端运行：<em> hexo new “YourPostName” </em><br>//YourPostName为你创建的博文名称。<br>创建成功后，终端提示：INFO Created: ~/source/_posts/YourPostName.md的提示。<br>open ~/source/_posts/  可以找到 YourPostName.md文件，这个文件就是我们博文的原始文件，好比画纸，我们在上面画什么我们的博文就展示什么。可以用Xcode打开和编辑该文件，或者用软件sublimetext。博客编写有一定的格式规则，如<strong>Markdown</strong>,<a href="http://wowubuntu.com/markdown/basic.html" target="_blank" rel="external">学习参考链接</a><br>每次编辑完后，<br>终端运行：<em> hexo generate </em><br>//生成静态网页<br>终端运行：<em> hexo server </em><br>//运行本地服务<br>在浏览器里面输入 <em> <a href="http://localhost:4000" target="_blank" rel="external">http://localhost:4000</a> </em><br>//就能看到新编辑的博文</p>
 <p><strong>剩下就是如何把我们的博文放到我们的GIT容器里了，以便让其他人也可访问到我们的博客</strong></p>
 <h2 id="首先，在我们电脑上装上GIT工具"><a href="#首先，在我们电脑上装上GIT工具" class="headerlink" title="首先，在我们电脑上装上GIT工具"></a>首先，在我们电脑上装上GIT工具</h2><h3 id="利用Homebrew安装git"><a href="#利用Homebrew安装git" class="headerlink" title="利用Homebrew安装git"></a>利用Homebrew安装git</h3><p>终端运行：<em> brew install git </em><br> <em>如果Mac上已经安装过git了，这一步略过。</em><br> <em>我之前先装的Xcode再装的git,记得是下的安装包装的，所以我电脑上已有git工具，这里不需要再重新装过。</em></p>
 <h3 id="需要一个github账号-创建一个仓库New-repository-名称为你github用户名-github-io"><a href="#需要一个github账号-创建一个仓库New-repository-名称为你github用户名-github-io" class="headerlink" title="需要一个github账号,创建一个仓库New repository,名称为你github用户名.github.io"></a>需要一个github账号,创建一个仓库New repository,名称为你github用户名.github.io</h3><p>如果没有账号，那就注册一个，<a href="https://github.com/" target="_blank" rel="external">Git官网</a></p>
@@ -105,11 +109,16 @@
 <p>deploy:<br>type:<br><strong>改成</strong><br>deploy:<br>type: git<br>repository: <a href="https://github.com/yourGithubName/yourGithubName.github.io.git" target="_blank" rel="external">https://github.com/yourGithubName/yourGithubName.github.io.git</a><br>branch: master</p>
 <h2 id="博文部署到github"><a href="#博文部署到github" class="headerlink" title="博文部署到github"></a>博文部署到github</h2><p>终端运行：<em> hexo deploy </em></p>
 <p><em>OK啦，统统搞定，浏览器输入yourGithubName.github.io就能看到你自己的blog了 </em></p>
+<p>.<br>.<br>.<br>.<br>.<br>.</p>
+<h3 id="参考链接"><a href="#参考链接" class="headerlink" title="参考链接"></a><em>参考链接</em></h3><ul>
+<li><a href="http://joakimliu.github.io/2015/04/19/Github&amp;&amp;Hexo-%3EPersonal%20Blog%20for%20Mac&gt;%20OS/" target="_blank" rel="external">http://joakimliu.github.io/</a></li>
+<li><a href="http://www.jianshu.com/p/858ecf233db9" target="_blank" rel="external">http://www.jianshu.com/p/858ecf233db9</a></li>
+</ul>
 
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2016/06/16/个人博客搭建for-Mac-Github-Hexo/" data-id="cipikquht0000jq2ur3by5sss" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2016/06/16/个人博客搭建for-Mac-Github-Hexo/" data-id="cipjmused0000dn2uigg6b7yt" class="article-share-link">Share</a>
       
       
     </footer>
