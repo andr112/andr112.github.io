@@ -68,6 +68,75 @@
       <div class="outer">
         <section id="main">
   
+    <article id="post-Android之代码性能优化" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2016/07/28/Android之代码性能优化/" class="article-date">
+  <time datetime="2016-07-28T12:12:52.000Z" itemprop="datePublished">2016-07-28</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/programming/">编程</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2016/07/28/Android之代码性能优化/">Android之代码性能优化</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <ul>
+<li>对于占用系统资源，两条基本原则：不要做不必要的事；不要分配不必要的内存。 *</li>
+</ul>
+<h2 id="1-避免建立对象"><a href="#1-避免建立对象" class="headerlink" title="1.    避免建立对象"></a>1.    避免建立对象</h2><p>对象都需要占用系统内存。除非必要，应尽量避免创建对象实例。</p>
+<p>Primitive数据类型内存占用情况（单位：Byte）：<br>byte 1 ；short 2 ; int 4 ; long 8; float 4;double 8 ;boolean 1 ;char 2</p>
+<p>例如  long[] data = new long[100]<br>占用内存8*1000 Bytes ，data本身是一个Object，也需占用内存。</p>
+<p>Java中一个引用占4byte ，在32位系统上<br>Object obj=null;        //4byte<br>Object[] objs=new Object[1000]; //至少4*1000byte</p>
+<p>一个对象使用的内存量，需要将所有实例变量使用的内存与对象本身的开销（一般是16个字节）相加。这些开销包括一个指向对象的类的引用、垃圾收集信息以及同步信息。另外，一般内存的使用都会被填充为8个字节的倍数。<br>一个Integer对象会使用24字节（16个字节的对象开销，4个字节用于保存它的int值以及4个填充字节）。<br>注明：64位操作系统对象开销为16，引用为8；32位系统，对象开销8，应用为4Bytes</p>
+<h2 id="2-使用本地方法"><a href="#2-使用本地方法" class="headerlink" title="2.    使用本地方法"></a>2.    使用本地方法</h2><h2 id="3-使用实现类比接口好"><a href="#3-使用实现类比接口好" class="headerlink" title="3.    使用实现类比接口好"></a>3.    使用实现类比接口好</h2><h2 id="4-避免使用内部的getter／setter方法"><a href="#4-避免使用内部的getter／setter方法" class="headerlink" title="4.    避免使用内部的getter／setter方法"></a>4.    避免使用内部的getter／setter方法</h2><h2 id="5-优先使用改进的for循环，在性能要求苛刻的Arraylist迭代中，考虑采用手写计数循环。"><a href="#5-优先使用改进的for循环，在性能要求苛刻的Arraylist迭代中，考虑采用手写计数循环。" class="headerlink" title="5.    优先使用改进的for循环，在性能要求苛刻的Arraylist迭代中，考虑采用手写计数循环。"></a>5.    优先使用改进的for循环，在性能要求苛刻的Arraylist迭代中，考虑采用手写计数循环。</h2><h2 id="6-避免使用枚举，"><a href="#6-避免使用枚举，" class="headerlink" title="6.    避免使用枚举，"></a>6.    避免使用枚举，</h2><h2 id="7-避免使用浮点数。Android设备中，通常浮点数比整数慢两倍"><a href="#7-避免使用浮点数。Android设备中，通常浮点数比整数慢两倍" class="headerlink" title="7.    避免使用浮点数。Android设备中，通常浮点数比整数慢两倍"></a>7.    避免使用浮点数。Android设备中，通常浮点数比整数慢两倍</h2><h2 id="8-避免深度继承：子类的构建会导致父类的递归构建"><a href="#8-避免深度继承：子类的构建会导致父类的递归构建" class="headerlink" title="8.    避免深度继承：子类的构建会导致父类的递归构建"></a>8.    避免深度继承：子类的构建会导致父类的递归构建</h2><h2 id="9-谨慎使用异常，且不要在循环中使用try／catch"><a href="#9-谨慎使用异常，且不要在循环中使用try／catch" class="headerlink" title="9.    谨慎使用异常，且不要在循环中使用try／catch"></a>9.    谨慎使用异常，且不要在循环中使用try／catch</h2><h2 id="10-慎用static"><a href="#10-慎用static" class="headerlink" title="10.    慎用static"></a>10.    慎用static</h2><p>尽可能将常量定义为static final类型：当没有final修饰时，即为变量，访问时通过地址字段查找，取得具体内容；而常量不需要经过查找<br>例如 ：static final int intVal=10; //引用intVal的代码，将直接调用整型值10</p>
+<h2 id="11-使用局部变量"><a href="#11-使用局部变量" class="headerlink" title="11.    使用局部变量"></a>11.    使用局部变量</h2><p>调用方法时传递的参数以及在方法中创建的零时变量都是保存在栈（stack）中，速度较快。其他变量都在堆（Heap）中创建。</p>
+<h2 id="12-乘法和除法用移位操作符代替：左移-lt-lt-1位相当于乘以2"><a href="#12-乘法和除法用移位操作符代替：左移-lt-lt-1位相当于乘以2" class="headerlink" title="12.    乘法和除法用移位操作符代替：左移 &lt;&lt;1位相当于乘以2"></a>12.    乘法和除法用移位操作符代替：左移 &lt;&lt;1位相当于乘以2</h2><h2 id="13-集合类"><a href="#13-集合类" class="headerlink" title="13.    集合类"></a>13.    集合类</h2><ul>
+<li>非线程安全的性能较好。Vector , HashTable 是线程安全的，ArrayList和HashMap不是</li>
+<li>Iterator遍历比直接遍历慢</li>
+<li>LinkedList插入和删除元素比ArrayList快</li>
+<li>固定长度的集合数组较高效：Vector的默认存储能力为10个元素，每次扩展长度时默认自动加一倍，ArrayList是原来的50%。每次扩展，需要将所有现有元素复制到新空间，原先的数组再被回收，比较费时。</li>
+</ul>
+<h2 id="14-I-O操作优化"><a href="#14-I-O操作优化" class="headerlink" title="14.    I/O操作优化"></a>14.    I/O操作优化</h2><ul>
+<li>字节流性能优于字符流操作：基于字节操作的I/O接口：InputStream和OutputStream；字符：Writer和Reader</li>
+<li>使用缓存优化性能（BufferedInputStream,BufferedReader）</li>
+<li>及时关闭I/O流，释放资源</li>
+</ul>
+<h2 id="15-字符串连接使用StringBuffer-StringBuilder-后者非线程安全，性能更好"><a href="#15-字符串连接使用StringBuffer-StringBuilder-后者非线程安全，性能更好" class="headerlink" title="15.    字符串连接使用StringBuffer/StringBuilder(后者非线程安全，性能更好)"></a>15.    字符串连接使用StringBuffer/StringBuilder(后者非线程安全，性能更好)</h2><h2 id="16-System-arraycopy（）代替通过循环复制数组"><a href="#16-System-arraycopy（）代替通过循环复制数组" class="headerlink" title="16.    System.arraycopy（）代替通过循环复制数组"></a>16.    System.arraycopy（）代替通过循环复制数组</h2><h2 id="17-避免在循环中调用同步方法"><a href="#17-避免在循环中调用同步方法" class="headerlink" title="17.    避免在循环中调用同步方法"></a>17.    避免在循环中调用同步方法</h2><h2 id="18-使用条件操作符代替简单的if语句"><a href="#18-使用条件操作符代替简单的if语句" class="headerlink" title="18.    使用条件操作符代替简单的if语句"></a>18.    使用条件操作符代替简单的if语句</h2><h2 id="19-强引用、弱引用、软引用、虚引用"><a href="#19-强引用、弱引用、软引用、虚引用" class="headerlink" title="19.    强引用、弱引用、软引用、虚引用"></a>19.    强引用、弱引用、软引用、虚引用</h2><h2 id="20-用static修饰的变量属于类，生命周期很长，应尽量避免static成员变量引用资源消耗过多的实例；Context尽量使用application-context；使用弱引用代替强引用，如可以用WeakReference-mContext"><a href="#20-用static修饰的变量属于类，生命周期很长，应尽量避免static成员变量引用资源消耗过多的实例；Context尽量使用application-context；使用弱引用代替强引用，如可以用WeakReference-mContext" class="headerlink" title="20.    用static修饰的变量属于类，生命周期很长，应尽量避免static成员变量引用资源消耗过多的实例；Context尽量使用application context；使用弱引用代替强引用，如可以用WeakReference mContext"></a>20.    用static修饰的变量属于类，生命周期很长，应尽量避免static成员变量引用资源消耗过多的实例；Context尽量使用application context；使用弱引用代替强引用，如可以用WeakReference mContext</h2><h2 id="21-线程的生命周期不可控，需谨慎对待"><a href="#21-线程的生命周期不可控，需谨慎对待" class="headerlink" title="21.    线程的生命周期不可控，需谨慎对待"></a>21.    线程的生命周期不可控，需谨慎对待</h2><h2 id="22-图片资源注意及时recycle，压缩减低内存消耗，巧用软引用"><a href="#22-图片资源注意及时recycle，压缩减低内存消耗，巧用软引用" class="headerlink" title="22.    图片资源注意及时recycle，压缩减低内存消耗，巧用软引用"></a>22.    图片资源注意及时recycle，压缩减低内存消耗，巧用软引用</h2><h2 id="23-Cursor及时close"><a href="#23-Cursor及时close" class="headerlink" title="23.    Cursor及时close"></a>23.    Cursor及时close</h2><h2 id="24-onTouchEvent-方法Action-move-事件处理频率控制"><a href="#24-onTouchEvent-方法Action-move-事件处理频率控制" class="headerlink" title="24.    onTouchEvent 方法Action_move 事件处理频率控制"></a>24.    onTouchEvent 方法Action_move 事件处理频率控制</h2><h2 id="25-ListView充分使用缓存机制"><a href="#25-ListView充分使用缓存机制" class="headerlink" title="25.    ListView充分使用缓存机制"></a>25.    ListView充分使用缓存机制</h2><h2 id="26-Android-TraceView-MemoryAnalyzer-分析内存使用情况"><a href="#26-Android-TraceView-MemoryAnalyzer-分析内存使用情况" class="headerlink" title="26.    Android TraceView + MemoryAnalyzer 分析内存使用情况"></a>26.    Android TraceView + MemoryAnalyzer 分析内存使用情况</h2><ul>
+<li>TraceView使用：在DDMS中选中线程，单击“Method Profiling”（stop按钮的左边），…，单击“Method Profiling”按钮停止。然后会相应窗口会弹出</li>
+<li>导出heap信息<strong>.hprof，在sdk的tools命令下，命令行执行如下命令，讲导出的hprof文件转换成MemoryAnalyzer支持的格式：hprof-conv  </strong>.hprof  newfile.hprof  </li>
+</ul>
+<h3 id="转载请注明出处"><a href="#转载请注明出处" class="headerlink" title="转载请注明出处"></a>转载请注明出处</h3><hr>
+<p><a href="http://wenku.uml.com.cn/document.asp?fileid=12887&amp;partname=%CA%D6%BB%FA%BF%AA%B7%A2" target="_blank" rel="external">原文地址</a><br><a href="http://www.eclipse.org/mat/downloads.php" target="_blank" rel="external">MemoryAnalyzer下载</a><br><a href="http://wangzzu.github.io/2016/05/07/java-object-memory/" target="_blank" rel="external">Java内存占用参考文献1</a><br><a href="http://javag.iteye.com/blog/319286" target="_blank" rel="external">Java内存占用参考文献2</a></p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2016/07/28/Android之代码性能优化/" data-id="cir6al0ih0005182us17935gu" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/android/">android</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/代码/">代码</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/优化/">优化</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+  
     <article id="post-2016个人阅读书单" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
     <a href="/2016/07/04/2016个人阅读书单/" class="article-date">
@@ -119,7 +188,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2016/07/04/2016个人阅读书单/" data-id="ciqq9vy3x0000ii2u6xzx3h2d" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2016/07/04/2016个人阅读书单/" data-id="cir6al0i80001182uhl58u60k" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/书籍/">书籍</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/阅读/">阅读</a></li></ul>
@@ -289,7 +358,7 @@ public void setDatas(List&lt;VideoBroadcast&gt; datas) {
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2016/07/04/一个ListView有关数据设置和刷新问题/" data-id="ciqq9vy4b0004ii2u49r0ilty" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2016/07/04/一个ListView有关数据设置和刷新问题/" data-id="cir6al0ik0007182uid3to6qz" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Android/">Android</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/经验/">经验</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/问题/">问题</a></li></ul>
@@ -342,7 +411,7 @@ public void setDatas(List&lt;VideoBroadcast&gt; datas) {
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2016/06/20/AS一个简单Jni开发实践/" data-id="ciqq9vy4e0005ii2usabhw3kl" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2016/06/20/AS一个简单Jni开发实践/" data-id="cir6al0i20000182u40x0e7ok" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Android/">Android</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/JNI/">JNI</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/实践/">实践</a></li></ul>
@@ -409,7 +478,7 @@ Error:(2) Attribute &quot;title&quot; has already been defined
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2016/06/20/attr属性重复的问题/" data-id="ciqq9vy440001ii2uerd4n2wf" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2016/06/20/attr属性重复的问题/" data-id="cir6al0if0004182uacscbt7a" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Android/">Android</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/经验/">经验</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/问题/">问题</a></li></ul>
@@ -453,7 +522,7 @@ Error:(2) Attribute &quot;title&quot; has already been defined
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2016/06/19/漂亮的花儿/" data-id="ciqq9vy4m0007ii2u19xpbjlv" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2016/06/19/漂亮的花儿/" data-id="cir6al0jr001a182urju54t1i" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/生活美物/">生活美物</a></li></ul>
@@ -547,7 +616,7 @@ theme: writing
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2016/06/16/个人博客搭建for-Mac-Github-Hexo/" data-id="ciqq9vy4v0009ii2u0re8yfxl" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2016/06/16/个人博客搭建for-Mac-Github-Hexo/" data-id="cir6al0in0009182utfbvpv9i" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/环境搭建/">环境搭建</a></li></ul>
@@ -578,7 +647,7 @@ theme: writing
   <div class="widget-wrap">
     <h3 class="widget-title">标签</h3>
     <div class="widget">
-      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Android/">Android</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/JNI/">JNI</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/书籍/">书籍</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/实践/">实践</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/环境搭建/">环境搭建</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/生活美物/">生活美物</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/经验/">经验</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/问题/">问题</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/阅读/">阅读</a></li></ul>
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Android/">Android</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/JNI/">JNI</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/android/">android</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/书籍/">书籍</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/代码/">代码</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/优化/">优化</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/实践/">实践</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/环境搭建/">环境搭建</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/生活美物/">生活美物</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/经验/">经验</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/问题/">问题</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/阅读/">阅读</a></li></ul>
     </div>
   </div>
 
@@ -588,7 +657,7 @@ theme: writing
   <div class="widget-wrap">
     <h3 class="widget-title">标签云</h3>
     <div class="widget tagcloud">
-      <a href="/tags/Android/" style="font-size: 20px;">Android</a> <a href="/tags/JNI/" style="font-size: 10px;">JNI</a> <a href="/tags/书籍/" style="font-size: 10px;">书籍</a> <a href="/tags/实践/" style="font-size: 10px;">实践</a> <a href="/tags/环境搭建/" style="font-size: 10px;">环境搭建</a> <a href="/tags/生活美物/" style="font-size: 10px;">生活美物</a> <a href="/tags/经验/" style="font-size: 15px;">经验</a> <a href="/tags/问题/" style="font-size: 15px;">问题</a> <a href="/tags/阅读/" style="font-size: 10px;">阅读</a>
+      <a href="/tags/Android/" style="font-size: 20px;">Android</a> <a href="/tags/JNI/" style="font-size: 10px;">JNI</a> <a href="/tags/android/" style="font-size: 10px;">android</a> <a href="/tags/书籍/" style="font-size: 10px;">书籍</a> <a href="/tags/代码/" style="font-size: 10px;">代码</a> <a href="/tags/优化/" style="font-size: 10px;">优化</a> <a href="/tags/实践/" style="font-size: 10px;">实践</a> <a href="/tags/环境搭建/" style="font-size: 10px;">环境搭建</a> <a href="/tags/生活美物/" style="font-size: 10px;">生活美物</a> <a href="/tags/经验/" style="font-size: 15px;">经验</a> <a href="/tags/问题/" style="font-size: 15px;">问题</a> <a href="/tags/阅读/" style="font-size: 10px;">阅读</a>
     </div>
   </div>
 
@@ -610,6 +679,10 @@ theme: writing
       <ul>
         
           <li>
+            <a href="/2016/07/28/Android之代码性能优化/">Android之代码性能优化</a>
+          </li>
+        
+          <li>
             <a href="/2016/07/04/2016个人阅读书单/">2016个人阅读书单</a>
           </li>
         
@@ -623,10 +696,6 @@ theme: writing
         
           <li>
             <a href="/2016/06/20/attr属性重复的问题/">attr属性重复的问题</a>
-          </li>
-        
-          <li>
-            <a href="/2016/06/19/漂亮的花儿/">漂亮的花儿</a>
           </li>
         
       </ul>
