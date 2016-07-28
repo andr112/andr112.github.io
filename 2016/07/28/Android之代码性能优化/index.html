@@ -5,28 +5,25 @@
   
   <title>Android之代码性能优化 | 胖墩记忆</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="对于占用系统资源，两条基本原则：不要做不必要的事；不要分配不必要的内存。 *
-
+  <meta name="description" content="对于占用系统资源，两条基本原则：不要做不必要的事；不要分配不必要的内存。
 1.    避免建立对象对象都需要占用系统内存。除非必要，应尽量避免创建对象实例。
 Primitive数据类型内存占用情况（单位：Byte）：byte 1 ；short 2 ; int 4 ; long 8; float 4;double 8 ;boolean 1 ;char 2
-例如  long[] data =">
+例如  long[] data = new">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Android之代码性能优化">
 <meta property="og:url" content="http://yoursite.com/2016/07/28/Android之代码性能优化/index.html">
 <meta property="og:site_name" content="胖墩记忆">
-<meta property="og:description" content="对于占用系统资源，两条基本原则：不要做不必要的事；不要分配不必要的内存。 *
-
+<meta property="og:description" content="对于占用系统资源，两条基本原则：不要做不必要的事；不要分配不必要的内存。
 1.    避免建立对象对象都需要占用系统内存。除非必要，应尽量避免创建对象实例。
 Primitive数据类型内存占用情况（单位：Byte）：byte 1 ；short 2 ; int 4 ; long 8; float 4;double 8 ;boolean 1 ;char 2
-例如  long[] data =">
-<meta property="og:updated_time" content="2016-07-28T12:26:55.000Z">
+例如  long[] data = new">
+<meta property="og:updated_time" content="2016-07-28T12:31:57.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Android之代码性能优化">
-<meta name="twitter:description" content="对于占用系统资源，两条基本原则：不要做不必要的事；不要分配不必要的内存。 *
-
+<meta name="twitter:description" content="对于占用系统资源，两条基本原则：不要做不必要的事；不要分配不必要的内存。
 1.    避免建立对象对象都需要占用系统内存。除非必要，应尽量避免创建对象实例。
 Primitive数据类型内存占用情况（单位：Byte）：byte 1 ；short 2 ; int 4 ; long 8; float 4;double 8 ;boolean 1 ;char 2
-例如  long[] data =">
+例如  long[] data = new">
   
     <link rel="alternate" href="/atom.xml" title="胖墩记忆" type="application/atom+xml">
   
@@ -105,9 +102,7 @@ Primitive数据类型内存占用情况（单位：Byte）：byte 1 ；short 2 ;
     
     <div class="article-entry" itemprop="articleBody">
       
-        <ul>
-<li>对于占用系统资源，两条基本原则：不要做不必要的事；不要分配不必要的内存。 *</li>
-</ul>
+        <p><em>对于占用系统资源，两条基本原则：不要做不必要的事；不要分配不必要的内存。</em></p>
 <h2 id="1-避免建立对象"><a href="#1-避免建立对象" class="headerlink" title="1.    避免建立对象"></a>1.    避免建立对象</h2><p>对象都需要占用系统内存。除非必要，应尽量避免创建对象实例。</p>
 <p>Primitive数据类型内存占用情况（单位：Byte）：<br>byte 1 ；short 2 ; int 4 ; long 8; float 4;double 8 ;boolean 1 ;char 2</p>
 <p>例如  long[] data = new long[100]<br>占用内存8*1000 Bytes ，data本身是一个Object，也需占用内存。</p>
@@ -130,13 +125,14 @@ Primitive数据类型内存占用情况（单位：Byte）：byte 1 ；short 2 ;
 <li>TraceView使用：在DDMS中选中线程，单击“Method Profiling”（stop按钮的左边），…，单击“Method Profiling”按钮停止。然后会相应窗口会弹出</li>
 <li>导出heap信息<strong>.hprof，在sdk的tools命令下，命令行执行如下命令，讲导出的hprof文件转换成MemoryAnalyzer支持的格式：hprof-conv  </strong>.hprof  newfile.hprof  </li>
 </ul>
-<h3 id="转载请注明出处"><a href="#转载请注明出处" class="headerlink" title="转载请注明出处"></a>转载请注明出处</h3><hr>
+<h3 id="转载请注明出处"><a href="#转载请注明出处" class="headerlink" title="转载请注明出处"></a>转载请注明出处</h3><p><em><a href="http://andr112.github.io/2016/07/28/Android%E4%B9%8B%E4%BB%A3%E7%A0%81%E6%80%A7%E8%83%BD%E4%BC%98%E5%8C%96/" target="_blank" rel="external">http://andr112.github.io/2016/07/28/Android%E4%B9%8B%E4%BB%A3%E7%A0%81%E6%80%A7%E8%83%BD%E4%BC%98%E5%8C%96/</a></em></p>
+<hr>
 <p><a href="http://wenku.uml.com.cn/document.asp?fileid=12887&amp;partname=%CA%D6%BB%FA%BF%AA%B7%A2" target="_blank" rel="external">原文地址</a><br><a href="http://www.eclipse.org/mat/downloads.php" target="_blank" rel="external">MemoryAnalyzer下载</a><br><a href="http://wangzzu.github.io/2016/05/07/java-object-memory/" target="_blank" rel="external">Java内存占用参考文献1</a><br><a href="http://javag.iteye.com/blog/319286" target="_blank" rel="external">Java内存占用参考文献2</a></p>
 
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2016/07/28/Android之代码性能优化/" data-id="cir6al0ih0005182us17935gu" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2016/07/28/Android之代码性能优化/" data-id="cir6av8d20001362u4tzv38yk" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/android/">android</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/代码/">代码</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/优化/">优化</a></li></ul>
