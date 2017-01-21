@@ -68,6 +68,78 @@
       <div class="outer">
         <section id="main">
   
+    <article id="post-终端常用命令" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2017/01/20/终端常用命令/" class="article-date">
+  <time datetime="2017-01-20T06:07:43.000Z" itemprop="datePublished">2017-01-20</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/other/">其他</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2017/01/20/终端常用命令/">Mac终端常用命令</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h1 id="记住这些终端命令并应用起来，会带给你诸多便利。"><a href="#记住这些终端命令并应用起来，会带给你诸多便利。" class="headerlink" title="记住这些终端命令并应用起来，会带给你诸多便利。"></a>记住这些终端命令并应用起来，会带给你诸多便利。</h1><h2 id="Mac-osx系统采用Linux文件系统"><a href="#Mac-osx系统采用Linux文件系统" class="headerlink" title="Mac osx系统采用Linux文件系统."></a>Mac osx系统采用Linux文件系统.</h2><p>所有文件都挂载到更目录下，没有磁盘分区的概念；<br>区分大小写，A.txt和a.txt是不同的文件；</p>
+<h2 id="和"><a href="#和" class="headerlink" title="/和./"></a>/和./</h2><p>/表示根目录，./表示当前目录，<br>例如,列出根目录下文件用命令：ls /<br>列出当前目录下文件用命令：ls ./</p>
+<h2 id="取得root权限"><a href="#取得root权限" class="headerlink" title="取得root权限"></a>取得root权限</h2><p>sudo -s<br><strong>输入时不会有任何提示，只管输完后按回车键</strong></p>
+<h2 id="查看摸个命令的使用说明"><a href="#查看摸个命令的使用说明" class="headerlink" title="查看摸个命令的使用说明"></a>查看摸个命令的使用说明</h2><p>man 命令<br>如：man find</p>
+<h2 id="基本命令"><a href="#基本命令" class="headerlink" title="基本命令"></a>基本命令</h2><p>列出文件<br>ls 参数 目录名<br>例如： ls -wla /Users/zhangdan/blog<br>参数：-w 显示中文，-l 详细信息， -a 包括隐藏文件 </p>
+<p>新建文件夹<br>mkdir 文件夹名称</p>
+<p>切换目录<br>cd 目录名</p>
+<p>拷贝文件<br>cp 参数 源文件 目标文件<br>例如 ： cp -r newtest ./backup<br>复制当前路径下文件夹newtest 到当前路径下文件夹backup中<br>参数 -r  表递归</p>
+<p>删除<br>rm 参数 文件名<br>例 删除当前路径下backup中文件夹newtest和其下的所有文件： rm -rf ./backup/newtest<br>参数 -r 递归； -f 强制</p>
+<p>移动<br>mv 源文件 目标文件夹</p>
+<p>更改文件权限<br>chmod 参数 权限<br>例：把驱动目录下所有文件设定到root读写，其他用户只读<br>chmod -R 755 /System/Library/Extensions<br>参数R 表示递归，755表示各用户的权限  </p>
+<p>获取当前路径<br>pwd</p>
+<p>文件编辑<br>nano 文件名<br>编辑完成后 用 Ctrl ＋O 存盘，Ctrl＋X 退出<br>另一个文本编辑软件是 vi</p>
+<p>执行脚本<br>sh 脚本文件<br>例如：<br>终端运行命令：nano ./delete<br>粘贴下面内容到文件delete<br>rm -rf /Users/zhangdan/Desktop/test<br>Ctrl ＋O 存盘，Ctrl＋X 退出<br>终端运行：sh ./delete<br>桌面上的test文件夹将被删除</p>
+<p>比较两个目录的内容<br>dircmp dir1 dir2 </p>
+<p>比较两个文件的不同<br>diff file1 file2</p>
+<p>在文件中按模式查找<br>grep “^[a-zA-Z]” filename </p>
+<p>统计文件的字符数、词数和行数<br>wc filename </p>
+<p>显示进程当前状态<br>ps u </p>
+<p>终止进程<br>kill -9 30142 </p>
+<p>显示当前设备时间<br>date</p>
+<p>列出最近执行过的 几条命令及编号<br>history </p>
+<p>显示操作系统的有关信息<br>uname -a </p>
+<p>清除屏幕或窗口内容<br>clear </p>
+<p>显示当前所有设置过的环境变量<br>env </p>
+<p>列出当前登录的所有用户<br>who </p>
+<p>显示当前正进行操作的用户名<br>whoami </p>
+<p>显示文件系统的总空间和可用空间<br>df /tmp </p>
+<p>查询磁盘使用情况<br>du -k subdir </p>
+<p>显示当前系统活动的总信息<br>w</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2017/01/20/终端常用命令/" data-id="ciy6kw9ja0007x62ugq40na28" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/其他/">其他</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+  
     <article id="post-Weex学习索引" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
     <a href="/2016/10/27/Weex学习索引/" class="article-date">
@@ -139,7 +211,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2016/10/27/Weex学习索引/" data-id="ciutdo0rz0004z52uwczui6ki" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2016/10/27/Weex学习索引/" data-id="ciy6kw9j40005x62uy8ry4jnj" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/weex/">weex</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/编程语言/">编程语言</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/资料索引/">资料索引</a></li></ul>
@@ -207,7 +279,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2016/07/28/Android之代码性能优化/" data-id="ciutdo0s10005z52uatd23l57" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2016/07/28/Android之代码性能优化/" data-id="ciy6kw9ix0001x62umdc1oy9c" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/android/">android</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/代码/">代码</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/优化/">优化</a></li></ul>
@@ -270,7 +342,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2016/07/04/2016个人阅读书单/" data-id="ciutdo0rp0000z52uklgk1zb6" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2016/07/04/2016个人阅读书单/" data-id="ciy6kw9is0000x62u2euj1lyd" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/书籍/">书籍</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/阅读/">阅读</a></li></ul>
@@ -440,7 +512,7 @@ public void setDatas(List&lt;VideoBroadcast&gt; datas) {
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2016/07/04/一个ListView有关数据设置和刷新问题/" data-id="ciutdo0s50007z52ujpqtdqlq" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2016/07/04/一个ListView有关数据设置和刷新问题/" data-id="ciy6kw9jf000bx62uf4zpe392" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Android/">Android</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/经验/">经验</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/问题/">问题</a></li></ul>
@@ -493,7 +565,7 @@ public void setDatas(List&lt;VideoBroadcast&gt; datas) {
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2016/06/20/AS一个简单Jni开发实践/" data-id="ciutdo0ru0001z52uq9hzylqa" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2016/06/20/AS一个简单Jni开发实践/" data-id="ciy6kw9j20004x62uls6zor7y" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Android/">Android</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/JNI/">JNI</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/实践/">实践</a></li></ul>
@@ -560,7 +632,7 @@ Error:(2) Attribute &quot;title&quot; has already been defined
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2016/06/20/attr属性重复的问题/" data-id="ciutdo0t80017z52uk6geha6h" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2016/06/20/attr属性重复的问题/" data-id="ciy6kw9jd0009x62us361bnhl" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Android/">Android</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/经验/">经验</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/问题/">问题</a></li></ul>
@@ -604,7 +676,7 @@ Error:(2) Attribute &quot;title&quot; has already been defined
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2016/06/19/漂亮的花儿/" data-id="ciutdo0te001az52uqexvpnnw" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2016/06/19/漂亮的花儿/" data-id="ciy6kw9jp000ix62ulg2mcofz" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/生活美物/">生活美物</a></li></ul>
@@ -698,7 +770,7 @@ theme: writing
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2016/06/16/个人博客搭建for-Mac-Github-Hexo/" data-id="ciutdo0t90018z52ur67m5xjb" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2016/06/16/个人博客搭建for-Mac-Github-Hexo/" data-id="ciy6kw9jj000fx62umjako8y6" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/环境搭建/">环境搭建</a></li></ul>
@@ -729,7 +801,7 @@ theme: writing
   <div class="widget-wrap">
     <h3 class="widget-title">标签</h3>
     <div class="widget">
-      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Android/">Android</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/JNI/">JNI</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/android/">android</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/weex/">weex</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/书籍/">书籍</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/代码/">代码</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/优化/">优化</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/实践/">实践</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/环境搭建/">环境搭建</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/生活美物/">生活美物</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/经验/">经验</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/编程语言/">编程语言</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/资料索引/">资料索引</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/问题/">问题</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/阅读/">阅读</a></li></ul>
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Android/">Android</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/JNI/">JNI</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/android/">android</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/weex/">weex</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/书籍/">书籍</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/代码/">代码</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/优化/">优化</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/其他/">其他</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/实践/">实践</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/环境搭建/">环境搭建</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/生活美物/">生活美物</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/经验/">经验</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/编程语言/">编程语言</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/资料索引/">资料索引</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/问题/">问题</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/阅读/">阅读</a></li></ul>
     </div>
   </div>
 
@@ -739,7 +811,7 @@ theme: writing
   <div class="widget-wrap">
     <h3 class="widget-title">标签云</h3>
     <div class="widget tagcloud">
-      <a href="/tags/Android/" style="font-size: 20px;">Android</a> <a href="/tags/JNI/" style="font-size: 10px;">JNI</a> <a href="/tags/android/" style="font-size: 10px;">android</a> <a href="/tags/weex/" style="font-size: 10px;">weex</a> <a href="/tags/书籍/" style="font-size: 10px;">书籍</a> <a href="/tags/代码/" style="font-size: 10px;">代码</a> <a href="/tags/优化/" style="font-size: 10px;">优化</a> <a href="/tags/实践/" style="font-size: 10px;">实践</a> <a href="/tags/环境搭建/" style="font-size: 10px;">环境搭建</a> <a href="/tags/生活美物/" style="font-size: 10px;">生活美物</a> <a href="/tags/经验/" style="font-size: 15px;">经验</a> <a href="/tags/编程语言/" style="font-size: 10px;">编程语言</a> <a href="/tags/资料索引/" style="font-size: 10px;">资料索引</a> <a href="/tags/问题/" style="font-size: 15px;">问题</a> <a href="/tags/阅读/" style="font-size: 10px;">阅读</a>
+      <a href="/tags/Android/" style="font-size: 20px;">Android</a> <a href="/tags/JNI/" style="font-size: 10px;">JNI</a> <a href="/tags/android/" style="font-size: 10px;">android</a> <a href="/tags/weex/" style="font-size: 10px;">weex</a> <a href="/tags/书籍/" style="font-size: 10px;">书籍</a> <a href="/tags/代码/" style="font-size: 10px;">代码</a> <a href="/tags/优化/" style="font-size: 10px;">优化</a> <a href="/tags/其他/" style="font-size: 10px;">其他</a> <a href="/tags/实践/" style="font-size: 10px;">实践</a> <a href="/tags/环境搭建/" style="font-size: 10px;">环境搭建</a> <a href="/tags/生活美物/" style="font-size: 10px;">生活美物</a> <a href="/tags/经验/" style="font-size: 15px;">经验</a> <a href="/tags/编程语言/" style="font-size: 10px;">编程语言</a> <a href="/tags/资料索引/" style="font-size: 10px;">资料索引</a> <a href="/tags/问题/" style="font-size: 15px;">问题</a> <a href="/tags/阅读/" style="font-size: 10px;">阅读</a>
     </div>
   </div>
 
@@ -748,7 +820,7 @@ theme: writing
   <div class="widget-wrap">
     <h3 class="widget-title">归档</h3>
     <div class="widget">
-      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/10/">十月 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/07/">七月 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/06/">六月 2016</a></li></ul>
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/01/">一月 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/10/">十月 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/07/">七月 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/06/">六月 2016</a></li></ul>
     </div>
   </div>
 
@@ -759,6 +831,10 @@ theme: writing
     <h3 class="widget-title">最新文章</h3>
     <div class="widget">
       <ul>
+        
+          <li>
+            <a href="/2017/01/20/终端常用命令/">Mac终端常用命令</a>
+          </li>
         
           <li>
             <a href="/2016/10/27/Weex学习索引/">Weex学习索引</a>
@@ -776,10 +852,6 @@ theme: writing
             <a href="/2016/07/04/一个ListView有关数据设置和刷新问题/">一个ListView有关数据设置和刷新问题</a>
           </li>
         
-          <li>
-            <a href="/2016/06/20/AS一个简单Jni开发实践/">AS一个简单Jni开发实践</a>
-          </li>
-        
       </ul>
     </div>
   </div>
@@ -792,7 +864,7 @@ theme: writing
   
   <div class="outer">
     <div id="footer-info" class="inner">
-      &copy; 2016 Zhangdan<br>
+      &copy; 2017 Zhangdan<br>
       Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
     </div>
   </div>
