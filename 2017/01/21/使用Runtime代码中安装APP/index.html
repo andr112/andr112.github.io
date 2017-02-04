@@ -3,17 +3,18 @@
 <head>
   <meta charset="utf-8">
   
-  <title>Tag: 优化 | 胖墩记忆</title>
+  <title>使用Runtime代码中安装APP | 胖墩记忆</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description">
-<meta property="og:type" content="website">
-<meta property="og:title" content="胖墩记忆">
-<meta property="og:url" content="http://yoursite.com/tags/优化/index.html">
+  <meta name="description" content="private void install( final String apkPath) {// 安装final Thread thread = new Thread() {public void run() {// install tmp.apkProcess rt = null;try {rt = Runtime.getRuntime().exec(“su”);BufferedReader st">
+<meta property="og:type" content="article">
+<meta property="og:title" content="使用Runtime代码中安装APP">
+<meta property="og:url" content="http://yoursite.com/2017/01/21/使用Runtime代码中安装APP/index.html">
 <meta property="og:site_name" content="胖墩记忆">
-<meta property="og:description">
+<meta property="og:description" content="private void install( final String apkPath) {// 安装final Thread thread = new Thread() {public void run() {// install tmp.apkProcess rt = null;try {rt = Runtime.getRuntime().exec(“su”);BufferedReader st">
+<meta property="og:updated_time" content="2017-02-04T06:47:36.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="胖墩记忆">
-<meta name="twitter:description">
+<meta name="twitter:title" content="使用Runtime代码中安装APP">
+<meta name="twitter:description" content="private void install( final String apkPath) {// 安装final Thread thread = new Thread() {public void run() {// install tmp.apkProcess rt = null;try {rt = Runtime.getRuntime().exec(“su”);BufferedReader st">
   
     <link rel="alternate" href="/atom.xml" title="胖墩记忆" type="application/atom+xml">
   
@@ -66,41 +67,92 @@
   </div>
 </header>
       <div class="outer">
-        <section id="main">
-  
-  
-    
-    
-      
-      
-      <section class="archives-wrap">
-        <div class="archive-year-wrap">
-          <a href="/archives/2016" class="archive-year">2016</a>
-        </div>
-        <div class="archives">
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      <a href="/2016/07/28/Android之代码性能优化/" class="archive-article-date">
-  <time datetime="2016-07-28T12:12:52.000Z" itemprop="datePublished">7月 28</time>
+        <section id="main"><article id="post-使用Runtime代码中安装APP" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2017/01/21/使用Runtime代码中安装APP/" class="article-date">
+  <time datetime="2017-01-21T10:29:25.000Z" itemprop="datePublished">2017-01-21</time>
 </a>
-      
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/programming/">编程</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
   
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2016/07/28/Android之代码性能优化/">Android之代码性能优化</a>
+    <h1 class="article-title" itemprop="name">
+      使用Runtime代码中安装APP
     </h1>
   
 
-    </header>
-  </div>
-</article>
-  
-  
-    </div></section>
-  
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>private void install( final String apkPath) {<br>// 安装<br>final Thread thread = new Thread() {<br>public void run() {<br>// install tmp.apk<br>Process rt = null;<br>try {<br>rt = Runtime.getRuntime().exec(“su”);<br>BufferedReader stdInput = new BufferedReader(new InputStreamReader(rt.getInputStream()));</p>
+<p>DataOutputStream os = new DataOutputStream(rt.getOutputStream());<br>String cmd = “pm install -r -d “ + apkPath + “\n”;<br>os.writeBytes(cmd + “\n”);<br>os.flush();<br>os.writeBytes(“exit\n”);<br>rt.waitFor();</p>
+<p>String std = null;<br>StringBuilder sb = new StringBuilder();</p>
+<p>boolean isSuccess = true;<br>while ((std = stdInput.readLine()) != null) {<br>Log.i(UpdaterConfig.TAG, std);<br>sb.append(std);<br>if (FAILED_OUTPUT.equals(std)) {<br>isSuccess = false;<br>}<br>}<br>new File(apkPath).delete();<br>Log.i(UpdaterConfig.TAG, “install success”);<br>if (isSuccess) {<br>showToastMsg(“安装完成”);<br>startAppIfNeed();<br>} else {<br>showToastMsg(“安装异常”);<br>}<br>} catch (Exception e) {<br>e.printStackTrace();<br>Log.i(UpdaterConfig.TAG, “install failed”);<br>showToastMsg(“安装异常”);<br>}<br>}<br>};<br>thread.start();<br>}</p>
+<p>private void startAppIfNeed() {<br>if (APP_PACKAGE_NAME.equals(mCurrentData.getPackageName())) {<br>try {<br>showToastMsg(“启动主程序”);<br>Intent intent = new Intent();<br>intent.setComponent(new ComponentName(APP_PACKAGE_NAME, APP_PACKAGE_NAME + “.MainActivity”));<br>intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);<br>intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);<br>intent.putExtra(UpdaterConfig.EXTRA_RESULT, UpdaterConfig.RESULT_SUCCESS);<br>UpdaterApp.getInstance().startActivity(intent);<br>} catch (Exception e) {<br>Log.e(UpdaterConfig.TAG, e.getMessage(), e);<br>}<br>}S<br>}</p>
 
-</section>
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2017/01/21/使用Runtime代码中安装APP/" data-id="ciyqvo0vj0000u72uso05eqzp" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Android/">Android</a></li></ul>
+
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2017/02/04/Android快捷获取设备IMEI号/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          Android快捷获取设备IMEI号
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2017/01/20/终端常用命令/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">Mac终端常用命令</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+
+  <section id="comments">
+    <!-- 多说评论框 start -->
+    <div class="ds-thread" data-thread-key="post-使用Runtime代码中安装APP" data-title="使用Runtime代码中安装APP" data-url="http://yoursite.com/2017/01/21/使用Runtime代码中安装APP/"></div>
+    <!-- 多说评论框 end -->
+    <!-- 多说公共JS代码 start (一个网页只需插入一次) -->
+    <script type="text/javascript">
+    var duoshuoQuery = {short_name:'andr112'};
+      (function() {
+        var ds = document.createElement('script');
+        ds.type = 'text/javascript';ds.async = true;
+        ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+        ds.charset = 'UTF-8';
+        (document.getElementsByTagName('head')[0] 
+         || document.getElementsByTagName('body')[0]).appendChild(ds);
+      })();
+      </script>
+    <!-- 多说公共JS代码 end -->
+  </section>
+  </section>
         
           <aside id="sidebar">
   

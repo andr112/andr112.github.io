@@ -68,6 +68,99 @@
       <div class="outer">
         <section id="main">
   
+    <article id="post-Android快捷获取设备IMEI号" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2017/02/04/Android快捷获取设备IMEI号/" class="article-date">
+  <time datetime="2017-02-04T06:33:26.000Z" itemprop="datePublished">2017-02-04</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/programming/">编程</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2017/02/04/Android快捷获取设备IMEI号/">Android快捷获取设备IMEI号</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h2 id="拨号界面输入字符-06"><a href="#拨号界面输入字符-06" class="headerlink" title="拨号界面输入字符 *#06"></a>拨号界面输入字符 *#06</h2><p><img src="http://oku6oiw6z.bkt.clouddn.com/B21B77B4C397C2C14C51607BFA9D1EFF.jpg" alt="快捷获取"></p>
+<h2 id="编程获取"><a href="#编程获取" class="headerlink" title="编程获取"></a>编程获取</h2><p>　　<uses-permission android:name="android.permission.READ_PHONE_STATE"></uses-permission></p>
+<p>　　TelephonyManager telephonyManager = (TelephonyManager) this.getSystemService(Context.TELEPHONY_SERVICE);<br>　　String IMEI = telephonyManager.getDeviceId();</p>
+<h2 id="adb命令获得-（若手机手机是双卡双待的貌似不支持）"><a href="#adb命令获得-（若手机手机是双卡双待的貌似不支持）" class="headerlink" title="adb命令获得 （若手机手机是双卡双待的貌似不支持）"></a>adb命令获得 （若手机手机是双卡双待的貌似不支持）</h2><p>　　adb shell dumpsys iphonesubinfo</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2017/02/04/Android快捷获取设备IMEI号/" data-id="ciyqvo0vq0001u72uojazs217" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Android/">Android</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-使用Runtime代码中安装APP" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2017/01/21/使用Runtime代码中安装APP/" class="article-date">
+  <time datetime="2017-01-21T10:29:25.000Z" itemprop="datePublished">2017-01-21</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/programming/">编程</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2017/01/21/使用Runtime代码中安装APP/">使用Runtime代码中安装APP</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>private void install( final String apkPath) {<br>// 安装<br>final Thread thread = new Thread() {<br>public void run() {<br>// install tmp.apk<br>Process rt = null;<br>try {<br>rt = Runtime.getRuntime().exec(“su”);<br>BufferedReader stdInput = new BufferedReader(new InputStreamReader(rt.getInputStream()));</p>
+<p>DataOutputStream os = new DataOutputStream(rt.getOutputStream());<br>String cmd = “pm install -r -d “ + apkPath + “\n”;<br>os.writeBytes(cmd + “\n”);<br>os.flush();<br>os.writeBytes(“exit\n”);<br>rt.waitFor();</p>
+<p>String std = null;<br>StringBuilder sb = new StringBuilder();</p>
+<p>boolean isSuccess = true;<br>while ((std = stdInput.readLine()) != null) {<br>Log.i(UpdaterConfig.TAG, std);<br>sb.append(std);<br>if (FAILED_OUTPUT.equals(std)) {<br>isSuccess = false;<br>}<br>}<br>new File(apkPath).delete();<br>Log.i(UpdaterConfig.TAG, “install success”);<br>if (isSuccess) {<br>showToastMsg(“安装完成”);<br>startAppIfNeed();<br>} else {<br>showToastMsg(“安装异常”);<br>}<br>} catch (Exception e) {<br>e.printStackTrace();<br>Log.i(UpdaterConfig.TAG, “install failed”);<br>showToastMsg(“安装异常”);<br>}<br>}<br>};<br>thread.start();<br>}</p>
+<p>private void startAppIfNeed() {<br>if (APP_PACKAGE_NAME.equals(mCurrentData.getPackageName())) {<br>try {<br>showToastMsg(“启动主程序”);<br>Intent intent = new Intent();<br>intent.setComponent(new ComponentName(APP_PACKAGE_NAME, APP_PACKAGE_NAME + “.MainActivity”));<br>intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);<br>intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);<br>intent.putExtra(UpdaterConfig.EXTRA_RESULT, UpdaterConfig.RESULT_SUCCESS);<br>UpdaterApp.getInstance().startActivity(intent);<br>} catch (Exception e) {<br>Log.e(UpdaterConfig.TAG, e.getMessage(), e);<br>}<br>}S<br>}</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2017/01/21/使用Runtime代码中安装APP/" data-id="ciyqvo0vj0000u72uso05eqzp" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Android/">Android</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+  
     <article id="post-终端常用命令" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
     <a href="/2017/01/20/终端常用命令/" class="article-date">
@@ -130,7 +223,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2017/01/20/终端常用命令/" data-id="ciyqvizig001fsc2ue9n7x8su" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2017/01/20/终端常用命令/" data-id="ciyqvksh8001dt52urig84whb" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/其他/">其他</a></li></ul>
@@ -213,7 +306,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2016/10/27/Weex学习索引/" data-id="ciyqvizgl0004sc2u60j3v8ud" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2016/10/27/Weex学习索引/" data-id="ciyqvksg10009t52u8eqko8nm" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/weex/">weex</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/编程语言/">编程语言</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/资料索引/">资料索引</a></li></ul>
@@ -281,7 +374,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2016/07/28/Android之代码性能优化/" data-id="ciyqvizgn0005sc2us54ees70" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2016/07/28/Android之代码性能优化/" data-id="ciyqvksfj0001t52uzxxxxy7s" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/android/">android</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/代码/">代码</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/优化/">优化</a></li></ul>
@@ -344,7 +437,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2016/07/04/2016个人阅读书单/" data-id="ciyqvizg80000sc2unl8wysdl" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2016/07/04/2016个人阅读书单/" data-id="ciyqvksfu0004t52uzpvwgy9h" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/书籍/">书籍</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/阅读/">阅读</a></li></ul>
@@ -514,7 +607,7 @@ public void setDatas(List&lt;VideoBroadcast&gt; datas) {
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2016/07/04/一个ListView有关数据设置和刷新问题/" data-id="ciyqvizgz0009sc2usdqdezbw" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2016/07/04/一个ListView有关数据设置和刷新问题/" data-id="ciyqvksfy0007t52uybpu970u" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Android/">Android</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/经验/">经验</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/问题/">问题</a></li></ul>
@@ -567,7 +660,7 @@ public void setDatas(List&lt;VideoBroadcast&gt; datas) {
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2016/06/20/AS一个简单Jni开发实践/" data-id="ciyqvizgf0001sc2u3kd3o2g8" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2016/06/20/AS一个简单Jni开发实践/" data-id="ciyqvksfc0000t52upxlzzpr0" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Android/">Android</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/JNI/">JNI</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/实践/">实践</a></li></ul>
@@ -634,7 +727,7 @@ Error:(2) Attribute &quot;title&quot; has already been defined
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2016/06/20/attr属性重复的问题/" data-id="ciyqvizgq0007sc2u1fqpp2gw" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2016/06/20/attr属性重复的问题/" data-id="ciyqvksfw0005t52uwzmtuksr" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Android/">Android</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/经验/">经验</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/问题/">问题</a></li></ul>
@@ -678,7 +771,7 @@ Error:(2) Attribute &quot;title&quot; has already been defined
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2016/06/19/漂亮的花儿/" data-id="ciyqvizil001gsc2uxjeksveb" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2016/06/19/漂亮的花儿/" data-id="ciyqvkshg001ht52udjikbfgw" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/生活美物/">生活美物</a></li></ul>
@@ -690,101 +783,11 @@ Error:(2) Attribute &quot;title&quot; has already been defined
 
 
   
-    <article id="post-个人博客搭建for-Mac-Github-Hexo" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2016/06/16/个人博客搭建for-Mac-Github-Hexo/" class="article-date">
-  <time datetime="2016-06-16T10:33:54.000Z" itemprop="datePublished">2016-06-16</time>
-</a>
-    
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/other/">其他</a>
-  </div>
-
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2016/06/16/个人博客搭建for-Mac-Github-Hexo/">个人博客搭建for Mac (Github+Hexo)</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>几年开发下，总觉得自己知识零零散散的，没有什么经验、学习研究、知识梳理概括等相关文字性的输出；很多遇到过解决掉的问题、学过的或者做过的，时间一久，自己都忘了；再则，工作中直来直去的交流，语言组织能力也是下降了不少。弄个博客写写，既可以把一些有用的东西分享给他人，也方便自己随时翻来看看。</p>
-<h2 id="为什么是Github-Hexo"><a href="#为什么是Github-Hexo" class="headerlink" title="为什么是Github+Hexo"></a>为什么是Github+Hexo</h2><p>GitHub是一个利用Git进行版本控制、专门用于存放软件代码与内容的共享虚拟主机服务。<br>Hexo是一个基于Node.js的静态博客程序，可以方便的生成静态网页托管在github上。<br>这里我们可以通俗简单地理解为GitHub是博客容器，Hexo是帮助我们制作博客的工具。</p>
-<h2 id="如何搭建"><a href="#如何搭建" class="headerlink" title="如何搭建"></a>如何搭建</h2><h2 id="Homebrew安装"><a href="#Homebrew安装" class="headerlink" title="Homebrew安装"></a>Homebrew安装</h2><p>Homebrew是一款自由及开放源代码的软件包管理系统，用以简化Mac OS X系统上的软件安装过程。<br>终端运行 ：<em> ruby -e “$(curl -fsSL <a href="https://raw.githubusercontent.com/Homebrew/install/master/install" target="_blank" rel="external">https://raw.githubusercontent.com/Homebrew/install/master/install</a>)” </em><br>，回车键。SO EASY！</p>
-<ol>
-<li><a href="http://brew.sh/" target="_blank" rel="external">Honebrew官网</a></li>
-<li><a href="https://github.com/Homebrew/brew/blob/master/share/doc/homebrew/README.md#readme" target="_blank" rel="external">安装详细文档</a></li>
-</ol>
-<h2 id="利用Homebrew安装Node-js"><a href="#利用Homebrew安装Node-js" class="headerlink" title="利用Homebrew安装Node.js"></a>利用Homebrew安装Node.js</h2><p>终端运行：<em> brew install node </em></p>
-<h2 id="利用Homebrew安装Hexo官网链接"><a href="#利用Homebrew安装Hexo官网链接" class="headerlink" title="利用Homebrew安装Hexo官网链接"></a>利用Homebrew安装Hexo<a href="https://hexo.io/zh-cn/" target="_blank" rel="external">官网链接</a></h2><p>终端运行：<em> npm install hexo -g </em></p>
-<h3 id="安装成功后，创建博客所属的文件夹"><a href="#安装成功后，创建博客所属的文件夹" class="headerlink" title="安装成功后，创建博客所属的文件夹"></a>安装成功后，创建博客所属的文件夹</h3><p>终端运行：<em> hexo init “YourDirName” </em><br>//执行init命令初始化hexo到你指定的目录</p>
-<h3 id="生成静态网页"><a href="#生成静态网页" class="headerlink" title="生成静态网页"></a>生成静态网页</h3><p>终端运行：<em> hexo generate </em><br>//自动根据当前目录下文件,生成静态网页， (hexo g也行)</p>
-<h3 id="将该静态网页运行在本地服务器"><a href="#将该静态网页运行在本地服务器" class="headerlink" title="将该静态网页运行在本地服务器"></a>将该静态网页运行在本地服务器</h3><p>终端运行：<em> hexo server </em><br>//运行本地服务 (hexo s也行)<br>在浏览器里面输入 <em> <a href="http://localhost:4000" target="_blank" rel="external">http://localhost:4000</a> </em><br>//就能看到有一篇Hello World博文在上面，是hexo安装后自动生成的。</p>
-<p><strong>以上，我们已经把Hexo帮助我们制作博客的工具环境搭建好，我们已经可以利用工具生产自己的本地静态（自己电脑上能看见，别人还访问不到）博文。</strong></p>
-<h3 id="创建新博文"><a href="#创建新博文" class="headerlink" title="创建新博文"></a>创建新博文</h3><p>终端运行：<em> hexo new “YourPostName” </em><br>//YourPostName为你创建的博文名称。<br>创建成功后，终端提示：INFO Created: ~/source/_posts/YourPostName.md的提示。<br>open ~/source/_posts/  可以找到 YourPostName.md文件，这个文件就是我们博文的原始文件，好比画纸，我们在上面画什么我们的博文就展示什么。可以用Xcode打开和编辑该文件，或者用软件sublimetext。博客编写有一定的格式规则，如<strong>Markdown</strong>,<a href="http://wowubuntu.com/markdown/basic.html" target="_blank" rel="external">学习参考链接</a><br>每次编辑完后，<br>终端运行：<em> hexo generate </em><br>//生成静态网页<br>终端运行：<em> hexo server </em><br>//运行本地服务<br>在浏览器里面输入 <em> <a href="http://localhost:4000" target="_blank" rel="external">http://localhost:4000</a> </em><br>//就能看到新编辑的博文</p>
-<p><strong>剩下就是如何把我们的博文放到我们的GIT容器里了，以便让其他人也可访问到我们的博客</strong></p>
-<h2 id="首先，在我们电脑上装上GIT工具"><a href="#首先，在我们电脑上装上GIT工具" class="headerlink" title="首先，在我们电脑上装上GIT工具"></a>首先，在我们电脑上装上GIT工具</h2><h3 id="利用Homebrew安装git"><a href="#利用Homebrew安装git" class="headerlink" title="利用Homebrew安装git"></a>利用Homebrew安装git</h3><p>终端运行：<em> brew install git </em><br> <em>如果Mac上已经安装过git了，这一步略过。</em><br> <em>我之前先装的Xcode再装的git,记得是下的安装包装的，所以我电脑上已有git工具，这里不需要再重新装过。</em></p>
-<h3 id="需要一个github账号-创建一个仓库New-repository-名称为你github用户名-github-io"><a href="#需要一个github账号-创建一个仓库New-repository-名称为你github用户名-github-io" class="headerlink" title="需要一个github账号,创建一个仓库New repository,名称为你github用户名.github.io"></a>需要一个github账号,创建一个仓库New repository,名称为你github用户名.github.io</h3><p>如果没有账号，那就注册一个，<a href="https://github.com/" target="_blank" rel="external">Git官网</a></p>
-<h2 id="其次，配置github账号仓库地址到我们的Hexo，或者进行GIT标准配置。"><a href="#其次，配置github账号仓库地址到我们的Hexo，或者进行GIT标准配置。" class="headerlink" title="其次，配置github账号仓库地址到我们的Hexo，或者进行GIT标准配置。"></a>其次，配置github账号仓库地址到我们的Hexo，或者进行GIT标准配置。</h2><p><em>这里介绍直接仓库配置</em><br>打开 初始化hexo过的文件夹YourDirName下的_config.yml文件，文件最底部</p>
-<p>deploy:<br>type:<br><strong>改成</strong><br>deploy:<br>type: git<br>repository: <a href="https://github.com/yourGithubName/yourGithubName.github.io.git" target="_blank" rel="external">https://github.com/yourGithubName/yourGithubName.github.io.git</a><br>branch: master</p>
-<h2 id="博文部署到github"><a href="#博文部署到github" class="headerlink" title="博文部署到github"></a>博文部署到github</h2><p>终端运行：<em> hexo deploy </em></p>
-<p><em>OK啦，统统搞定，浏览器输入yourGithubName.github.io就能看到你自己的blog了 </em></p>
-<hr>
-<p><strong> 以下内容不是必须，算是为博客锦上添花 </strong></p>
-<ul>
-<li><h2 id="主题更改"><a href="#主题更改" class="headerlink" title="主题更改"></a>主题更改</h2>如果不喜欢默认的主题样式，可以进行个性化设置</li>
-</ul>
-<p><a href="https://hexo.io/" target="_blank" rel="external">Hexo官网</a>提供了很多主题,供大家根据自己的喜好对主题进行修改。主题直接<a href="https://github.com/hexojs/hexo/wiki/Themes" target="_blank" rel="external">下载网址</a>.</p>
-<h3 id="如何设置"><a href="#如何设置" class="headerlink" title="如何设置"></a>如何设置</h3><p>在Hexo的初始化目录（“YourDirName”）下对喜欢的主题进行克隆，或者把克隆好的主题拷贝到该目录（“YourDirName”）的 <em> themes </em> 文件夹下.然后，找到并打开目录（“YourDirName”）下配置文件<em> _config.yml </em>,修改主题为你所选择的主题。具体操作：</p>
-<pre><code>git clone git@github.com:yunlzheng/hexo-themes.git themes/writing
-
-#在./_config.yml，修改主题为writing
-theme: writing
-</code></pre><ul>
-<li><h2 id="添加多说评论"><a href="#添加多说评论" class="headerlink" title="添加多说评论"></a>添加多说评论</h2><ul>
-<li><a href="[1]">Hexo添加多说教程</a></li>
-<li><a href="[2]">多说站点创建</a>，用以获取教程里的short_name .</li>
-</ul>
-</li>
-</ul>
-<ul>
-<li><h2 id="增加rss"><a href="#增加rss" class="headerlink" title="增加rss"></a>增加rss</h2><p>  npm install hexo-generator-feed<br>启动服务器，用浏览器打开 <a href="http://localhost:4000/atom.xml，可看到RSS已经生效。" target="_blank" rel="external">http://localhost:4000/atom.xml，可看到RSS已经生效。</a></p>
-</li>
-<li><h2 id="增加sitemap"><a href="#增加sitemap" class="headerlink" title="增加sitemap"></a>增加sitemap</h2><p>  pm install hexo-generator-sitemap<br>启动服务器，用浏览器打开 用浏览器打开 <a href="http://localhost:4000/sitemap.xml" target="_blank" rel="external">http://localhost:4000/sitemap.xml</a> 发现site已经生效</p>
-</li>
-</ul>
-<h3 id="注-转载请注明出处"><a href="#注-转载请注明出处" class="headerlink" title=" 注  转载请注明出处:"></a><strong> 注 </strong> 转载请注明出处:</h3><p><strong> <a href="http://andr112.github.io/2016/06/16/个人博客搭建for-Mac-Github-Hexo/" target="_blank" rel="external">http://andr112.github.io/2016/06/16/个人博客搭建for-Mac-Github-Hexo/</a> </strong><br>.<br>.<br>.</p>
-<hr>
-<h3 id="参考链接"><a href="#参考链接" class="headerlink" title="参考链接"></a><em>参考链接</em></h3><ul>
-<li><a href="http://joakimliu.github.io/2015/04/19/Github&amp;&amp;Hexo-%3EPersonal%20Blog%20for%20Mac&gt;%20OS/" target="_blank" rel="external">http://joakimliu.github.io/</a></li>
-<li><a href="http://www.jianshu.com/p/858ecf233db9" target="_blank" rel="external">http://www.jianshu.com/p/858ecf233db9</a></li>
-<li><a href="http://blog.netpi.me/实用/hexo/" target="_blank" rel="external">http://blog.netpi.me/实用/hexo/</a></li>
-</ul>
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://yoursite.com/2016/06/16/个人博客搭建for-Mac-Github-Hexo/" data-id="ciyqvizin001jsc2uiwq9g77p" class="article-share-link">Share</a>
-      
-      
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/环境搭建/">环境搭建</a></li></ul>
-
-    </footer>
-  </div>
-  
-</article>
 
 
-  
-
+  <nav id="page-nav">
+    <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="extend next" rel="next" href="/page/2/">__('next') &raquo;</a>
+  </nav>
 </section>
         
           <aside id="sidebar">
@@ -822,7 +825,7 @@ theme: writing
   <div class="widget-wrap">
     <h3 class="widget-title">归档</h3>
     <div class="widget">
-      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/01/">一月 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/10/">十月 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/07/">七月 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/06/">六月 2016</a></li></ul>
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/02/">二月 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/01/">一月 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/10/">十月 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/07/">七月 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/06/">六月 2016</a></li></ul>
     </div>
   </div>
 
@@ -835,6 +838,14 @@ theme: writing
       <ul>
         
           <li>
+            <a href="/2017/02/04/Android快捷获取设备IMEI号/">Android快捷获取设备IMEI号</a>
+          </li>
+        
+          <li>
+            <a href="/2017/01/21/使用Runtime代码中安装APP/">使用Runtime代码中安装APP</a>
+          </li>
+        
+          <li>
             <a href="/2017/01/20/终端常用命令/">Mac终端常用命令</a>
           </li>
         
@@ -844,14 +855,6 @@ theme: writing
         
           <li>
             <a href="/2016/07/28/Android之代码性能优化/">Android之代码性能优化</a>
-          </li>
-        
-          <li>
-            <a href="/2016/07/04/2016个人阅读书单/">2016个人阅读书单</a>
-          </li>
-        
-          <li>
-            <a href="/2016/07/04/一个ListView有关数据设置和刷新问题/">一个ListView有关数据设置和刷新问题</a>
           </li>
         
       </ul>
