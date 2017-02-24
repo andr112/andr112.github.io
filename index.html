@@ -68,6 +68,83 @@
       <div class="outer">
         <section id="main">
   
+    <article id="post-手机如何伪装成电脑上网" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2017/02/24/手机如何伪装成电脑上网/" class="article-date">
+  <time datetime="2017-02-24T06:22:14.000Z" itemprop="datePublished">2017-02-24</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/programming/">编程</a>►<a class="article-category-link" href="/categories/programming/life/">生活</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2017/02/24/手机如何伪装成电脑上网/">手机如何伪装成电脑上网</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h2 id="手机浏览器上网"><a href="#手机浏览器上网" class="headerlink" title="手机浏览器上网"></a>手机浏览器上网</h2><p>  打开浏览器，点开浏览器的“设置”项（一般在页面下方图标为三个杠的菜单中），找到“设置”里“UA设置”；UA设置一般有四个选项“Android；iPhone；iPad；电脑”，默认是“Android”，改选为“电脑”即可。</p>
+<h2 id="代码网络请求实现。"><a href="#代码网络请求实现。" class="headerlink" title="代码网络请求实现。"></a>代码网络请求实现。</h2><p>   通过抓包软件比对，设置浏览器UA选项前后发出去的数据请求，只是请求头user-agent字段不同；我们代码一般不特别设置user-agent字段，默认情况下是发出去的请求头是没有该字段的。于是要实现伪装，只要为请求头添加相应的user-agent字段即可。</p>
+<p>   实例代码：</p>
+<pre><code>Map&lt;String, String&gt; headers = new HashMap&lt;&gt;(); 
+public void request(Context context, String url, final BaseCallback callback) {
+    headers.clear();
+    //伪装成电脑上网
+    headers.put(&quot;user-agent&quot;, &quot;Mozilla/5.0 (Windows; U; Windows NT 5.1; en-US) AppleWebKit/534.20 (KHTML, likeGecko) Chrome/11.0.672.0 Safari/534.20&quot;); 
+    RequestQueue queue = Volley.newRequestQueue(context);
+    StringRequest stringRequest = new StringRequest(Request.Method.GET, url, new Response.Listener&lt;String&gt;() {
+    @Override
+        public void onResponse(String response) {
+            WxLog.i(tag, &quot; getLoginUUID onResponse: &quot; + response);
+            if (callback != null) {
+            callback.onSuccess(response);
+            }
+        }
+    },
+    new Response.ErrorListener() {
+        @Override
+        public void onErrorResponse(VolleyError error) {
+            WxLog.i(tag, &quot; onErrorResponse&quot;);
+            if (callback != null) {
+                callback.onFailed(error.getMessage());
+            }
+        }
+    }) {
+    @Override
+    public Map&lt;String, String&gt; getHeaders() throws AuthFailureError {
+        return headers;
+    }
+    };
+    queue.add(stringRequest);
+}
+</code></pre><h2 id="抓包工具推荐AnyProxy"><a href="#抓包工具推荐AnyProxy" class="headerlink" title="抓包工具推荐AnyProxy"></a>抓包工具推荐AnyProxy</h2><p>  网址 ：<a href="https://github.com/alibaba/anyproxy" target="_blank" rel="external">https://github.com/alibaba/anyproxy</a></p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2017/02/24/手机如何伪装成电脑上网/" data-id="cizjk6sxm000b1o2uh3fjckmq" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/android/">android</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/其他/">其他</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+  
     <article id="post-Android快捷获取设备IMEI号" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
     <a href="/2017/02/04/Android快捷获取设备IMEI号/" class="article-date">
@@ -103,7 +180,7 @@ String IMEI = telephonyManager.getDeviceId();
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2017/02/04/Android快捷获取设备IMEI号/" data-id="ciyqvqjd2000bun2uo0s0om96" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2017/02/04/Android快捷获取设备IMEI号/" data-id="cizjk6sxs000f1o2ucovyhhqe" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Android/">Android</a></li></ul>
@@ -150,7 +227,7 @@ String IMEI = telephonyManager.getDeviceId();
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2017/01/21/使用Runtime代码中安装APP/" data-id="ciyqvqjdh000mun2urotbowm4" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2017/01/21/使用Runtime代码中安装APP/" data-id="cizjk6sy0000o1o2up4od4le1" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Android/">Android</a></li></ul>
@@ -224,7 +301,7 @@ String IMEI = telephonyManager.getDeviceId();
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2017/01/20/终端常用命令/" data-id="ciyqvqjda000fun2ulelxiy98" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2017/01/20/终端常用命令/" data-id="cizjk6sy5000t1o2u7r0v2avx" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/其他/">其他</a></li></ul>
@@ -307,7 +384,7 @@ String IMEI = telephonyManager.getDeviceId();
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2016/10/27/Weex学习索引/" data-id="ciyqvqjcu0007un2ujyi3dvft" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2016/10/27/Weex学习索引/" data-id="cizjk6sx900051o2uci1zg903" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/weex/">weex</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/编程语言/">编程语言</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/资料索引/">资料索引</a></li></ul>
@@ -375,7 +452,7 @@ String IMEI = telephonyManager.getDeviceId();
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2016/07/28/Android之代码性能优化/" data-id="ciyqvqjca0001un2u3mgkoz79" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2016/07/28/Android之代码性能优化/" data-id="cizjk6swt00001o2uvajtntj8" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/android/">android</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/代码/">代码</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/优化/">优化</a></li></ul>
@@ -438,7 +515,7 @@ String IMEI = telephonyManager.getDeviceId();
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2016/07/04/2016个人阅读书单/" data-id="ciyqvqjcn0004un2ux2uxf1lk" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2016/07/04/2016个人阅读书单/" data-id="cizjk6sx700041o2u9gx3ms7m" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/书籍/">书籍</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/阅读/">阅读</a></li></ul>
@@ -608,7 +685,7 @@ public void setDatas(List&lt;VideoBroadcast&gt; datas) {
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2016/07/04/一个ListView有关数据设置和刷新问题/" data-id="ciyqvqjcz0009un2uc4fj2og1" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2016/07/04/一个ListView有关数据设置和刷新问题/" data-id="cizjk6sxb00071o2urk5sk5ju" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Android/">Android</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/经验/">经验</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/问题/">问题</a></li></ul>
@@ -661,7 +738,7 @@ public void setDatas(List&lt;VideoBroadcast&gt; datas) {
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2016/06/20/AS一个简单Jni开发实践/" data-id="ciyqvqjc40000un2urq932pk0" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2016/06/20/AS一个简单Jni开发实践/" data-id="cizjk6swz00011o2u4z0r6yf4" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Android/">Android</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/JNI/">JNI</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/实践/">实践</a></li></ul>
@@ -728,54 +805,10 @@ Error:(2) Attribute &quot;title&quot; has already been defined
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2016/06/20/attr属性重复的问题/" data-id="ciyqvqjcp0005un2u6ciojtff" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2016/06/20/attr属性重复的问题/" data-id="cizjk6sxv000h1o2ub0bptehj" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Android/">Android</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/经验/">经验</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/问题/">问题</a></li></ul>
-
-    </footer>
-  </div>
-  
-</article>
-
-
-  
-    <article id="post-漂亮的花儿" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2016/06/19/漂亮的花儿/" class="article-date">
-  <time datetime="2016-06-19T14:48:34.000Z" itemprop="datePublished">2016-06-19</time>
-</a>
-    
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/life/">生活</a>
-  </div>
-
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2016/06/19/漂亮的花儿/">漂亮的花儿</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h1 id="每个季节有每个季节别样的花儿"><a href="#每个季节有每个季节别样的花儿" class="headerlink" title="每个季节有每个季节别样的花儿"></a>每个季节有每个季节别样的花儿</h1><h2 id="三月梅花"><a href="#三月梅花" class="headerlink" title="三月梅花"></a>三月梅花</h2><p><img src="http://o90wzbp0x.bkt.clouddn.com/IMG_1818.JPG" alt="红梅"></p>
-<h2 id="四月蔷薇"><a href="#四月蔷薇" class="headerlink" title="四月蔷薇"></a>四月蔷薇</h2><p><img src="http://o90wzbp0x.bkt.clouddn.com/20120820222859_8166.jpg" alt="粉红多花蔷薇" title="粉蔷薇"></p>
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://yoursite.com/2016/06/19/漂亮的花儿/" data-id="ciyqvqjdd000iun2ugqn9v96y" class="article-share-link">Share</a>
-      
-      
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/生活美物/">生活美物</a></li></ul>
 
     </footer>
   </div>
@@ -797,7 +830,7 @@ Error:(2) Attribute &quot;title&quot; has already been defined
   <div class="widget-wrap">
     <h3 class="widget-title">分类</h3>
     <div class="widget">
-      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/other/">其他</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/life/">生活</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/programming/">编程</a></li></ul>
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/other/">其他</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/life/">生活</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/programming/">编程</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/programming/life/">生活</a></li></ul></li></ul>
     </div>
   </div>
 
@@ -817,7 +850,7 @@ Error:(2) Attribute &quot;title&quot; has already been defined
   <div class="widget-wrap">
     <h3 class="widget-title">标签云</h3>
     <div class="widget tagcloud">
-      <a href="/tags/Android/" style="font-size: 20px;">Android</a> <a href="/tags/JNI/" style="font-size: 10px;">JNI</a> <a href="/tags/android/" style="font-size: 10px;">android</a> <a href="/tags/weex/" style="font-size: 10px;">weex</a> <a href="/tags/书籍/" style="font-size: 10px;">书籍</a> <a href="/tags/代码/" style="font-size: 10px;">代码</a> <a href="/tags/优化/" style="font-size: 10px;">优化</a> <a href="/tags/其他/" style="font-size: 10px;">其他</a> <a href="/tags/实践/" style="font-size: 10px;">实践</a> <a href="/tags/环境搭建/" style="font-size: 10px;">环境搭建</a> <a href="/tags/生活美物/" style="font-size: 10px;">生活美物</a> <a href="/tags/经验/" style="font-size: 15px;">经验</a> <a href="/tags/编程语言/" style="font-size: 10px;">编程语言</a> <a href="/tags/资料索引/" style="font-size: 10px;">资料索引</a> <a href="/tags/问题/" style="font-size: 15px;">问题</a> <a href="/tags/阅读/" style="font-size: 10px;">阅读</a>
+      <a href="/tags/Android/" style="font-size: 20px;">Android</a> <a href="/tags/JNI/" style="font-size: 10px;">JNI</a> <a href="/tags/android/" style="font-size: 15px;">android</a> <a href="/tags/weex/" style="font-size: 10px;">weex</a> <a href="/tags/书籍/" style="font-size: 10px;">书籍</a> <a href="/tags/代码/" style="font-size: 10px;">代码</a> <a href="/tags/优化/" style="font-size: 10px;">优化</a> <a href="/tags/其他/" style="font-size: 15px;">其他</a> <a href="/tags/实践/" style="font-size: 10px;">实践</a> <a href="/tags/环境搭建/" style="font-size: 10px;">环境搭建</a> <a href="/tags/生活美物/" style="font-size: 10px;">生活美物</a> <a href="/tags/经验/" style="font-size: 15px;">经验</a> <a href="/tags/编程语言/" style="font-size: 10px;">编程语言</a> <a href="/tags/资料索引/" style="font-size: 10px;">资料索引</a> <a href="/tags/问题/" style="font-size: 15px;">问题</a> <a href="/tags/阅读/" style="font-size: 10px;">阅读</a>
     </div>
   </div>
 
@@ -839,6 +872,10 @@ Error:(2) Attribute &quot;title&quot; has already been defined
       <ul>
         
           <li>
+            <a href="/2017/02/24/手机如何伪装成电脑上网/">手机如何伪装成电脑上网</a>
+          </li>
+        
+          <li>
             <a href="/2017/02/04/Android快捷获取设备IMEI号/">Android快捷获取设备IMEI号</a>
           </li>
         
@@ -852,10 +889,6 @@ Error:(2) Attribute &quot;title&quot; has already been defined
         
           <li>
             <a href="/2016/10/27/Weex学习索引/">Weex学习索引</a>
-          </li>
-        
-          <li>
-            <a href="/2016/07/28/Android之代码性能优化/">Android之代码性能优化</a>
           </li>
         
       </ul>
