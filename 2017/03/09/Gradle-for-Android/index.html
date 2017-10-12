@@ -3,26 +3,21 @@
 <head>
   <meta charset="utf-8">
   
-  <title>Android快捷获取设备IMEI号 | 胖墩记忆</title>
+  <title>Gradle for Android | 胖墩记忆</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="拨号界面输入字符 *#06
-编程获取&amp;lt;uses-permission android:name=&amp;quot;android.permission.READ_PHONE_STATE&amp;quot; /&amp;gt; 
-TelephonyManager telephonyManager = (TelephonyManager) this.getSystemService(Context.TELEPHONY">
+  <meta name="description" content="对Gradle的基本理解  一个基于Gradle的Android工程，必须有一个build.grade构建脚本，而我们用Android Studio创建工程时，Studio以为我们自动生成了该脚本文件。每个Module也会对应各自的一个构建脚本build.grade文件。
+  Gradle脚本不是像传统的xml文件那样，而是一种基于Groovy的动态DSL，而Groovy语言是一种基于jvm的动态">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Android快捷获取设备IMEI号">
-<meta property="og:url" content="http://yoursite.com/2017/02/04/Android快捷获取设备IMEI号/index.html">
+<meta property="og:title" content="Gradle for Android">
+<meta property="og:url" content="http://yoursite.com/2017/03/09/Gradle-for-Android/index.html">
 <meta property="og:site_name" content="胖墩记忆">
-<meta property="og:description" content="拨号界面输入字符 *#06
-编程获取&amp;lt;uses-permission android:name=&amp;quot;android.permission.READ_PHONE_STATE&amp;quot; /&amp;gt; 
-TelephonyManager telephonyManager = (TelephonyManager) this.getSystemService(Context.TELEPHONY">
-<meta property="og:image" content="http://oku6oiw6z.bkt.clouddn.com/B21B77B4C397C2C14C51607BFA9D1EFF.jpg">
-<meta property="og:updated_time" content="2017-02-04T06:58:56.000Z">
+<meta property="og:description" content="对Gradle的基本理解  一个基于Gradle的Android工程，必须有一个build.grade构建脚本，而我们用Android Studio创建工程时，Studio以为我们自动生成了该脚本文件。每个Module也会对应各自的一个构建脚本build.grade文件。
+  Gradle脚本不是像传统的xml文件那样，而是一种基于Groovy的动态DSL，而Groovy语言是一种基于jvm的动态">
+<meta property="og:updated_time" content="2017-03-09T10:13:43.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Android快捷获取设备IMEI号">
-<meta name="twitter:description" content="拨号界面输入字符 *#06
-编程获取&amp;lt;uses-permission android:name=&amp;quot;android.permission.READ_PHONE_STATE&amp;quot; /&amp;gt; 
-TelephonyManager telephonyManager = (TelephonyManager) this.getSystemService(Context.TELEPHONY">
-<meta name="twitter:image" content="http://oku6oiw6z.bkt.clouddn.com/B21B77B4C397C2C14C51607BFA9D1EFF.jpg">
+<meta name="twitter:title" content="Gradle for Android">
+<meta name="twitter:description" content="对Gradle的基本理解  一个基于Gradle的Android工程，必须有一个build.grade构建脚本，而我们用Android Studio创建工程时，Studio以为我们自动生成了该脚本文件。每个Module也会对应各自的一个构建脚本build.grade文件。
+  Gradle脚本不是像传统的xml文件那样，而是一种基于Groovy的动态DSL，而Groovy语言是一种基于jvm的动态">
   
     <link rel="alternate" href="/atom.xml" title="胖墩记忆" type="application/atom+xml">
   
@@ -75,10 +70,10 @@ TelephonyManager telephonyManager = (TelephonyManager) this.getSystemService(Con
   </div>
 </header>
       <div class="outer">
-        <section id="main"><article id="post-Android快捷获取设备IMEI号" class="article article-type-post" itemscope itemprop="blogPost">
+        <section id="main"><article id="post-Gradle-for-Android" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
-    <a href="/2017/02/04/Android快捷获取设备IMEI号/" class="article-date">
-  <time datetime="2017-02-04T06:33:26.000Z" itemprop="datePublished">2017-02-04</time>
+    <a href="/2017/03/09/Gradle-for-Android/" class="article-date">
+  <time datetime="2017-03-09T09:01:42.000Z" itemprop="datePublished">2017-03-09</time>
 </a>
     
   <div class="article-category">
@@ -93,7 +88,7 @@ TelephonyManager telephonyManager = (TelephonyManager) this.getSystemService(Con
         
   
     <h1 class="article-title" itemprop="name">
-      Android快捷获取设备IMEI号
+      Gradle for Android
     </h1>
   
 
@@ -101,19 +96,64 @@ TelephonyManager telephonyManager = (TelephonyManager) this.getSystemService(Con
     
     <div class="article-entry" itemprop="articleBody">
       
-        <h2 id="拨号界面输入字符-06"><a href="#拨号界面输入字符-06" class="headerlink" title="拨号界面输入字符 *#06"></a>拨号界面输入字符 *#06</h2><p><img src="http://oku6oiw6z.bkt.clouddn.com/B21B77B4C397C2C14C51607BFA9D1EFF.jpg" alt="快捷获取"></p>
-<h2 id="编程获取"><a href="#编程获取" class="headerlink" title="编程获取"></a>编程获取</h2><pre><code>&lt;uses-permission android:name=&quot;android.permission.READ_PHONE_STATE&quot; /&gt; 
-TelephonyManager telephonyManager = (TelephonyManager) this.getSystemService(Context.TELEPHONY_SERVICE);
-String IMEI = telephonyManager.getDeviceId();
-</code></pre><h2 id="adb命令获得-（若手机手机是双卡双待的貌似不支持）"><a href="#adb命令获得-（若手机手机是双卡双待的貌似不支持）" class="headerlink" title="adb命令获得 （若手机手机是双卡双待的貌似不支持）"></a>adb命令获得 （若手机手机是双卡双待的貌似不支持）</h2><pre><code>adb shell dumpsys iphonesubinfo
-</code></pre>
+        <h2 id="对Gradle的基本理解"><a href="#对Gradle的基本理解" class="headerlink" title="对Gradle的基本理解"></a>对Gradle的基本理解</h2><p>  一个基于Gradle的Android工程，必须有一个build.grade构建脚本，而我们用Android Studio创建工程时，Studio以为我们自动生成了该脚本文件。每个Module也会对应各自的一个构建脚本build.grade文件。</p>
+<p>  Gradle脚本不是像传统的xml文件那样，而是一种基于Groovy的动态DSL，而Groovy语言是一种基于jvm的动态语言。</p>
+<p>  在grade中两大概念：project和tasks。<br>  Android studio中的project和Gradle中的project不是一个概念。<br>  每个project有至少一个tasks。每一个build.grade文件代表着一个project。tasks在build.gradle中定义。<br>  当初始化构建进程，gradle会基于build文件，集合所有的project和tasks,一个tasks包含了一系列动作，<br>  然后它们将会按照顺序执行，一个动作就是一段被执行的代码，很像Java中的方法。</p>
+<h2 id="Android中的Gradle脚本文件"><a href="#Android中的Gradle脚本文件" class="headerlink" title="Android中的Gradle脚本文件"></a>Android中的Gradle脚本文件</h2><h3 id="Android的build-gradle"><a href="#Android的build-gradle" class="headerlink" title="Android的build.gradle"></a>Android的build.gradle</h3><pre><code>buildscript {
+    repositories {
+        jcenter()
+    }
+    dependencies {
+        classpath &apos;com.android.tools.build:gradle:2.2.3&apos;
+    } 
+}
+</code></pre><p>这就是实际构建开始的地方，仓库地址，使用了JCenter，JCenter类似maven库，grade还支持其他几个仓库，不论是远程还是本地仓库。</p>
+<p>每个Module构建脚本的第一行都会声明使用什么插件：</p>
+<pre><code>apply plugin: &apos;com.android.application&apos;
+</code></pre><p>每个Android应用都需要一个插件：’com.android.application’；依赖库插件为’com.android.library’。（两插件不能同时使用）<br>插件用于扩展gradle脚本的能力，在一个项目中使用插件，这样该项目的构建脚本就可以定义该插件定义好的属性和使用它的tasks。</p>
+<p>当使用Android 插件的时候，Android标签将可以被使用，如：</p>
+<pre><code>android {
+    compileSdkVersion 22
+    buildToolsVersion &quot;22.0.1&quot;
+
+    //设置代码文件源，一般用于导入旧的eclipse Android工程
+    sourceSets {
+        main {
+            manifest.srcFile &apos;AndroidManifest.xml&apos;
+            java.srcDirs = [&apos;src&apos;]
+            resources.srcDirs = [&apos;src&apos;]
+            aidl.srcDirs = [&apos;src&apos;]
+            renderscript.srcDirs = [&apos;src&apos;]
+            res.srcDirs = [&apos;res&apos;]
+            assets.srcDirs = [&apos;assets&apos;]
+        }
+        androidTest.setRoot(&apos;tests&apos;)
+    }
+
+}
+</code></pre><h2 id="Gradle-基本构建命令"><a href="#Gradle-基本构建命令" class="headerlink" title="Gradle 基本构建命令"></a>Gradle 基本构建命令</h2><ul>
+<li><p>tasks：命令行，导航到项目文件夹下，命令，列出所以可运行的tasks</p>
+<p>  $ gradlew tasks </p>
+</li>
+<li><p>assemble：开发时，构建项目，你需要运行assemble task通过debug配置</p>
+<p>  $ gradlew assembleDebug</p>
+<p>该任务将会创建一个debug版本的app,同时Android插件会将其保存在MyApp/app/build/ outputs/apk目录下。</p>
+</li>
+<li><p>check 运行所以的checks,这意味着运行所有的tests在已连的设备或模拟器上</p>
+</li>
+<li><p>build 是check和assemble的集合体</p>
+</li>
+<li><p>clean 清楚项目的output文件</p>
+</li>
+</ul>
+
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2017/02/04/Android快捷获取设备IMEI号/" data-id="cj028q6160005xe2u4p623o7r" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2017/03/09/Gradle-for-Android/" data-id="cj028q61b0009xe2uik9kzuzk" class="article-share-link">Share</a>
       
       
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Android/">Android</a></li></ul>
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Android/">Android</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Gradle/">Gradle</a></li></ul>
 
     </footer>
   </div>
@@ -121,19 +161,10 @@ String IMEI = telephonyManager.getDeviceId();
     
 <nav id="article-nav">
   
-    <a href="/2017/02/24/手机如何伪装成电脑上网/" id="article-nav-newer" class="article-nav-link-wrap">
-      <strong class="article-nav-caption">Newer</strong>
-      <div class="article-nav-title">
-        
-          手机如何伪装成电脑上网
-        
-      </div>
-    </a>
   
-  
-    <a href="/2017/01/21/使用Runtime代码中安装APP/" id="article-nav-older" class="article-nav-link-wrap">
+    <a href="/2017/02/24/手机如何伪装成电脑上网/" id="article-nav-older" class="article-nav-link-wrap">
       <strong class="article-nav-caption">Older</strong>
-      <div class="article-nav-title">使用Runtime代码中安装APP</div>
+      <div class="article-nav-title">手机如何伪装成电脑上网</div>
     </a>
   
 </nav>
@@ -144,7 +175,7 @@ String IMEI = telephonyManager.getDeviceId();
 
   <section id="comments">
     <!-- 多说评论框 start -->
-    <div class="ds-thread" data-thread-key="post-Android快捷获取设备IMEI号" data-title="Android快捷获取设备IMEI号" data-url="http://yoursite.com/2017/02/04/Android快捷获取设备IMEI号/"></div>
+    <div class="ds-thread" data-thread-key="post-Gradle-for-Android" data-title="Gradle for Android" data-url="http://yoursite.com/2017/03/09/Gradle-for-Android/"></div>
     <!-- 多说评论框 end -->
     <!-- 多说公共JS代码 start (一个网页只需插入一次) -->
     <script type="text/javascript">

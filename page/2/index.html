@@ -68,6 +68,73 @@
       <div class="outer">
         <section id="main">
   
+    <article id="post-attr属性重复的问题" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2016/06/20/attr属性重复的问题/" class="article-date">
+  <time datetime="2016-06-20T10:32:12.000Z" itemprop="datePublished">2016-06-20</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/programming/">编程</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2016/06/20/attr属性重复的问题/">attr属性重复的问题</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h2 id="编译报错，Error-2-Attribute-“＊＊”-has-already-been-defined-，例："><a href="#编译报错，Error-2-Attribute-“＊＊”-has-already-been-defined-，例：" class="headerlink" title="编译报错，Error:(2) Attribute “＊＊” has already been defined ，例："></a>编译报错，Error:(2) Attribute “＊＊” has already been defined ，例：</h2><pre><code>/Users/zhangdan/Documents/dev/HaiTao_Android/app/src/main/res/values/colors.xml
+Error:(2) Attribute &quot;icon&quot; has already been defined
+Error:(2) Attribute &quot;title&quot; has already been defined
+</code></pre><p>编译系统告诉我们，属性”icon”被定义过；属性”title”被定义过，并告诉我们是在“../colors.xml” 文件中</p>
+<h2 id="解决办法"><a href="#解决办法" class="headerlink" title="解决办法"></a>解决办法</h2><ol>
+<li><h3 id="找到它-“＊＊”（例子里是-“icon”-，”title”）"><a href="#找到它-“＊＊”（例子里是-“icon”-，”title”）" class="headerlink" title="找到它 “＊＊”（例子里是 “icon” ，”title”）"></a>找到它 “＊＊”（例子里是 “icon” ，”title”）</h3><ul>
+<li>通常建议在系统报错信息给出的文件里面，用find搜索一下。（通常找不到，我这次就没找到，编译系统也会忽悠人哦）</li>
+<li>直接找attrs.xml文件看是非有报错属性</li>
+<li>App里资源文件很多，可以每个文件都找一篇，建议用全局搜索字符</li>
+</ul>
+</li>
+<li><h3 id="修改它"><a href="#修改它" class="headerlink" title="修改它"></a>修改它</h3><p>既然是已经被定义过了，重复了，那就改个别的名吧，并相应修改所有使用它的地方</p>
+</li>
+</ol>
+<p>更改前：</p>
+<pre><code>&lt;declare-styleable name=&quot;PurchaseNoteView&quot;&gt;
+&lt;attr name=&quot;icon&quot; format=&quot;reference&quot;/&gt;
+&lt;/declare-styleable&gt;
+</code></pre><p>更改后：</p>
+<pre><code>&lt;declare-styleable name=&quot;PurchaseNoteView&quot;&gt;
+&lt;attr name=&quot;purchaseIcon&quot; format=&quot;reference&quot;/&gt;
+&lt;/declare-styleable&gt;
+</code></pre><p>名称通常加个相关前缀就不大会重复了。改好名称后，记得把相关用到的地方都一并改过来，再编译就OK了</p>
+<hr>
+<h3 id="转载请注明出处"><a href="#转载请注明出处" class="headerlink" title="转载请注明出处:"></a>转载请注明出处:</h3><p>  <a href="http://andr112.github.io/2016/06/20/attr属性重复的问题/" target="_blank" rel="external">http://andr112.github.io/2016/06/20/attr属性重复的问题/</a></p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2016/06/20/attr属性重复的问题/" data-id="cj028q61c000bxe2ufxyyi1ze" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Android/">Android</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/经验/">经验</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/问题/">问题</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+  
     <article id="post-漂亮的花儿" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
     <a href="/2016/06/19/漂亮的花儿/" class="article-date">
@@ -100,7 +167,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2016/06/19/漂亮的花儿/" data-id="cizjk6sxx000l1o2usqjmvt8u" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2016/06/19/漂亮的花儿/" data-id="cj028q61y000txe2uqwyma9oz" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/生活美物/">生活美物</a></li></ul>
@@ -194,7 +261,7 @@ theme: writing
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2016/06/16/个人博客搭建for-Mac-Github-Hexo/" data-id="cizjk6sxe00091o2u9033bkkg" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2016/06/16/个人博客搭建for-Mac-Github-Hexo/" data-id="cj028q61p000ixe2u02i33hlr" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/环境搭建/">环境搭建</a></li></ul>
@@ -229,7 +296,7 @@ theme: writing
   <div class="widget-wrap">
     <h3 class="widget-title">标签</h3>
     <div class="widget">
-      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Android/">Android</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/JNI/">JNI</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/android/">android</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/weex/">weex</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/书籍/">书籍</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/代码/">代码</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/优化/">优化</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/其他/">其他</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/实践/">实践</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/环境搭建/">环境搭建</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/生活美物/">生活美物</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/经验/">经验</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/编程语言/">编程语言</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/资料索引/">资料索引</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/问题/">问题</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/阅读/">阅读</a></li></ul>
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Android/">Android</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Gradle/">Gradle</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/JNI/">JNI</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/android/">android</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/weex/">weex</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/书籍/">书籍</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/代码/">代码</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/优化/">优化</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/其他/">其他</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/实践/">实践</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/环境搭建/">环境搭建</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/生活美物/">生活美物</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/经验/">经验</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/编程语言/">编程语言</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/资料索引/">资料索引</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/问题/">问题</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/阅读/">阅读</a></li></ul>
     </div>
   </div>
 
@@ -239,7 +306,7 @@ theme: writing
   <div class="widget-wrap">
     <h3 class="widget-title">标签云</h3>
     <div class="widget tagcloud">
-      <a href="/tags/Android/" style="font-size: 20px;">Android</a> <a href="/tags/JNI/" style="font-size: 10px;">JNI</a> <a href="/tags/android/" style="font-size: 15px;">android</a> <a href="/tags/weex/" style="font-size: 10px;">weex</a> <a href="/tags/书籍/" style="font-size: 10px;">书籍</a> <a href="/tags/代码/" style="font-size: 10px;">代码</a> <a href="/tags/优化/" style="font-size: 10px;">优化</a> <a href="/tags/其他/" style="font-size: 15px;">其他</a> <a href="/tags/实践/" style="font-size: 10px;">实践</a> <a href="/tags/环境搭建/" style="font-size: 10px;">环境搭建</a> <a href="/tags/生活美物/" style="font-size: 10px;">生活美物</a> <a href="/tags/经验/" style="font-size: 15px;">经验</a> <a href="/tags/编程语言/" style="font-size: 10px;">编程语言</a> <a href="/tags/资料索引/" style="font-size: 10px;">资料索引</a> <a href="/tags/问题/" style="font-size: 15px;">问题</a> <a href="/tags/阅读/" style="font-size: 10px;">阅读</a>
+      <a href="/tags/Android/" style="font-size: 20px;">Android</a> <a href="/tags/Gradle/" style="font-size: 10px;">Gradle</a> <a href="/tags/JNI/" style="font-size: 10px;">JNI</a> <a href="/tags/android/" style="font-size: 15px;">android</a> <a href="/tags/weex/" style="font-size: 10px;">weex</a> <a href="/tags/书籍/" style="font-size: 10px;">书籍</a> <a href="/tags/代码/" style="font-size: 10px;">代码</a> <a href="/tags/优化/" style="font-size: 10px;">优化</a> <a href="/tags/其他/" style="font-size: 15px;">其他</a> <a href="/tags/实践/" style="font-size: 10px;">实践</a> <a href="/tags/环境搭建/" style="font-size: 10px;">环境搭建</a> <a href="/tags/生活美物/" style="font-size: 10px;">生活美物</a> <a href="/tags/经验/" style="font-size: 15px;">经验</a> <a href="/tags/编程语言/" style="font-size: 10px;">编程语言</a> <a href="/tags/资料索引/" style="font-size: 10px;">资料索引</a> <a href="/tags/问题/" style="font-size: 15px;">问题</a> <a href="/tags/阅读/" style="font-size: 10px;">阅读</a>
     </div>
   </div>
 
@@ -248,7 +315,7 @@ theme: writing
   <div class="widget-wrap">
     <h3 class="widget-title">归档</h3>
     <div class="widget">
-      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/02/">二月 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/01/">一月 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/10/">十月 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/07/">七月 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/06/">六月 2016</a></li></ul>
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/03/">三月 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/02/">二月 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/01/">一月 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/10/">十月 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/07/">七月 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/06/">六月 2016</a></li></ul>
     </div>
   </div>
 
@@ -259,6 +326,10 @@ theme: writing
     <h3 class="widget-title">最新文章</h3>
     <div class="widget">
       <ul>
+        
+          <li>
+            <a href="/2017/03/09/Gradle-for-Android/">Gradle for Android</a>
+          </li>
         
           <li>
             <a href="/2017/02/24/手机如何伪装成电脑上网/">手机如何伪装成电脑上网</a>
@@ -274,10 +345,6 @@ theme: writing
         
           <li>
             <a href="/2017/01/20/终端常用命令/">Mac终端常用命令</a>
-          </li>
-        
-          <li>
-            <a href="/2016/10/27/Weex学习索引/">Weex学习索引</a>
           </li>
         
       </ul>
