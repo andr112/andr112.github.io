@@ -3,18 +3,24 @@
 <head>
   <meta charset="utf-8">
   
-  <title>使用Runtime代码中安装APP | 胖墩记忆</title>
+  <title>阿里云ECS CentOS系统搭建LAMP | 胖墩记忆</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="private void install( final String apkPath) {// 安装final Thread thread = new Thread() {public void run() {// install tmp.apkProcess rt = null;try {rt = Runtime.getRuntime().exec(“su”);BufferedReader st">
+  <meta name="description" content="作为PHP自学新手，买了阿里云ECS低配，摸索着弄个服务器，用来PHP前端的学习实践。各种百度，实践操作总结如下，分享给如我一般的菜鸟同学。
+认识CentOS系统  （百度）centos是linux系统的一个发行版。也就是linux系统中的一个。它是基于linux红帽版本制作的。红帽版因为是商业版，所以很多东西是要钱的。但是centos完全免费，主要用作服务器的搭建。
+  LAMP环境，即L">
 <meta property="og:type" content="article">
-<meta property="og:title" content="使用Runtime代码中安装APP">
-<meta property="og:url" content="http://yoursite.com/2017/01/21/使用Runtime代码中安装APP/index.html">
+<meta property="og:title" content="阿里云ECS CentOS系统搭建LAMP">
+<meta property="og:url" content="http://yoursite.com/2017/11/01/阿里云ECS-CentOS系统搭建LAMP/index.html">
 <meta property="og:site_name" content="胖墩记忆">
-<meta property="og:description" content="private void install( final String apkPath) {// 安装final Thread thread = new Thread() {public void run() {// install tmp.apkProcess rt = null;try {rt = Runtime.getRuntime().exec(“su”);BufferedReader st">
-<meta property="og:updated_time" content="2017-02-04T06:47:36.000Z">
+<meta property="og:description" content="作为PHP自学新手，买了阿里云ECS低配，摸索着弄个服务器，用来PHP前端的学习实践。各种百度，实践操作总结如下，分享给如我一般的菜鸟同学。
+认识CentOS系统  （百度）centos是linux系统的一个发行版。也就是linux系统中的一个。它是基于linux红帽版本制作的。红帽版因为是商业版，所以很多东西是要钱的。但是centos完全免费，主要用作服务器的搭建。
+  LAMP环境，即L">
+<meta property="og:updated_time" content="2017-11-01T09:00:20.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="使用Runtime代码中安装APP">
-<meta name="twitter:description" content="private void install( final String apkPath) {// 安装final Thread thread = new Thread() {public void run() {// install tmp.apkProcess rt = null;try {rt = Runtime.getRuntime().exec(“su”);BufferedReader st">
+<meta name="twitter:title" content="阿里云ECS CentOS系统搭建LAMP">
+<meta name="twitter:description" content="作为PHP自学新手，买了阿里云ECS低配，摸索着弄个服务器，用来PHP前端的学习实践。各种百度，实践操作总结如下，分享给如我一般的菜鸟同学。
+认识CentOS系统  （百度）centos是linux系统的一个发行版。也就是linux系统中的一个。它是基于linux红帽版本制作的。红帽版因为是商业版，所以很多东西是要钱的。但是centos完全免费，主要用作服务器的搭建。
+  LAMP环境，即L">
   
     <link rel="alternate" href="/atom.xml" title="胖墩记忆" type="application/atom+xml">
   
@@ -67,14 +73,14 @@
   </div>
 </header>
       <div class="outer">
-        <section id="main"><article id="post-使用Runtime代码中安装APP" class="article article-type-post" itemscope itemprop="blogPost">
+        <section id="main"><article id="post-阿里云ECS-CentOS系统搭建LAMP" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
-    <a href="/2017/01/21/使用Runtime代码中安装APP/" class="article-date">
-  <time datetime="2017-01-21T10:29:25.000Z" itemprop="datePublished">2017-01-21</time>
+    <a href="/2017/11/01/阿里云ECS-CentOS系统搭建LAMP/" class="article-date">
+  <time datetime="2017-11-01T04:51:14.000Z" itemprop="datePublished">2017-11-01</time>
 </a>
     
   <div class="article-category">
-    <a class="article-category-link" href="/categories/programming/">编程</a>
+    <a class="article-category-link" href="/categories/other/">其他</a>
   </div>
 
   </div>
@@ -85,7 +91,7 @@
         
   
     <h1 class="article-title" itemprop="name">
-      使用Runtime代码中安装APP
+      阿里云ECS CentOS系统搭建LAMP
     </h1>
   
 
@@ -93,19 +99,93 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <p>private void install( final String apkPath) {<br>// 安装<br>final Thread thread = new Thread() {<br>public void run() {<br>// install tmp.apk<br>Process rt = null;<br>try {<br>rt = Runtime.getRuntime().exec(“su”);<br>BufferedReader stdInput = new BufferedReader(new InputStreamReader(rt.getInputStream()));</p>
-<p>DataOutputStream os = new DataOutputStream(rt.getOutputStream());<br>String cmd = “pm install -r -d “ + apkPath + “\n”;<br>os.writeBytes(cmd + “\n”);<br>os.flush();<br>os.writeBytes(“exit\n”);<br>rt.waitFor();</p>
-<p>String std = null;<br>StringBuilder sb = new StringBuilder();</p>
-<p>boolean isSuccess = true;<br>while ((std = stdInput.readLine()) != null) {<br>Log.i(UpdaterConfig.TAG, std);<br>sb.append(std);<br>if (FAILED_OUTPUT.equals(std)) {<br>isSuccess = false;<br>}<br>}<br>new File(apkPath).delete();<br>Log.i(UpdaterConfig.TAG, “install success”);<br>if (isSuccess) {<br>showToastMsg(“安装完成”);<br>startAppIfNeed();<br>} else {<br>showToastMsg(“安装异常”);<br>}<br>} catch (Exception e) {<br>e.printStackTrace();<br>Log.i(UpdaterConfig.TAG, “install failed”);<br>showToastMsg(“安装异常”);<br>}<br>}<br>};<br>thread.start();<br>}</p>
-<p>private void startAppIfNeed() {<br>if (APP_PACKAGE_NAME.equals(mCurrentData.getPackageName())) {<br>try {<br>showToastMsg(“启动主程序”);<br>Intent intent = new Intent();<br>intent.setComponent(new ComponentName(APP_PACKAGE_NAME, APP_PACKAGE_NAME + “.MainActivity”));<br>intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);<br>intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);<br>intent.putExtra(UpdaterConfig.EXTRA_RESULT, UpdaterConfig.RESULT_SUCCESS);<br>UpdaterApp.getInstance().startActivity(intent);<br>} catch (Exception e) {<br>Log.e(UpdaterConfig.TAG, e.getMessage(), e);<br>}<br>}S<br>}</p>
+        <p>   作为PHP自学新手，买了阿里云ECS低配，摸索着弄个服务器，用来PHP前端的学习实践。各种百度，实践操作总结如下，分享给如我一般的菜鸟同学。</p>
+<h2 id="认识CentOS系统"><a href="#认识CentOS系统" class="headerlink" title="认识CentOS系统"></a>认识CentOS系统</h2><p>  （百度）centos是linux系统的一个发行版。也就是linux系统中的一个。它是基于linux红帽版本制作的。红帽版因为是商业版，所以很多东西是要钱的。但是centos完全免费，主要用作服务器的搭建。</p>
+<p>  LAMP环境，即Linux、Apache、MySQL、PHP环境。centos是Linux系统，接下来就只要装Apache、MySQL、PHP就好。</p>
+<h2 id="安装-Apache"><a href="#安装-Apache" class="headerlink" title="安装 Apache"></a>安装 Apache</h2><pre><code>//安装
+[root@izm5eicge3x0nikiewxdz8z ~]# yum install httpd httpd-devel
+
+//查看是否已经安装
+[root@izm5eicge3x0nikiewxdz8z ~]# yum list installed | grep httpd
+
+//结果显示，说明已经安装成功
+httpd.x86_64                            2.4.6-67.el7.centos.6          @updates 
+httpd-devel.x86_64                      2.4.6-67.el7.centos.6          @updates 
+httpd-tools.x86_64                      2.4.6-67.el7.centos.6          @updates 
+
+//运行
+[root@izm5eicge3x0nikiewxdz8z ~]# systemctl start httpd
+[root@izm5eicge3x0nikiewxdz8z ~]# systemctl restart httpd
+
+//查看80端口是否被监听.有,说明已启动
+[root@izm5eicge3x0nikiewxdz8z ~]# netstat -ant 
+Active Internet connections (servers and established)
+Proto Recv-Q Send-Q Local Address           Foreign Address         State      
+tcp        0      0 0.0.0.0:80              0.0.0.0:*               LISTEN     
+tcp        0      0 0.0.0.0:22              0.0.0.0:*               LISTEN     
+tcp        0      0 172.31.79.65:59786      140.205.140.205:80      ESTABLISHED
+
+tcp        0      0 172.31.79.65:22         115.236.163.195:56720   ESTABLISHED
+tcp        0     52 172.31.79.65:22         115.236.163.195:60099   ESTABLISHED
+</code></pre><h2 id="安装-MySQL"><a href="#安装-MySQL" class="headerlink" title="安装 MySQL"></a>安装 MySQL</h2><pre><code>[root@izm5eicge3x0nikiewxdz8z ~]# yum install mysql mysql-server
+
+//查看安装后的MySql的服务是否已经启动
+[root@izm5eicge3x0nikiewxdz8z www]# service mysqld status 
+
+// 没启动则启动MySQL服务
+[root@izm5eicge3x0nikiewxdz8z www]# service mysqld start
+</code></pre><h2 id="安装-PHP"><a href="#安装-PHP" class="headerlink" title="安装 PHP"></a>安装 PHP</h2><pre><code>//检查是否已经安装
+[root@izm5eicge3x0nikiewxdz8z ~]# yum list installed | grep php
+
+//安装
+[root@izm5eicge3x0nikiewxdz8z ~]# yum install php php-devel 
+
+//安装插件
+[root@izm5eicge3x0nikiewxdz8z ~]#  yum install php-mysql php-gd php-xml   php-imap php-ldap php-odbc php-pear php-xmlrpc 
+</code></pre><h2 id="安装结束"><a href="#安装结束" class="headerlink" title="安装结束"></a>安装结束</h2><h3 id="重启Apache服务器"><a href="#重启Apache服务器" class="headerlink" title="重启Apache服务器"></a>重启Apache服务器</h3><pre><code>[root@izm5eicge3x0nikiewxdz8z www]# systemctl restart httpd
+</code></pre><h3 id="安装目录介绍"><a href="#安装目录介绍" class="headerlink" title="安装目录介绍"></a>安装目录介绍</h3><p>Apache默认将网站的根目录指向/var/www/html 目录<br>默认的主配置文件是/etc/httpd/conf/httpd.conf<br>配置存储在的/etc/httpd/conf.d/目录</p>
+<h3 id="设置mysql数据库密码"><a href="#设置mysql数据库密码" class="headerlink" title="设置mysql数据库密码"></a>设置mysql数据库密码</h3><pre><code>//获取零时密码
+[root@izm5eicge3x0nikiewxdz8z ~]# grep &apos;temporary password&apos; /var/log/mysqld.log
+
+// 用临时密码登入mysql
+[root@izm5eicge3x0nikiewxdz8z ~]# mysql -u root -p 
+
+// 设置密码
+mysql&gt; USE MYSQL
+ERROR 1820 (HY000): You must reset your password using ALTER USER statement before executing this statement.
+
+mysql&gt; SET PASSWORD FOR &apos;root&apos;@&apos;localhost&apos;=&apos;PwPw_123123&apos;;
+mysql&gt; use mysql
+mysql&gt; show tables;
+mysql&gt; desc user;
+</code></pre><h3 id="测试mysql是否链接成功的php代码"><a href="#测试mysql是否链接成功的php代码" class="headerlink" title="测试mysql是否链接成功的php代码"></a>测试mysql是否链接成功的php代码</h3><pre><code>&lt;?php
+$con = mysql_connect(&quot;localhost&quot;,&quot;root&quot;,&quot;PwPw_123123&quot;); //主机名，用户，密码
+if (!$con)
+  {
+  die(&apos;Could not connect: &apos; . mysql_error());
+  }
+
+mysql_select_db(&quot;mydb&quot;, $con);
+
+$result = mysql_query(&quot;SELECT * FROM sys_user&quot;);
+
+while($row = mysql_fetch_array($result))
+  {
+  echo $row[&apos;UserName&apos;] . &quot; &quot; . $row[&apos;PassWord&apos;] . &quot; &quot; . $row[&apos;id&apos;];
+  echo &quot;&lt;br /&gt;&quot;;
+  }
+
+mysql_close($con);
+?&gt;
+</code></pre><p>可以把上面的代码传入目录/var/www/html/<br>就可以看到执行情况</p>
 
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2017/01/21/使用Runtime代码中安装APP/" data-id="cj9gt0xf0000mf72uovq1s1tc" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2017/11/01/阿里云ECS-CentOS系统搭建LAMP/" data-id="cj9gt0xfb000zf72u4pnztf2t" class="article-share-link">Share</a>
       
       
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Android/">Android</a></li></ul>
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/环境搭建/">环境搭建</a></li></ul>
 
     </footer>
   </div>
@@ -113,19 +193,10 @@
     
 <nav id="article-nav">
   
-    <a href="/2017/02/04/Android快捷获取设备IMEI号/" id="article-nav-newer" class="article-nav-link-wrap">
-      <strong class="article-nav-caption">Newer</strong>
-      <div class="article-nav-title">
-        
-          Android快捷获取设备IMEI号
-        
-      </div>
-    </a>
   
-  
-    <a href="/2017/01/20/终端常用命令/" id="article-nav-older" class="article-nav-link-wrap">
+    <a href="/2017/03/09/Gradle-for-Android/" id="article-nav-older" class="article-nav-link-wrap">
       <strong class="article-nav-caption">Older</strong>
-      <div class="article-nav-title">Mac终端常用命令</div>
+      <div class="article-nav-title">Gradle for Android</div>
     </a>
   
 </nav>
@@ -136,7 +207,7 @@
 
   <section id="comments">
     <!-- 多说评论框 start -->
-    <div class="ds-thread" data-thread-key="post-使用Runtime代码中安装APP" data-title="使用Runtime代码中安装APP" data-url="http://yoursite.com/2017/01/21/使用Runtime代码中安装APP/"></div>
+    <div class="ds-thread" data-thread-key="post-阿里云ECS-CentOS系统搭建LAMP" data-title="阿里云ECS CentOS系统搭建LAMP" data-url="http://yoursite.com/2017/11/01/阿里云ECS-CentOS系统搭建LAMP/"></div>
     <!-- 多说评论框 end -->
     <!-- 多说公共JS代码 start (一个网页只需插入一次) -->
     <script type="text/javascript">

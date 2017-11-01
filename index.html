@@ -68,6 +68,127 @@
       <div class="outer">
         <section id="main">
   
+    <article id="post-阿里云ECS-CentOS系统搭建LAMP" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2017/11/01/阿里云ECS-CentOS系统搭建LAMP/" class="article-date">
+  <time datetime="2017-11-01T04:51:14.000Z" itemprop="datePublished">2017-11-01</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/other/">其他</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2017/11/01/阿里云ECS-CentOS系统搭建LAMP/">阿里云ECS CentOS系统搭建LAMP</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>   作为PHP自学新手，买了阿里云ECS低配，摸索着弄个服务器，用来PHP前端的学习实践。各种百度，实践操作总结如下，分享给如我一般的菜鸟同学。</p>
+<h2 id="认识CentOS系统"><a href="#认识CentOS系统" class="headerlink" title="认识CentOS系统"></a>认识CentOS系统</h2><p>  （百度）centos是linux系统的一个发行版。也就是linux系统中的一个。它是基于linux红帽版本制作的。红帽版因为是商业版，所以很多东西是要钱的。但是centos完全免费，主要用作服务器的搭建。</p>
+<p>  LAMP环境，即Linux、Apache、MySQL、PHP环境。centos是Linux系统，接下来就只要装Apache、MySQL、PHP就好。</p>
+<h2 id="安装-Apache"><a href="#安装-Apache" class="headerlink" title="安装 Apache"></a>安装 Apache</h2><pre><code>//安装
+[root@izm5eicge3x0nikiewxdz8z ~]# yum install httpd httpd-devel
+
+//查看是否已经安装
+[root@izm5eicge3x0nikiewxdz8z ~]# yum list installed | grep httpd
+
+//结果显示，说明已经安装成功
+httpd.x86_64                            2.4.6-67.el7.centos.6          @updates 
+httpd-devel.x86_64                      2.4.6-67.el7.centos.6          @updates 
+httpd-tools.x86_64                      2.4.6-67.el7.centos.6          @updates 
+
+//运行
+[root@izm5eicge3x0nikiewxdz8z ~]# systemctl start httpd
+[root@izm5eicge3x0nikiewxdz8z ~]# systemctl restart httpd
+
+//查看80端口是否被监听.有,说明已启动
+[root@izm5eicge3x0nikiewxdz8z ~]# netstat -ant 
+Active Internet connections (servers and established)
+Proto Recv-Q Send-Q Local Address           Foreign Address         State      
+tcp        0      0 0.0.0.0:80              0.0.0.0:*               LISTEN     
+tcp        0      0 0.0.0.0:22              0.0.0.0:*               LISTEN     
+tcp        0      0 172.31.79.65:59786      140.205.140.205:80      ESTABLISHED
+
+tcp        0      0 172.31.79.65:22         115.236.163.195:56720   ESTABLISHED
+tcp        0     52 172.31.79.65:22         115.236.163.195:60099   ESTABLISHED
+</code></pre><h2 id="安装-MySQL"><a href="#安装-MySQL" class="headerlink" title="安装 MySQL"></a>安装 MySQL</h2><pre><code>[root@izm5eicge3x0nikiewxdz8z ~]# yum install mysql mysql-server
+
+//查看安装后的MySql的服务是否已经启动
+[root@izm5eicge3x0nikiewxdz8z www]# service mysqld status 
+
+// 没启动则启动MySQL服务
+[root@izm5eicge3x0nikiewxdz8z www]# service mysqld start
+</code></pre><h2 id="安装-PHP"><a href="#安装-PHP" class="headerlink" title="安装 PHP"></a>安装 PHP</h2><pre><code>//检查是否已经安装
+[root@izm5eicge3x0nikiewxdz8z ~]# yum list installed | grep php
+
+//安装
+[root@izm5eicge3x0nikiewxdz8z ~]# yum install php php-devel 
+
+//安装插件
+[root@izm5eicge3x0nikiewxdz8z ~]#  yum install php-mysql php-gd php-xml   php-imap php-ldap php-odbc php-pear php-xmlrpc 
+</code></pre><h2 id="安装结束"><a href="#安装结束" class="headerlink" title="安装结束"></a>安装结束</h2><h3 id="重启Apache服务器"><a href="#重启Apache服务器" class="headerlink" title="重启Apache服务器"></a>重启Apache服务器</h3><pre><code>[root@izm5eicge3x0nikiewxdz8z www]# systemctl restart httpd
+</code></pre><h3 id="安装目录介绍"><a href="#安装目录介绍" class="headerlink" title="安装目录介绍"></a>安装目录介绍</h3><p>Apache默认将网站的根目录指向/var/www/html 目录<br>默认的主配置文件是/etc/httpd/conf/httpd.conf<br>配置存储在的/etc/httpd/conf.d/目录</p>
+<h3 id="设置mysql数据库密码"><a href="#设置mysql数据库密码" class="headerlink" title="设置mysql数据库密码"></a>设置mysql数据库密码</h3><pre><code>//获取零时密码
+[root@izm5eicge3x0nikiewxdz8z ~]# grep &apos;temporary password&apos; /var/log/mysqld.log
+
+// 用临时密码登入mysql
+[root@izm5eicge3x0nikiewxdz8z ~]# mysql -u root -p 
+
+// 设置密码
+mysql&gt; USE MYSQL
+ERROR 1820 (HY000): You must reset your password using ALTER USER statement before executing this statement.
+
+mysql&gt; SET PASSWORD FOR &apos;root&apos;@&apos;localhost&apos;=&apos;PwPw_123123&apos;;
+mysql&gt; use mysql
+mysql&gt; show tables;
+mysql&gt; desc user;
+</code></pre><h3 id="测试mysql是否链接成功的php代码"><a href="#测试mysql是否链接成功的php代码" class="headerlink" title="测试mysql是否链接成功的php代码"></a>测试mysql是否链接成功的php代码</h3><pre><code>&lt;?php
+$con = mysql_connect(&quot;localhost&quot;,&quot;root&quot;,&quot;PwPw_123123&quot;); //主机名，用户，密码
+if (!$con)
+  {
+  die(&apos;Could not connect: &apos; . mysql_error());
+  }
+
+mysql_select_db(&quot;mydb&quot;, $con);
+
+$result = mysql_query(&quot;SELECT * FROM sys_user&quot;);
+
+while($row = mysql_fetch_array($result))
+  {
+  echo $row[&apos;UserName&apos;] . &quot; &quot; . $row[&apos;PassWord&apos;] . &quot; &quot; . $row[&apos;id&apos;];
+  echo &quot;&lt;br /&gt;&quot;;
+  }
+
+mysql_close($con);
+?&gt;
+</code></pre><p>可以把上面的代码传入目录/var/www/html/<br>就可以看到执行情况</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2017/11/01/阿里云ECS-CentOS系统搭建LAMP/" data-id="cj9gt0xfb000zf72u4pnztf2t" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/环境搭建/">环境搭建</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+  
     <article id="post-Gradle-for-Android" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
     <a href="/2017/03/09/Gradle-for-Android/" class="article-date">
@@ -148,7 +269,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2017/03/09/Gradle-for-Android/" data-id="cj028q61b0009xe2uik9kzuzk" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2017/03/09/Gradle-for-Android/" data-id="cj9gt0xe70007f72uh45kam3p" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Android/">Android</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Gradle/">Gradle</a></li></ul>
@@ -225,7 +346,7 @@ public void request(Context context, String url, final BaseCallback callback) {
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2017/02/24/手机如何伪装成电脑上网/" data-id="cj028q61w000oxe2uy0jxtulc" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2017/02/24/手机如何伪装成电脑上网/" data-id="cj9gt0xf1000of72uj5r05om7" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/android/">android</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/其他/">其他</a></li></ul>
@@ -272,7 +393,7 @@ String IMEI = telephonyManager.getDeviceId();
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2017/02/04/Android快捷获取设备IMEI号/" data-id="cj028q6160005xe2u4p623o7r" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2017/02/04/Android快捷获取设备IMEI号/" data-id="cj9gt0xe50005f72ui8h3yqit" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Android/">Android</a></li></ul>
@@ -319,7 +440,7 @@ String IMEI = telephonyManager.getDeviceId();
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2017/01/21/使用Runtime代码中安装APP/" data-id="cj028q61v000mxe2u14pw2137" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2017/01/21/使用Runtime代码中安装APP/" data-id="cj9gt0xf0000mf72uovq1s1tc" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Android/">Android</a></li></ul>
@@ -394,7 +515,7 @@ String IMEI = telephonyManager.getDeviceId();
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2017/01/20/终端常用命令/" data-id="cj028q61z000vxe2uym0469yf" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2017/01/20/终端常用命令/" data-id="cj9gt0xf7000vf72uy4is9jnd" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/其他/">其他</a></li></ul>
@@ -477,7 +598,7 @@ String IMEI = telephonyManager.getDeviceId();
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2016/10/27/Weex学习索引/" data-id="cj028q6170007xe2urjix55hi" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2016/10/27/Weex学习索引/" data-id="cj9gt0xei0009f72uojmkcewv" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/weex/">weex</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/编程语言/">编程语言</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/资料索引/">资料索引</a></li></ul>
@@ -545,7 +666,7 @@ String IMEI = telephonyManager.getDeviceId();
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2016/07/28/Android之代码性能优化/" data-id="cj028q6130004xe2u1ipor78b" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2016/07/28/Android之代码性能优化/" data-id="cj9gt0xe20004f72ulg54v3hl" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/android/">android</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/代码/">代码</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/优化/">优化</a></li></ul>
@@ -608,7 +729,7 @@ String IMEI = telephonyManager.getDeviceId();
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2016/07/04/2016个人阅读书单/" data-id="cj028q60i0000xe2u09dykrod" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2016/07/04/2016个人阅读书单/" data-id="cj9gt0xdp0000f72upyfqhxc3" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/书籍/">书籍</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/阅读/">阅读</a></li></ul>
@@ -778,63 +899,10 @@ public void setDatas(List&lt;VideoBroadcast&gt; datas) {
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2016/07/04/一个ListView有关数据设置和刷新问题/" data-id="cj028q61i000fxe2upubkihhm" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2016/07/04/一个ListView有关数据设置和刷新问题/" data-id="cj9gt0xer000ff72uga3dtqr7" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Android/">Android</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/经验/">经验</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/问题/">问题</a></li></ul>
-
-    </footer>
-  </div>
-  
-</article>
-
-
-  
-    <article id="post-AS一个简单Jni开发实践" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2016/06/20/AS一个简单Jni开发实践/" class="article-date">
-  <time datetime="2016-06-20T13:52:48.000Z" itemprop="datePublished">2016-06-20</time>
-</a>
-    
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/programming/">编程</a>
-  </div>
-
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2016/06/20/AS一个简单Jni开发实践/">AS一个简单Jni开发实践</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h2 id="NDK下载地址"><a href="#NDK下载地址" class="headerlink" title="NDK下载地址"></a>NDK下载地址</h2><ul>
-<li><a href="https://developer.android.com/ndk/downloads/index.html" target="_blank" rel="external">https://developer.android.com/ndk</a></li>
-</ul>
-<h2 id="官方例子"><a href="#官方例子" class="headerlink" title="官方例子"></a>官方例子</h2><ul>
-<li><a href="https://github.com/googlesamples/android-ndk/tree/android-mk" target="_blank" rel="external">https://github.com/googlesamples/android-ndk</a></li>
-</ul>
-<p>.<br>.<br>.</p>
-<hr>
-<h3 id="参考链接"><a href="#参考链接" class="headerlink" title="参考链接"></a><em>参考链接</em></h3><ul>
-<li><a href="http://yanbober.github.io/2015/02/14/android_studio_jni_1/" target="_blank" rel="external">NDK-JNI实战教程</a></li>
-</ul>
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://yoursite.com/2016/06/20/AS一个简单Jni开发实践/" data-id="cj028q60o0001xe2umaazyo63" class="article-share-link">Share</a>
-      
-      
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Android/">Android</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/JNI/">JNI</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/实践/">实践</a></li></ul>
 
     </footer>
   </div>
@@ -876,7 +944,7 @@ public void setDatas(List&lt;VideoBroadcast&gt; datas) {
   <div class="widget-wrap">
     <h3 class="widget-title">标签云</h3>
     <div class="widget tagcloud">
-      <a href="/tags/Android/" style="font-size: 20px;">Android</a> <a href="/tags/Gradle/" style="font-size: 10px;">Gradle</a> <a href="/tags/JNI/" style="font-size: 10px;">JNI</a> <a href="/tags/android/" style="font-size: 15px;">android</a> <a href="/tags/weex/" style="font-size: 10px;">weex</a> <a href="/tags/书籍/" style="font-size: 10px;">书籍</a> <a href="/tags/代码/" style="font-size: 10px;">代码</a> <a href="/tags/优化/" style="font-size: 10px;">优化</a> <a href="/tags/其他/" style="font-size: 15px;">其他</a> <a href="/tags/实践/" style="font-size: 10px;">实践</a> <a href="/tags/环境搭建/" style="font-size: 10px;">环境搭建</a> <a href="/tags/生活美物/" style="font-size: 10px;">生活美物</a> <a href="/tags/经验/" style="font-size: 15px;">经验</a> <a href="/tags/编程语言/" style="font-size: 10px;">编程语言</a> <a href="/tags/资料索引/" style="font-size: 10px;">资料索引</a> <a href="/tags/问题/" style="font-size: 15px;">问题</a> <a href="/tags/阅读/" style="font-size: 10px;">阅读</a>
+      <a href="/tags/Android/" style="font-size: 20px;">Android</a> <a href="/tags/Gradle/" style="font-size: 10px;">Gradle</a> <a href="/tags/JNI/" style="font-size: 10px;">JNI</a> <a href="/tags/android/" style="font-size: 15px;">android</a> <a href="/tags/weex/" style="font-size: 10px;">weex</a> <a href="/tags/书籍/" style="font-size: 10px;">书籍</a> <a href="/tags/代码/" style="font-size: 10px;">代码</a> <a href="/tags/优化/" style="font-size: 10px;">优化</a> <a href="/tags/其他/" style="font-size: 15px;">其他</a> <a href="/tags/实践/" style="font-size: 10px;">实践</a> <a href="/tags/环境搭建/" style="font-size: 15px;">环境搭建</a> <a href="/tags/生活美物/" style="font-size: 10px;">生活美物</a> <a href="/tags/经验/" style="font-size: 15px;">经验</a> <a href="/tags/编程语言/" style="font-size: 10px;">编程语言</a> <a href="/tags/资料索引/" style="font-size: 10px;">资料索引</a> <a href="/tags/问题/" style="font-size: 15px;">问题</a> <a href="/tags/阅读/" style="font-size: 10px;">阅读</a>
     </div>
   </div>
 
@@ -885,7 +953,7 @@ public void setDatas(List&lt;VideoBroadcast&gt; datas) {
   <div class="widget-wrap">
     <h3 class="widget-title">归档</h3>
     <div class="widget">
-      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/03/">三月 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/02/">二月 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/01/">一月 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/10/">十月 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/07/">七月 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/06/">六月 2016</a></li></ul>
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/11/">十一月 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/03/">三月 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/02/">二月 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/01/">一月 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/10/">十月 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/07/">七月 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/06/">六月 2016</a></li></ul>
     </div>
   </div>
 
@@ -896,6 +964,10 @@ public void setDatas(List&lt;VideoBroadcast&gt; datas) {
     <h3 class="widget-title">最新文章</h3>
     <div class="widget">
       <ul>
+        
+          <li>
+            <a href="/2017/11/01/阿里云ECS-CentOS系统搭建LAMP/">阿里云ECS CentOS系统搭建LAMP</a>
+          </li>
         
           <li>
             <a href="/2017/03/09/Gradle-for-Android/">Gradle for Android</a>
@@ -911,10 +983,6 @@ public void setDatas(List&lt;VideoBroadcast&gt; datas) {
         
           <li>
             <a href="/2017/01/21/使用Runtime代码中安装APP/">使用Runtime代码中安装APP</a>
-          </li>
-        
-          <li>
-            <a href="/2017/01/20/终端常用命令/">Mac终端常用命令</a>
           </li>
         
       </ul>
