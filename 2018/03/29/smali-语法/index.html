@@ -8,8 +8,8 @@
   <meta name="description" content="##smali是什么Smali是Dalvik的寄存器语言，它与Java的关系，简单理解就是汇编之于C。
 ##smali文件是哪来的，获取方法Smali代码是安卓APK反编译而来的。Smali文件和Java文件一一对应。获取Smali文件，我们需要下载一个辅助工具：ApkTool 。apktool这个命令行工具，最常用的命令有：
 
-反编译decode：apktool d xxx.apk
-打包buil">
+反编译decode：  apktool d xxx.apk
+打包bu">
 <meta property="og:type" content="article">
 <meta property="og:title" content="smali 语法">
 <meta property="og:url" content="http://yoursite.com/2018/03/29/smali-语法/index.html">
@@ -17,16 +17,16 @@
 <meta property="og:description" content="##smali是什么Smali是Dalvik的寄存器语言，它与Java的关系，简单理解就是汇编之于C。
 ##smali文件是哪来的，获取方法Smali代码是安卓APK反编译而来的。Smali文件和Java文件一一对应。获取Smali文件，我们需要下载一个辅助工具：ApkTool 。apktool这个命令行工具，最常用的命令有：
 
-反编译decode：apktool d xxx.apk
-打包buil">
-<meta property="og:updated_time" content="2018-03-30T10:30:31.000Z">
+反编译decode：  apktool d xxx.apk
+打包bu">
+<meta property="og:updated_time" content="2018-03-31T02:41:16.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="smali 语法">
 <meta name="twitter:description" content="##smali是什么Smali是Dalvik的寄存器语言，它与Java的关系，简单理解就是汇编之于C。
 ##smali文件是哪来的，获取方法Smali代码是安卓APK反编译而来的。Smali文件和Java文件一一对应。获取Smali文件，我们需要下载一个辅助工具：ApkTool 。apktool这个命令行工具，最常用的命令有：
 
-反编译decode：apktool d xxx.apk
-打包buil">
+反编译decode：  apktool d xxx.apk
+打包bu">
   
     <link rel="alternate" href="/atom.xml" title="胖墩记忆" type="application/atom+xml">
   
@@ -108,88 +108,296 @@
         <p>##smali是什么<br>Smali是Dalvik的寄存器语言，它与Java的关系，简单理解就是汇编之于C。</p>
 <p>##smali文件是哪来的，获取方法<br>Smali代码是安卓APK反编译而来的。Smali文件和Java文件一一对应。获取Smali文件，我们需要下载一个辅助工具：ApkTool 。apktool这个命令行工具，最常用的命令有：</p>
 <ul>
-<li>反编译decode：apktool d xxx.apk</li>
-<li>打包build：apktool b</li>
+<li>反编译decode：<br>  apktool d xxx.apk</li>
+<li>打包build：<br>  apktool b</li>
 </ul>
-<p>##Smali语法<br>这里仍然以一个默认的HelloWorld的应用程序进行解释吧。新建一个HelloWorld安卓项目，在MainActivity中只保留onCreate函数。代码如下：</p>
-<p>MainActivity.java</p>
-<p> package com.fusijie.helloworld;</p>
-<p>  import android.app.Activity;<br>  import android.os.Bundle;</p>
-<p>  public class MainActivity extends Activity {</p>
-<p>  @Override<br>  protected void onCreate(Bundle savedInstanceState) {<br>      super.onCreate(savedInstanceState);<br>      setContentView(R.layout.activity_main);<br>      }<br>  }</p>
-<p>反编译后的Smali文件如下：</p>
-<p>MainActivity.smali</p>
-<pre><code>.class public Lcom/fusijie/helloworld/MainActivity;
-</code></pre><p>  .super Landroid/app/Activity;<br>  .source “MainActivity.java”</p>
-<h1 id="direct-methods"><a href="#direct-methods" class="headerlink" title="direct methods"></a>direct methods</h1><p>  .method public constructor <init>()V<br>    .locals 0</init></p>
-<pre><code>.prologue
-.line 14
-invoke-direct {p0}, Landroid/app/Activity;-&gt;&lt;init&gt;()V
+<h2 id="Smali语法"><a href="#Smali语法" class="headerlink" title="Smali语法"></a>Smali语法</h2><h3 id="基本数据类型"><a href="#基本数据类型" class="headerlink" title="基本数据类型"></a>基本数据类型</h3><pre><code>V void (只能用于返回值类型) 
+Z boolean
+B byte
+S short
+C char
+I int
+J long（64位）
+F float
+D double（64位）
+</code></pre><h3 id="对象类型"><a href="#对象类型" class="headerlink" title="对象类型"></a>对象类型</h3><p>Lpackage/ObjectName; 相当于java中的package.ObjectName;<br>L 表示这是一个对象类型<br>package 该对象所在的包<br>ObjectName 对象名称<br>; 标识对象名称的结束<br>例如：Ltestdemo/hpp/cn/test/MainActivity;Ljava/lang/String;</p>
+<h3 id="数组类型"><a href="#数组类型" class="headerlink" title="数组类型"></a>数组类型</h3><p>[I :表示一个整形的一维数组，相当于java的int[];<br>对于多维数组，只要增加[ 就行了，[[I = int[][];注：每一维最多255个；</p>
+<p>对象数组的表示形式：<br>[Ljava/lang/String 表示一个String的对象数组；</p>
+<h3 id="寄存器与变量"><a href="#寄存器与变量" class="headerlink" title="寄存器与变量"></a>寄存器与变量</h3><p>android变量都是存放在寄存器中的，寄存器为32位，可以支持任何类型，其中long和double是64为的，需要使用两个寄存器保存。<br>寄存器采用v和p来命名，v表示本地寄存器，p表示参数寄存器。</p>
+<p>例如：</p>
+<pre><code>//===================================================================
+private void print(String string) {
+    Log.d(TAG, string);
+}
+//===================================================================
+.method private print(Ljava/lang/String;)V
+    .registers 3
+    .param p1, &quot;string&quot;    # Ljava/lang/String;
 
-return-void
-</code></pre><p>  .end method</p>
-<h1 id="virtual-methods"><a href="#virtual-methods" class="headerlink" title="virtual methods"></a>virtual methods</h1><p>  .method protected onCreate(Landroid/os/Bundle;)V<br>    .locals 1<br>    .parameter “savedInstanceState”</p>
-<pre><code>.prologue
-.line 18
-invoke-super {p0, p1}, Landroid/app/Activity;-&gt;onCreate(Landroid/os/Bundle;)V
+    .prologue
+    .line 29
+    const-string v0, &quot;MainActivity&quot;
 
-.line 19
-const/high16 v0, 0x7f03
+    invoke-static {v0, p1}, Landroid/util/Log;-&gt;d(Ljava/lang/String;Ljava/lang/String;)I
 
-invoke-virtual {p0, v0}, Lcom/fusijie/helloworld/MainActivity;-&gt;setContentView(I)V
+    .line 30
+    return-void
+.end method
+//===================================================================
+</code></pre><p>.registers 3 说明该方法有三个寄存器，其中一个本地寄存器v0，两个参数寄存器p0,p1，细心的人可能会注意到没有看到p0，原因是p0存放的是this。如果是静态方法的话就只有2个寄存器了，不需要存this了。</p>
+<h3 id="基本指令"><a href="#基本指令" class="headerlink" title="基本指令"></a>基本指令</h3><p>smali字节码是类似于汇编，如果有汇编基础，理解起来是非常容易的。<br>    move v0, v3 把v3寄存器的值移动到寄存器v0上<br>    const-string v0, “MainActivity” 把字符串”MainActivity”赋值给v0寄存器<br>    invoke-super　　调用父函数<br>    return-void　　函数返回void<br>    new-instance　　创建实例<br>    iput-object　　对象赋值<br>    iget-object　　调用对象<br>    invoke-static　　调用静态函数<br>    invoke-direct　　调用函数</p>
+<p>例如：</p>
+<pre><code>//===================================================================
+@Override
+public void onClick(View view) {
+    String str = &quot;Hello World!&quot;;
+    print(str);
+}
+//===================================================================
+# virtual methods
+# 参数类型为Landroid/view/View，返回类型为V
+.method public onClick(Landroid/view/View;)V
+    # 表示有三个寄存器
+    .registers 3
+    # 参数View类型的view变量对应的是寄存器p1
+    .param p1, &quot;view&quot;    # Landroid/view/View;
 
-.line 20
-return-void
-</code></pre><p>  .end method</p>
-<p>对比一下，可以比较清楚的看出来，smali代码其实就是对java代码一个翻译，只是没有java看起来那么简单，smali把很多应该复杂的东西还原成复杂的状态了。简单解释下这段代码。</p>
-<p>前三行指明了类名，父类名，和源文件名。<br>类名以“L”开头相信熟悉Jni的童鞋都比较清楚。<br>“#”是smali中的注释。<br>“.method”和“.end method”类似于Java中的大括号，包含了方法的实现代码段。<br>方法的括号后面指明了返回类型，这同样类似与Jni的调用。<br>“.locals”指明了这个方法用到的寄存器数量，当然寄存器可以重复利用，从“V0”起算。<br>“.prologue”指定了代码开始处。<br>“.line”表明这是在java源码中的第几行，其实这个值无所谓是多少，可以任意修改，主要用于调试。<br>“invoke-direct”这是对方法的调用，可以看到这里调用了是Android.app.Activity的init方法，这在java里是隐式调用的。<br>“return-void”表明了返回类型，这和java不一样，即使没有返回值，也需要这样写。<br>接下来是onCreate方法，“.parameter”指明了参数名，但是一般没有用，需要注意的是p0代表的是this，p1开始代表函数参数，静态函数没有this，所以从p0开始就代表参数。<br>在实现里先是调用了父类的方法，然后再调用setContentView，注意这里给了一个传参。整形的传参，这个值是先赋给寄存器v0，然后再调用的使用传递进去的。smali中都是这么使用，所有的值必须通过寄存器来中转。这点和汇编很像。<br>对比了Java代码和Smali代码，可以很清楚的看到，原本只有几行的代码到了Smali，内容被大大扩充了。Smali还原了Java隐藏的东西，同时显式地指定了很多细节。这还只是个最基本的HelloWorld的onCreate函数，如果有内部类，还有分文件显示。</p>
-<p>这样看来，其实Smali只能说复杂，不能说难。我这里不打算把Smali的语法再贴一次，这里给出几个链接，算是总结的相对好一点的（其实我都没看到有系统总结的。。。如果你有好的资料，欢迎跟帖分享）</p>
-<p>Smali语法—数据类型、方法、字段和寄存器<br>Android软件安全与逆向分享—Smali文件格式<br>Smali—Dalvik虚拟机指令语言</p>
-<p>##小试牛刀</p>
-<p>了解了Smali的基本语法，那我们要动手试一下，Smali能做什么？仍然以HelloWorld为例，假如我们没有Android项目的源代码，只有一个APK，给他加个新功能吧！</p>
-<p>这个功能很简单，只是在HelloWorld中输出一个“Hello, Smali”。</p>
-<p>(1)第一步还是先使用apktool来反编译HelloWorld.apk。</p>
-<p>(2)打开smali下的com/fusijie/helloworld/MainActivity.smali文件。</p>
-<p>(3)原本我们在Java中要写的代码是：</p>
-<p>Toast</p>
-<p> Toast.makeText(this, “Hello, Smali”, Toast.LENGTH_LONG).show();<br>翻译成Smali就是：</p>
-<p>Toast</p>
-<pre><code>.line xx
-const-string v0, &quot;Hello, Smali&quot;
+    .prologue
+    .line 24
+    #将&quot;Hello World!&quot;字符串放到寄存器v0中
+    const-string v0, &quot;Hello World!&quot;
 
-const/4 v1, 0x1
+    .line 25
+    # 定义一个Ljava/lang/String类型的str变量对应本地寄存器v0
+    .local v0, &quot;str&quot;:Ljava/lang/String;
+    # 调用该类的print方法，该方法的参数类型为Ljava/lang/String，返回值为V
+    # 调用print方法传入的参数为{p0, v0}，及print(p0, v0)，p0为this，v0为&quot;Hello World!&quot;字符串
+    invoke-direct {p0, v0}, Ltestdemo/hpp/cn/annotationtest/MainActivity;-&gt;print(Ljava/lang/String;)V
 
-invoke-static {p0, v0, v1}, Landroid/widget/Toast;-&gt;makeText(Landroid/content/Context;Ljava/lang/CharSequence;I)Landroid/widget/Toast;
+    .line 26
+    return-void
+.end method
+//===================================================================
+</code></pre><h3 id="if判断语句"><a href="#if判断语句" class="headerlink" title="if判断语句"></a>if判断语句</h3><p>if判断一共有12条指令：</p>
+<pre><code>if-eq vA, VB, cond_** 如果vA等于vB则跳转到cond_**。相当于if (vA==vB)
+if-ne vA, VB, cond_** 如果vA不等于vB则跳转到cond_**。相当于if (vA!=vB)
+if-lt vA, VB, cond_** 如果vA小于vB则跳转到cond_**。相当于if (vA&lt;vB)
+if-le vA, VB, cond_** 如果vA小于等于vB则跳转到cond_**。相当于if (vA&lt;=vB)
+if-gt vA, VB, cond_** 如果vA大于vB则跳转到cond_**。相当于if (vA&gt;vB)
+if-ge vA, VB, cond_** 如果vA大于等于vB则跳转到cond_**。相当于if (vA&gt;=vB)
 
-move-result-object v0
+if-eqz vA, :cond_** 如果vA等于0则跳转到:cond_** 相当于if (VA==0)
+if-nez vA, :cond_** 如果vA不等于0则跳转到:cond_**相当于if (VA!=0)
+if-ltz vA, :cond_** 如果vA小于0则跳转到:cond_**相当于if (VA&lt;0)
+if-lez vA, :cond_** 如果vA小于等于0则跳转到:cond_**相当于if (VA&lt;=0)
+if-gtz vA, :cond_** 如果vA大于0则跳转到:cond_**相当于if (VA&gt;0)
+if-gez vA, :cond_** 如果vA大于等于0则跳转到:cond_**相当于if (VA&gt;=0)
+</code></pre><h3 id="循环语句"><a href="#循环语句" class="headerlink" title="循环语句"></a>循环语句</h3><p>常用的循环结构有：迭代器循环，for循环，do while循环。</p>
+<h3 id="switch分支语句"><a href="#switch分支语句" class="headerlink" title="switch分支语句"></a>switch分支语句</h3><h3 id="try-catch语句"><a href="#try-catch语句" class="headerlink" title="try/catch语句"></a>try/catch语句</h3><h2 id="头信息——类的主体信息"><a href="#头信息——类的主体信息" class="headerlink" title="头信息——类的主体信息"></a>头信息——类的主体信息</h2><p>在打开smali文件的时候，它的头三行描述了当前类的一些信息。<br>    .class &lt;访问权限&gt; [关键修饰字] &lt;类名&gt;;<br>    .super &lt;父类名&gt;;<br>    .source &lt;源文件名&gt;</p>
+<p>例如：</p>
+<pre><code>//===================================================================
+public class MainActivity extends AppCompatActivity {
+    // ......
+}
+//===================================================================
+.class public Ltestdemo/hpp/cn/test/MainActivity;
+.super Landroid/support/v7/app/AppCompatActivity;
+.source &quot;MainActivity.java&quot;
+//===================================================================
+</code></pre><p>.class指令表示当前的类名，类的访问权限是public，类名为Ltestdemo/hpp/cn/test/MainActivity，类开头的L是遵循Dalvik字节码的相关约定，表示后面跟随的字符串是一个类。</p>
+<p>.super指定了当前类所继承的父类，后面指的就是这个父类的类名，L表示后面跟的字符串是一个类</p>
+<p>.source指定了当前类的源文件名</p>
+<p>注意：经过混淆的dex文件，反编译出来的smali代码可能没有源文件信息，因此source行的代码可能为空。</p>
+<p>这三行就是类的主体部分了，另外一个类是由多个字段或者方法组成。</p>
+<h2 id="接口"><a href="#接口" class="headerlink" title="接口"></a>接口</h2><p>如果一个类实现了一个接口，那么会在smali文件中使用.implements指令指出。</p>
+<pre><code>#interfaces
+.implements &lt;接口名&gt;
+</code></pre><p>同样，#interfaces是注释，.implements是接口关键字。</p>
+<h2 id="例如："><a href="#例如：" class="headerlink" title="例如："></a>例如：</h2><pre><code>//===================================================================
+public class MainActivity extends AppCompatActivity implements View.OnClickListener {
+    // ......
+}
+//===================================================================
+# interfaces
+.implements Landroid/view/View$OnClickListener;
+//===================================================================
+</code></pre><p>字段</p>
+<p>smali文件中，字段的声明使用.field指令，字段分为静态字段和实例字段。</p>
+<p>1、静态字段</p>
+<pre><code>#static fields
+.field &lt;访问权限&gt; static [修饰关键字] &lt;字段名&gt;:&lt;字段类型&gt;
+</code></pre><p>可以看到，baksmali在生成smali文件时，会在静态字段声明的起始处添加注释”static fields”，注释是以#开头。</p>
+<p>访问权限包括：private、protected、public（三者之一）<br>修饰关键字为字段的其他属性，例如，final<br>字段名和类型就不用解释了</p>
+<p>例如：</p>
+<pre><code>//===================================================================
+private  static final String TAG = &quot;MainActivity&quot;;
+//===================================================================
+# static fields
+.field private static final TAG:Ljava/lang/String; = &quot;MainActivity&quot;
+//===================================================================
+</code></pre><p>2、实例字段<br>相比于静态自动就少了一个static的静态声明而已，其他都一样。</p>
+<pre><code>#instance fields
+.field &lt;访问权限&gt; [修饰关键字] &lt;字段名&gt;:&lt;字段类型&gt;
+</code></pre><p>例如：</p>
+<pre><code>//===================================================================
+private Button mButton;
+//===================================================================
+# instance fields
+.field private mButton:Landroid/widget/Button;
+//===================================================================
+</code></pre><p>五、方法<br>smali的方法声明使用的.method指令，方法分为直接方法和虚方法两种。</p>
+<p>1、直接方法<br>直接方法指的是该类中定义的方法。</p>
+<pre><code>#direct methods
+.method &lt;访问权限&gt; [修饰关键字] &lt;方法原型&gt;
+    &lt;.registers&gt;
+    [.param]
+    [.prologue]
+    [.line]
+    &lt;.local&gt;
+    &lt;代码体&gt;
+.end method
+</code></pre><p>#direct methods是注释，是baksmali添加的，访问权限和修饰关键字跟字段是一样的。<br>方法原型描述了方法的名称、参数与返回值。<br>.registers 指令指定了方法中寄存器的总数,这个数量是参数和本地变量总和。<br>.param表明了方法的参数，每个.param指令表示一个参数，方法使用了几个参数就有几个.parameter指令。<br>.prologue指定了代码的开始处，混淆过的代码可能去掉了该指令。<br>.line指明了该处代码在源代码中的行号，同样，混淆后的代码可能去掉了行号。<br>.local 使用这个指定表明方法中非参寄存器</p>
+<pre><code>//===================================================================
+private void print(String string) {
+    Log.d(TAG, string);
+}
+//===================================================================
+.method private print(Ljava/lang/String;)V
+    .registers 3
+    .param p1, &quot;string&quot;    # Ljava/lang/String;
 
-invoke-virtual {v0}, Landroid/widget/Toast;-&gt;show()V
-</code></pre><p>(4)最后在插入Smali的时候，我们需要修改2个地方：</p>
-<p>“.locals 1”，因为本来只用到了v0，现在多用了一个v1，所以改为“.locals 2”。<br>“.line xx” xx随意改为一个不重复的值即可。<br>(5)使用apktool打包成apk，因为打包完后原有的密钥会丢失，所以需要重新打上我们自己的密钥，可以参考 很早以前我写的一个帖子 。</p>
-<p>(6)最后的效果是这样的。</p>
-<p>##干点坏事<br>从上面一个例子对Smali的用途就很清楚了，没错，Smali注入。现在常见的除了测试以外的用途，Smali注入明显是带有黑客性质的，小的如破解游戏，替换游戏广告，大的甚至利用漏洞去破解密码，偷窃个人资料，财产等等。对Smali，安卓逆向分析，安卓系统安全比较清楚的，这些事其实都不算事。</p>
-<p>我这里以一个实际上线的游戏破解为例，看看我们平时在写代码时要注意哪些问题，避免辛辛苦苦写游戏，却在帮人家数钱。这里的破解不是重点，反破解才是重点。</p>
-<p>以市场上很火的一款单机游戏《消灭小星星》为例，下载地址是： <a href="http://apk.91.com/Soft/Android/com.brianbaek.popstar-340.html" target="_blank" rel="external">http://apk.91.com/Soft/Android/com.brianbaek.popstar-340.html</a></p>
-<p>相同的方法反编译，在/smali/com/zplay/android/sdk/pay/ZplayPay.smali文件的dopay函数开头，注入如下代码：</p>
-<p>popstar_crack</p>
-<pre><code>const/4 v0, 0x1  
-invoke-static {v0}, Lcom/zplay/iap/ZplayJNI;-&gt;sendMessage(I)V
-return-void
-</code></pre><p>原理很简单，这个游戏使用了Zplay的支付系统，在Java层的处理了支付逻辑，如果觉得Smali读起来费劲，那么直接使用dex2jar就能很清楚的看到，支付提醒甚至是中文的。Java层处理完支付逻辑后会给C++层丢个消息，调用C++层的代码去处理游戏逻辑，比如成功支付，那么幸运星就会相应地增加。这里使用native方法进行处理。</p>
-<p>所以注入的代码是，一旦进入支付逻辑，直接返回成功，同时强制返回函数，这就实现了支付的破解。当然作为一个有节操，有逼格的游戏从业者，这里就不放出破解版了（不过说得也够明白了）。查找注入点这东西靠的是耐心，细心和运气。</p>
-<p>为了方便，一般会先用正常的java写一些调试类，然后反编译出静态的smali放入目标文件夹中以供调试使用。</p>
-<p>再放张图，星星用不完了：</p>
-<p>##总结<br>就像上面说的，Smali能做的不仅仅是这些。有兴趣的可以看看这篇文章 《支付宝钱包手势密码破解实战》 ，我没有去验证过真伪，但是如作者所描述的应该是可行无误。这里用到的一个更高级的功能是将支付宝的加密解密逻辑Smali的jar包导入自己新建的工程，进而直接在自己的程序中集成支付宝的加密解密功能。</p>
-<p>在逆向分析游戏的过程中，我也发现了几个重要的点能帮助开发者提高自己程序的安全性。</p>
-<p>首先，完全避免破解是不可能的，我们能做的工作就是尽最大可能去妨碍破解者破解游戏，提高破解成本。</p>
-<p>一定要使用混淆。不单单是第三方SDK，你的代码也是。破解游戏很重要一点就是要抓住游戏的逻辑。代码混淆后，Smali更加晦涩难懂，逻辑也更难掌握。<br>回到开头的话，解读汇编比解读Smali难度大的多得多。所以重要的逻辑可以放到C/C++层去处理就不要放在Java层上去处理。<br>多用连续调用的方式。这样出来的效果是Java只有一行，Smali可能有好几十行，看着都蛋疼。当然这对熟练的破解老手无效～<br>在一些关键的点上，比如支付，多绕一下。而不是像《消灭小星星》这样，直接在Java内用中文显示“支付成功”，同时去调用JNI方法。用dex2jar看一眼就暴露了。<br>哈哈，总之，小心你的艳照。。。</p>
-<p>哇咔咔，竟然写了快4个小时～</p>
-<p>﻿﻿</p>
+    .prologue
+    .line 29
+    const-string v0, &quot;MainActivity&quot;
+
+    invoke-static {v0, p1}, Landroid/util/Log;-&gt;d(Ljava/lang/String;Ljava/lang/String;)I
+
+    .line 30
+    return-void
+.end method
+//===================================================================
+</code></pre><p>2、虚方法<br>虚方法指的是从父类中继承的方法或者实现的接口的方法，它的声明跟直接方法相同，只是起始的初始为virtual methods</p>
+<pre><code>//===================================================================
+@Override
+public void onClick(View view) {
+    String str = &quot;Hello World!&quot;;
+    print(str);
+}
+//===================================================================
+# virtual methods
+.method public onClick(Landroid/view/View;)V
+    .registers 3
+    .param p1, &quot;view&quot;    # Landroid/view/View;
+
+    .prologue
+    .line 24
+    const-string v0, &quot;Hello World!&quot;
+
+    .line 25
+    .local v0, &quot;str&quot;:Ljava/lang/String;
+    invoke-direct {p0, v0}, Ltestdemo/hpp/cn/annotationtest/MainActivity;-&gt;print(Ljava/lang/String;)V
+
+    .line 26
+    return-void
+.end method
+//===================================================================
+</code></pre><p>3、静态方法</p>
+<pre><code>//===================================================================
+public static void setTag(String str) {
+    TAG = str;
+}
+//===================================================================
+.method public static setTag(Ljava/lang/String;)V
+    .registers 1
+    .param p0, &quot;str&quot;    # Ljava/lang/String;
+
+    .prologue
+    .line 64
+    sput-object p0, Ltestdemo/hpp/cn/annotationtest/MainActivity;-&gt;TAG:Ljava/lang/String;
+
+    .line 65
+    return-void
+.end method
+//===================================================================
+</code></pre><h2 id="注解"><a href="#注解" class="headerlink" title="注解"></a>注解</h2><p>如果一个类使用了注解，那么smali中会使用.annotation指令。</p>
+<pre><code>#annotations
+.annotation [注解属性] &lt;注解类名&gt;
+    [注解字段 = 值]
+.end annotation
+</code></pre><p>注解的作用范围可以是类、方法或者字段。如果注解的作用范围是类，.annotation指令会直接定义在smali文件中，如果是方法或者字段，.annotation指令则会包含在方法或者字段的定义中。</p>
+<p>＋ 注解类</p>
+<pre><code>//===================================================================
+@BindInt(100)
+public class MainActivity extends AppCompatActivity {
+
+}
+//===================================================================
+# annotations
+.annotation build Ltestdemo/hpp/cn/annotationtest/BindInt;
+    value = 0x64
+.end annotation
+//===================================================================
+</code></pre><p>＋ 注解字段</p>
+<pre><code>//===================================================================
+@BindView(R.id.button)
+public Button mButton;
+//===================================================================
+# instance fields
+.field public mButton:Landroid/widget/Button;
+    .annotation build Lbutterknife/BindView;
+        value = 0x7f0c0050
+    .end annotation
+.end field
+//===================================================================
+</code></pre><p>＋ 注解方法</p>
+<pre><code>//===================================================================
+@OnClick(R.id.button)
+public void click() {
+    String str = &quot;Hello World!&quot;;
+    print(str);
+}
+//===================================================================
+# virtual methods
+.method public click()V
+    .registers 2
+    .annotation build Lbutterknife/OnClick;
+        value = {
+            0x7f0c0050
+        }
+    .end annotation
+
+    .prologue
+    .line 29
+    const-string v0, &quot;Hello World!&quot;
+
+    .line 30
+    .local v0, &quot;str&quot;:Ljava/lang/String;
+    invoke-direct {p0, v0}, Ltestdemo/hpp/cn/annotationtest/MainActivity;-&gt;print(Ljava/lang/String;)V
+
+    .line 31
+    return-void
+.end method
+//===================================================================
+</code></pre><h2 id="smali插桩"><a href="#smali插桩" class="headerlink" title="smali插桩"></a>smali插桩</h2><p>插桩的原理就是静态的修改apk的samli文件，然后重新打包。</p>
+<p>1、使用上面的方法得到一个apk的smali文件</p>
+<p>2、在关键部位添加自己的代码，需要遵循smili语法，例如在关键地方打log，输出关键信息</p>
+<p>3、重新进行打包签名</p>
+<p><a href="http://drops.wooyun.org/papers/6045" target="_blank" rel="external">具体例子参考文章</a></p>
+<h2 id="代码安全，防解密"><a href="#代码安全，防解密" class="headerlink" title="代码安全，防解密"></a>代码安全，防解密</h2><p>完全避免破解是不可能的，尽最大可能提高破解成本。</p>
+<ul>
+<li>混淆代码。代码混淆后，Smali更加晦涩难懂，逻辑也更难掌握。</li>
+<li>解读汇编比解读Smali难度大的多得多。重要的逻辑可以放到C/C++层去处理就不要放在Java层上去处理。<br>＋ 多用连续调用的方式。这样出来的效果是Java只有一行，Smali可能有好几十行，增加查看难度。在一些关键的点上，比如支付，多绕一下。不要直接在Java内用中文显示标注等</li>
+</ul>
+<p>﻿﻿### <em>参考链接</em></p>
+<ul>
+<li><a href="https://blog.csdn.net/hp910315/article/details/51823236" target="_blank" rel="external">静态分析Android程序——smali文件解析</a></li>
+<li><a href="https://blog.csdn.net/lkgmfjk/article/details/51202095" target="_blank" rel="external">Smali和逆向分析</a></li>
+</ul>
 
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/03/29/smali-语法/" data-id="cjfdt53iw0009j97q3qq7e19v" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2018/03/29/smali-语法/" data-id="cjfertvz2000bit7qf2zgruaf" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Android/">Android</a></li></ul>
