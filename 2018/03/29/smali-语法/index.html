@@ -1,0 +1,340 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>smali 语法 | 胖墩记忆</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="##smali是什么Smali是Dalvik的寄存器语言，它与Java的关系，简单理解就是汇编之于C。
+##smali文件是哪来的，获取方法Smali代码是安卓APK反编译而来的。Smali文件和Java文件一一对应。获取Smali文件，我们需要下载一个辅助工具：ApkTool 。apktool这个命令行工具，最常用的命令有：
+
+反编译decode：apktool d xxx.apk
+打包buil">
+<meta property="og:type" content="article">
+<meta property="og:title" content="smali 语法">
+<meta property="og:url" content="http://yoursite.com/2018/03/29/smali-语法/index.html">
+<meta property="og:site_name" content="胖墩记忆">
+<meta property="og:description" content="##smali是什么Smali是Dalvik的寄存器语言，它与Java的关系，简单理解就是汇编之于C。
+##smali文件是哪来的，获取方法Smali代码是安卓APK反编译而来的。Smali文件和Java文件一一对应。获取Smali文件，我们需要下载一个辅助工具：ApkTool 。apktool这个命令行工具，最常用的命令有：
+
+反编译decode：apktool d xxx.apk
+打包buil">
+<meta property="og:updated_time" content="2018-03-30T10:30:31.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="smali 语法">
+<meta name="twitter:description" content="##smali是什么Smali是Dalvik的寄存器语言，它与Java的关系，简单理解就是汇编之于C。
+##smali文件是哪来的，获取方法Smali代码是安卓APK反编译而来的。Smali文件和Java文件一一对应。获取Smali文件，我们需要下载一个辅助工具：ApkTool 。apktool这个命令行工具，最常用的命令有：
+
+反编译decode：apktool d xxx.apk
+打包buil">
+  
+    <link rel="alternate" href="/atom.xml" title="胖墩记忆" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  <link rel="stylesheet" href="/css/style.css">
+  
+
+</head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">胖墩记忆</a>
+      </h1>
+      
+        <h2 id="subtitle-wrap">
+          <a href="/" id="subtitle">小胖胖的学习、工作和生活...</a>
+        </h2>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="搜索"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" results="0" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://yoursite.com"></form>
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main"><article id="post-smali-语法" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2018/03/29/smali-语法/" class="article-date">
+  <time datetime="2018-03-29T05:17:07.000Z" itemprop="datePublished">2018-03-29</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/programming/">编程</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      smali 语法
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>##smali是什么<br>Smali是Dalvik的寄存器语言，它与Java的关系，简单理解就是汇编之于C。</p>
+<p>##smali文件是哪来的，获取方法<br>Smali代码是安卓APK反编译而来的。Smali文件和Java文件一一对应。获取Smali文件，我们需要下载一个辅助工具：ApkTool 。apktool这个命令行工具，最常用的命令有：</p>
+<ul>
+<li>反编译decode：apktool d xxx.apk</li>
+<li>打包build：apktool b</li>
+</ul>
+<p>##Smali语法<br>这里仍然以一个默认的HelloWorld的应用程序进行解释吧。新建一个HelloWorld安卓项目，在MainActivity中只保留onCreate函数。代码如下：</p>
+<p>MainActivity.java</p>
+<p> package com.fusijie.helloworld;</p>
+<p>  import android.app.Activity;<br>  import android.os.Bundle;</p>
+<p>  public class MainActivity extends Activity {</p>
+<p>  @Override<br>  protected void onCreate(Bundle savedInstanceState) {<br>      super.onCreate(savedInstanceState);<br>      setContentView(R.layout.activity_main);<br>      }<br>  }</p>
+<p>反编译后的Smali文件如下：</p>
+<p>MainActivity.smali</p>
+<pre><code>.class public Lcom/fusijie/helloworld/MainActivity;
+</code></pre><p>  .super Landroid/app/Activity;<br>  .source “MainActivity.java”</p>
+<h1 id="direct-methods"><a href="#direct-methods" class="headerlink" title="direct methods"></a>direct methods</h1><p>  .method public constructor <init>()V<br>    .locals 0</init></p>
+<pre><code>.prologue
+.line 14
+invoke-direct {p0}, Landroid/app/Activity;-&gt;&lt;init&gt;()V
+
+return-void
+</code></pre><p>  .end method</p>
+<h1 id="virtual-methods"><a href="#virtual-methods" class="headerlink" title="virtual methods"></a>virtual methods</h1><p>  .method protected onCreate(Landroid/os/Bundle;)V<br>    .locals 1<br>    .parameter “savedInstanceState”</p>
+<pre><code>.prologue
+.line 18
+invoke-super {p0, p1}, Landroid/app/Activity;-&gt;onCreate(Landroid/os/Bundle;)V
+
+.line 19
+const/high16 v0, 0x7f03
+
+invoke-virtual {p0, v0}, Lcom/fusijie/helloworld/MainActivity;-&gt;setContentView(I)V
+
+.line 20
+return-void
+</code></pre><p>  .end method</p>
+<p>对比一下，可以比较清楚的看出来，smali代码其实就是对java代码一个翻译，只是没有java看起来那么简单，smali把很多应该复杂的东西还原成复杂的状态了。简单解释下这段代码。</p>
+<p>前三行指明了类名，父类名，和源文件名。<br>类名以“L”开头相信熟悉Jni的童鞋都比较清楚。<br>“#”是smali中的注释。<br>“.method”和“.end method”类似于Java中的大括号，包含了方法的实现代码段。<br>方法的括号后面指明了返回类型，这同样类似与Jni的调用。<br>“.locals”指明了这个方法用到的寄存器数量，当然寄存器可以重复利用，从“V0”起算。<br>“.prologue”指定了代码开始处。<br>“.line”表明这是在java源码中的第几行，其实这个值无所谓是多少，可以任意修改，主要用于调试。<br>“invoke-direct”这是对方法的调用，可以看到这里调用了是Android.app.Activity的init方法，这在java里是隐式调用的。<br>“return-void”表明了返回类型，这和java不一样，即使没有返回值，也需要这样写。<br>接下来是onCreate方法，“.parameter”指明了参数名，但是一般没有用，需要注意的是p0代表的是this，p1开始代表函数参数，静态函数没有this，所以从p0开始就代表参数。<br>在实现里先是调用了父类的方法，然后再调用setContentView，注意这里给了一个传参。整形的传参，这个值是先赋给寄存器v0，然后再调用的使用传递进去的。smali中都是这么使用，所有的值必须通过寄存器来中转。这点和汇编很像。<br>对比了Java代码和Smali代码，可以很清楚的看到，原本只有几行的代码到了Smali，内容被大大扩充了。Smali还原了Java隐藏的东西，同时显式地指定了很多细节。这还只是个最基本的HelloWorld的onCreate函数，如果有内部类，还有分文件显示。</p>
+<p>这样看来，其实Smali只能说复杂，不能说难。我这里不打算把Smali的语法再贴一次，这里给出几个链接，算是总结的相对好一点的（其实我都没看到有系统总结的。。。如果你有好的资料，欢迎跟帖分享）</p>
+<p>Smali语法—数据类型、方法、字段和寄存器<br>Android软件安全与逆向分享—Smali文件格式<br>Smali—Dalvik虚拟机指令语言</p>
+<p>##小试牛刀</p>
+<p>了解了Smali的基本语法，那我们要动手试一下，Smali能做什么？仍然以HelloWorld为例，假如我们没有Android项目的源代码，只有一个APK，给他加个新功能吧！</p>
+<p>这个功能很简单，只是在HelloWorld中输出一个“Hello, Smali”。</p>
+<p>(1)第一步还是先使用apktool来反编译HelloWorld.apk。</p>
+<p>(2)打开smali下的com/fusijie/helloworld/MainActivity.smali文件。</p>
+<p>(3)原本我们在Java中要写的代码是：</p>
+<p>Toast</p>
+<p> Toast.makeText(this, “Hello, Smali”, Toast.LENGTH_LONG).show();<br>翻译成Smali就是：</p>
+<p>Toast</p>
+<pre><code>.line xx
+const-string v0, &quot;Hello, Smali&quot;
+
+const/4 v1, 0x1
+
+invoke-static {p0, v0, v1}, Landroid/widget/Toast;-&gt;makeText(Landroid/content/Context;Ljava/lang/CharSequence;I)Landroid/widget/Toast;
+
+move-result-object v0
+
+invoke-virtual {v0}, Landroid/widget/Toast;-&gt;show()V
+</code></pre><p>(4)最后在插入Smali的时候，我们需要修改2个地方：</p>
+<p>“.locals 1”，因为本来只用到了v0，现在多用了一个v1，所以改为“.locals 2”。<br>“.line xx” xx随意改为一个不重复的值即可。<br>(5)使用apktool打包成apk，因为打包完后原有的密钥会丢失，所以需要重新打上我们自己的密钥，可以参考 很早以前我写的一个帖子 。</p>
+<p>(6)最后的效果是这样的。</p>
+<p>##干点坏事<br>从上面一个例子对Smali的用途就很清楚了，没错，Smali注入。现在常见的除了测试以外的用途，Smali注入明显是带有黑客性质的，小的如破解游戏，替换游戏广告，大的甚至利用漏洞去破解密码，偷窃个人资料，财产等等。对Smali，安卓逆向分析，安卓系统安全比较清楚的，这些事其实都不算事。</p>
+<p>我这里以一个实际上线的游戏破解为例，看看我们平时在写代码时要注意哪些问题，避免辛辛苦苦写游戏，却在帮人家数钱。这里的破解不是重点，反破解才是重点。</p>
+<p>以市场上很火的一款单机游戏《消灭小星星》为例，下载地址是： <a href="http://apk.91.com/Soft/Android/com.brianbaek.popstar-340.html" target="_blank" rel="external">http://apk.91.com/Soft/Android/com.brianbaek.popstar-340.html</a></p>
+<p>相同的方法反编译，在/smali/com/zplay/android/sdk/pay/ZplayPay.smali文件的dopay函数开头，注入如下代码：</p>
+<p>popstar_crack</p>
+<pre><code>const/4 v0, 0x1  
+invoke-static {v0}, Lcom/zplay/iap/ZplayJNI;-&gt;sendMessage(I)V
+return-void
+</code></pre><p>原理很简单，这个游戏使用了Zplay的支付系统，在Java层的处理了支付逻辑，如果觉得Smali读起来费劲，那么直接使用dex2jar就能很清楚的看到，支付提醒甚至是中文的。Java层处理完支付逻辑后会给C++层丢个消息，调用C++层的代码去处理游戏逻辑，比如成功支付，那么幸运星就会相应地增加。这里使用native方法进行处理。</p>
+<p>所以注入的代码是，一旦进入支付逻辑，直接返回成功，同时强制返回函数，这就实现了支付的破解。当然作为一个有节操，有逼格的游戏从业者，这里就不放出破解版了（不过说得也够明白了）。查找注入点这东西靠的是耐心，细心和运气。</p>
+<p>为了方便，一般会先用正常的java写一些调试类，然后反编译出静态的smali放入目标文件夹中以供调试使用。</p>
+<p>再放张图，星星用不完了：</p>
+<p>##总结<br>就像上面说的，Smali能做的不仅仅是这些。有兴趣的可以看看这篇文章 《支付宝钱包手势密码破解实战》 ，我没有去验证过真伪，但是如作者所描述的应该是可行无误。这里用到的一个更高级的功能是将支付宝的加密解密逻辑Smali的jar包导入自己新建的工程，进而直接在自己的程序中集成支付宝的加密解密功能。</p>
+<p>在逆向分析游戏的过程中，我也发现了几个重要的点能帮助开发者提高自己程序的安全性。</p>
+<p>首先，完全避免破解是不可能的，我们能做的工作就是尽最大可能去妨碍破解者破解游戏，提高破解成本。</p>
+<p>一定要使用混淆。不单单是第三方SDK，你的代码也是。破解游戏很重要一点就是要抓住游戏的逻辑。代码混淆后，Smali更加晦涩难懂，逻辑也更难掌握。<br>回到开头的话，解读汇编比解读Smali难度大的多得多。所以重要的逻辑可以放到C/C++层去处理就不要放在Java层上去处理。<br>多用连续调用的方式。这样出来的效果是Java只有一行，Smali可能有好几十行，看着都蛋疼。当然这对熟练的破解老手无效～<br>在一些关键的点上，比如支付，多绕一下。而不是像《消灭小星星》这样，直接在Java内用中文显示“支付成功”，同时去调用JNI方法。用dex2jar看一眼就暴露了。<br>哈哈，总之，小心你的艳照。。。</p>
+<p>哇咔咔，竟然写了快4个小时～</p>
+<p>﻿﻿</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2018/03/29/smali-语法/" data-id="cjfdt53iw0009j97q3qq7e19v" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Android/">Android</a></li></ul>
+
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+  
+    <a href="/2017/11/01/阿里云ECS-CentOS系统搭建LAMP/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">阿里云ECS CentOS系统搭建LAMP</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+
+  <section id="comments">
+    <!-- 多说评论框 start -->
+    <div class="ds-thread" data-thread-key="post-smali-语法" data-title="smali 语法" data-url="http://yoursite.com/2018/03/29/smali-语法/"></div>
+    <!-- 多说评论框 end -->
+    <!-- 多说公共JS代码 start (一个网页只需插入一次) -->
+    <script type="text/javascript">
+    var duoshuoQuery = {short_name:'andr112'};
+      (function() {
+        var ds = document.createElement('script');
+        ds.type = 'text/javascript';ds.async = true;
+        ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+        ds.charset = 'UTF-8';
+        (document.getElementsByTagName('head')[0] 
+         || document.getElementsByTagName('body')[0]).appendChild(ds);
+      })();
+      </script>
+    <!-- 多说公共JS代码 end -->
+  </section>
+  </section>
+        
+          <aside id="sidebar">
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">分类</h3>
+    <div class="widget">
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/other/">其他</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/life/">生活</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/programming/">编程</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/programming/life/">生活</a></li></ul></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">标签</h3>
+    <div class="widget">
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Android/">Android</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Gradle/">Gradle</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/JNI/">JNI</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/android/">android</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/weex/">weex</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/书籍/">书籍</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/代码/">代码</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/优化/">优化</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/其他/">其他</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/实践/">实践</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/环境搭建/">环境搭建</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/生活美物/">生活美物</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/经验/">经验</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/编程语言/">编程语言</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/资料索引/">资料索引</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/问题/">问题</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/阅读/">阅读</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">标签云</h3>
+    <div class="widget tagcloud">
+      <a href="/tags/Android/" style="font-size: 20px;">Android</a> <a href="/tags/Gradle/" style="font-size: 10px;">Gradle</a> <a href="/tags/JNI/" style="font-size: 10px;">JNI</a> <a href="/tags/android/" style="font-size: 15px;">android</a> <a href="/tags/weex/" style="font-size: 10px;">weex</a> <a href="/tags/书籍/" style="font-size: 10px;">书籍</a> <a href="/tags/代码/" style="font-size: 10px;">代码</a> <a href="/tags/优化/" style="font-size: 10px;">优化</a> <a href="/tags/其他/" style="font-size: 15px;">其他</a> <a href="/tags/实践/" style="font-size: 10px;">实践</a> <a href="/tags/环境搭建/" style="font-size: 15px;">环境搭建</a> <a href="/tags/生活美物/" style="font-size: 10px;">生活美物</a> <a href="/tags/经验/" style="font-size: 15px;">经验</a> <a href="/tags/编程语言/" style="font-size: 10px;">编程语言</a> <a href="/tags/资料索引/" style="font-size: 10px;">资料索引</a> <a href="/tags/问题/" style="font-size: 15px;">问题</a> <a href="/tags/阅读/" style="font-size: 10px;">阅读</a>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">归档</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/03/">三月 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/11/">十一月 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/03/">三月 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/02/">二月 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/01/">一月 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/10/">十月 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/07/">七月 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/06/">六月 2016</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">最新文章</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2018/03/29/smali-语法/">smali 语法</a>
+          </li>
+        
+          <li>
+            <a href="/2017/11/01/阿里云ECS-CentOS系统搭建LAMP/">阿里云ECS CentOS系统搭建LAMP</a>
+          </li>
+        
+          <li>
+            <a href="/2017/03/09/Gradle-for-Android/">Gradle for Android</a>
+          </li>
+        
+          <li>
+            <a href="/2017/02/24/手机如何伪装成电脑上网/">手机如何伪装成电脑上网</a>
+          </li>
+        
+          <li>
+            <a href="/2017/02/04/Android快捷获取设备IMEI号/">Android快捷获取设备IMEI号</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2018 Zhangdan<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  <script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/js/script.js"></script>
+
+  </div>
+</body>
+</html>

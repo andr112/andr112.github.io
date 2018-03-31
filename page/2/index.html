@@ -68,6 +68,176 @@
       <div class="outer">
         <section id="main">
   
+    <article id="post-一个ListView有关数据设置和刷新问题" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2016/07/04/一个ListView有关数据设置和刷新问题/" class="article-date">
+  <time datetime="2016-07-04T08:51:21.000Z" itemprop="datePublished">2016-07-04</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/programming/">编程</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2016/07/04/一个ListView有关数据设置和刷新问题/">一个ListView有关数据设置和刷新问题</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h2 id="问题描述"><a href="#问题描述" class="headerlink" title="问题描述"></a>问题描述</h2><p>当数据变化是，没调notifyDataSetChanged方法刷新控件，滑动列表，就会报错如下</p>
+<pre><code>java.lang.IllegalStateException: The content of the adapter has changed but ListView did not receive a notification. Make sure the content of your adapter is not modified from a background thread, but only from the UI thread. Make sure your adapter calls notifyDataSetChanged() when its content changes. [in ListView(2131559716, class android.widget.ListView) with Adapter(class kr)]
+at android.widget.ListView.layoutChildren(ListView.java:1562)
+ at android.widget.AbsListView.onTouchMove(AbsListView.java:3919)
+ at android.widget.AbsListView.onTouchEvent(AbsListView.java:3788)
+ at android.view.View.dispatchTouchEvent(View.java:8444)
+ at android.view.ViewGroup.dispatchTransformedTouchEvent(ViewGroup.java:2430)
+ at android.view.ViewGroup.dispatchTouchEvent(ViewGroup.java:2158)
+ at android.view.ViewGroup.dispatchTransformedTouchEvent(ViewGroup.java:2436)
+ at android.view.ViewGroup.dispatchTouchEvent(ViewGroup.java:2178)
+ at android.view.ViewGroup.dispatchTransformedTouchEvent(ViewGroup.java:2436)
+ at android.view.ViewGroup.dispatchTouchEvent(ViewGroup.java:2178)
+ at android.view.ViewGroup.dispatchTransformedTouchEvent(ViewGroup.java:2436)
+ at android.view.ViewGroup.dispatchTouchEvent(ViewGroup.java:2178)
+ at android.view.ViewGroup.dispatchTransformedTouchEvent(ViewGroup.java:2436)
+ at android.view.ViewGroup.dispatchTouchEvent(ViewGroup.java:2178)
+ at android.view.ViewGroup.dispatchTransformedTouchEvent(ViewGroup.java:2436)
+ at android.view.ViewGroup.dispatchTouchEvent(ViewGroup.java:2178)
+ at android.view.ViewGroup.dispatchTransformedTouchEvent(ViewGroup.java:2436)
+ at android.view.ViewGroup.dispatchTouchEvent(ViewGroup.java:2178)
+ at com.android.internal.policy.impl.PhoneWindow$DecorView.superDispatchTouchEvent(PhoneWindow.java:2386)
+ at com.android.internal.policy.impl.PhoneWindow.superDispatchTouchEvent(PhoneWindow.java:1727)
+ at android.app.Activity.dispatchTouchEvent(Activity.java:2764)
+ at com.android.internal.policy.impl.PhoneWindow$DecorView.dispatchTouchEvent(PhoneWindow.java:2335)
+ at android.view.View.dispatchPointerEvent(View.java:8655)
+ at android.view.ViewRootImpl$ViewPostImeInputStage.processPointerEvent(ViewRootImpl.java:4238)
+ at android.view.ViewRootImpl$ViewPostImeInputStage.onProcess(ViewRootImpl.java:4094)
+ at android.view.ViewRootImpl$InputStage.deliver(ViewRootImpl.java:3635)
+ at android.view.ViewRootImpl$InputStage.onDeliverToNext(ViewRootImpl.java:3694)
+ at android.view.ViewRootImpl$InputStage.forward(ViewRootImpl.java:3660)
+ at android.view.ViewRootImpl$AsyncInputStage.forward(ViewRootImpl.java:3773)
+ at android.view.ViewRootImpl$InputStage.apply(ViewRootImpl.java:3668)
+ at android.view.ViewRootImpl$AsyncInputStage.apply(ViewRootImpl.java:3830)
+ at android.view.ViewRootImpl$InputStage.deliver(ViewRootImpl.java:3640)
+ at android.view.ViewRootImpl$InputStage.onDeliverToNext(ViewRootImpl.java:3694)
+ at android.view.ViewRootImpl$InputStage.forward(ViewRootImpl.java:3660)
+ at android.view.ViewRootImpl$InputStage.apply(ViewRootImpl.java:3668)
+ at android.view.ViewRootImpl$InputStage.deliver(ViewRootImpl.java:3640)
+ at android.view.ViewRootImpl.deliverInputEvent(ViewRootImpl.java:5940)
+ at android.view.ViewRootImpl.doProcessInputEvents(ViewRootImpl.java:5908)
+ at android.view.ViewRootImpl.enqueueInputEvent(ViewRootImpl.java:5872)
+ at android.view.ViewRootImpl$WindowInputEventReceiver.onInputEvent(ViewRootImpl.java:6030)
+ at android.view.InputEventReceiver.dispatchInputEvent(InputEventReceiver.java:211)
+ at android.view.InputEventReceiver.nativeConsumeBatchedInputEvents(Native Method)
+ at android.view.InputEventReceiver.consumeBatchedInputEvents(InputEventReceiver.java:197)
+ ....
+</code></pre><h2 id="问题代码"><a href="#问题代码" class="headerlink" title="问题代码"></a>问题代码</h2><pre><code>public class VideoBroadcastViewsHolder {
+......
+private ListView mMsgListView;
+private List&lt;VideoBroadcast&gt; mMsgDatas;
+private BroadcastMsgAdapter mBroadcastMsgAdapter;
+...
+...
+private void updateMsgList(VideoBroadcast videoBroadcast) {
+    if (TextUtils.isEmpty(videoBroadcast.getMsg())) {
+        return;
+    }
+    if (mMsgDatas == null) {
+        mMsgDatas = new ArrayList&lt;&gt;();
+        mBroadcastMsgAdapter = new BroadcastMsgAdapter(mContext，mMsgDatas);
+        if (mMsgListView != null) {
+            mMsgListView.setAdapter(mBroadcastMsgAdapter);
+        }
+    }
+    mMsgDatas.add(videoBroadcast);
+    toRefreshListView(RefreshDelayedTime);
+}
+ private void toRefreshListView(long delayedTime) {
+    if (mMsgListView != null) {
+        if (mListRefreshRunnable != null) {
+            mMsgListView.removeCallbacks(mListRefreshRunnable);
+        }
+        DebugLog.d(&quot;VideoBroadcastViewsHolder&quot;, &quot;toRefreshListView isListViewTouching : &quot; + isListViewTouching + &quot; ,delayedTime :&quot; + delayedTime);
+        if (isListViewTouching) {
+            return;
+        }
+        if (System.currentTimeMillis() - mLastListRefreshTime &gt;= RefreshIntervalTime) {
+            mMsgListView.post(new ListRefreshRunnable());
+        } else {
+            mListRefreshRunnable = new ListRefreshRunnable();
+            mMsgListView.postDelayed(mListRefreshRunnable, delayedTime);
+        }
+    }
+
+}
+......
+}
+
+public class BroadcastMsgAdapter extends BaseAdapter {
+
+// 上下文
+private Context mContext;
+
+private List&lt;VideoBroadcast&gt; mDatas;
+
+public BroadcastMsgAdapter(Context context ，List&lt;VideoBroadcast&gt; datas) {
+    mContext = context;
+    mDatas = datas;
+}
+...
+}
+</code></pre><h2 id="问题分析"><a href="#问题分析" class="headerlink" title="问题分析"></a>问题分析</h2><p>当列表适配器直接用的是外面传递进来的列表时，外围列表的管理者对列表进行数据增减，使其数据发生了变化，但应某种原因或者采用的具体策略，没及时通知适配器，在这中间时段，如果用户滑动列表，系统就会报错。</p>
+<h2 id="个人建议"><a href="#个人建议" class="headerlink" title="个人建议"></a>个人建议</h2><p>让适配器拥有自己的数据列表，这样就可避免类似问题。数据的使用者使者拥有和管理自己的数据，降低耦合性，遵循代码设计原则。</p>
+<p>简单修改后，适配器代码如下：</p>
+<pre><code>public class BroadcastMsgAdapter extends BaseAdapter {
+
+// 上下文
+private Context mContext;
+
+private List&lt;VideoBroadcast&gt; mDatas;
+
+public BroadcastMsgAdapter(Context context) {
+    mContext = context;
+    mDatas = new ArrayList&lt;&gt;();
+}
+
+public void setDatas(List&lt;VideoBroadcast&gt; datas) {
+    if (datas != null &amp;&amp; datas.size() &gt; 0) {
+        mDatas.clear();
+        mDatas.addAll(datas);
+    }
+    notifyDataSetChanged();
+}
+...
+}
+</code></pre><ul>
+<li>适当调整使用的地方，问题就OK了。*</li>
+</ul>
+<h2 id="小问题，通常都不好定位，需要自己平时注意小细节，培养良好的编程习惯。写代码时，多遵循设计原则！"><a href="#小问题，通常都不好定位，需要自己平时注意小细节，培养良好的编程习惯。写代码时，多遵循设计原则！" class="headerlink" title="小问题，通常都不好定位，需要自己平时注意小细节，培养良好的编程习惯。写代码时，多遵循设计原则！"></a>小问题，通常都不好定位，需要自己平时注意小细节，培养良好的编程习惯。写代码时，多遵循设计原则！</h2>
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2016/07/04/一个ListView有关数据设置和刷新问题/" data-id="cjfdt53j8000ij97qby0oho9b" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Android/">Android</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/经验/">经验</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/问题/">问题</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+  
     <article id="post-AS一个简单Jni开发实践" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
     <a href="/2016/06/20/AS一个简单Jni开发实践/" class="article-date">
@@ -109,7 +279,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2016/06/20/AS一个简单Jni开发实践/" data-id="cj9gt0xdv0001f72uica0gvur" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2016/06/20/AS一个简单Jni开发实践/" data-id="cjfdt53i80000j97qkc3plm3z" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Android/">Android</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/JNI/">JNI</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/实践/">实践</a></li></ul>
@@ -176,7 +346,7 @@ Error:(2) Attribute &quot;title&quot; has already been defined
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2016/06/20/attr属性重复的问题/" data-id="cj9gt0xel000bf72uteak1fmx" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2016/06/20/attr属性重复的问题/" data-id="cjfdt53iy000bj97q99saf4j2" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Android/">Android</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/经验/">经验</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/问题/">问题</a></li></ul>
@@ -220,7 +390,7 @@ Error:(2) Attribute &quot;title&quot; has already been defined
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2016/06/19/漂亮的花儿/" data-id="cj9gt0xf5000tf72u1oqi6kdz" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2016/06/19/漂亮的花儿/" data-id="cjfdt53je000oj97qgw4xoj1i" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/生活美物/">生活美物</a></li></ul>
@@ -314,7 +484,7 @@ theme: writing
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2016/06/16/个人博客搭建for-Mac-Github-Hexo/" data-id="cj9gt0xex000if72u7s7psdjw" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2016/06/16/个人博客搭建for-Mac-Github-Hexo/" data-id="cjfdt53jb000lj97qcdol1ptv" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/环境搭建/">环境搭建</a></li></ul>
@@ -368,7 +538,7 @@ theme: writing
   <div class="widget-wrap">
     <h3 class="widget-title">归档</h3>
     <div class="widget">
-      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/11/">十一月 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/03/">三月 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/02/">二月 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/01/">一月 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/10/">十月 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/07/">七月 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/06/">六月 2016</a></li></ul>
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/03/">三月 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/11/">十一月 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/03/">三月 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/02/">二月 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/01/">一月 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/10/">十月 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/07/">七月 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/06/">六月 2016</a></li></ul>
     </div>
   </div>
 
@@ -379,6 +549,10 @@ theme: writing
     <h3 class="widget-title">最新文章</h3>
     <div class="widget">
       <ul>
+        
+          <li>
+            <a href="/2018/03/29/smali-语法/">smali 语法</a>
+          </li>
         
           <li>
             <a href="/2017/11/01/阿里云ECS-CentOS系统搭建LAMP/">阿里云ECS CentOS系统搭建LAMP</a>
@@ -396,10 +570,6 @@ theme: writing
             <a href="/2017/02/04/Android快捷获取设备IMEI号/">Android快捷获取设备IMEI号</a>
           </li>
         
-          <li>
-            <a href="/2017/01/21/使用Runtime代码中安装APP/">使用Runtime代码中安装APP</a>
-          </li>
-        
       </ul>
     </div>
   </div>
@@ -412,7 +582,7 @@ theme: writing
   
   <div class="outer">
     <div id="footer-info" class="inner">
-      &copy; 2017 Zhangdan<br>
+      &copy; 2018 Zhangdan<br>
       Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
     </div>
   </div>
