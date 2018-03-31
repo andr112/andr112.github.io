@@ -94,8 +94,8 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <p>##smali是什么<br>Smali是Dalvik的寄存器语言，它与Java的关系，简单理解就是汇编之于C。</p>
-<p>##smali文件是哪来的，获取方法<br>Smali代码是安卓APK反编译而来的。Smali文件和Java文件一一对应。获取Smali文件，我们需要下载一个辅助工具：ApkTool 。apktool这个命令行工具，最常用的命令有：</p>
+        <h2 id="smali是什么"><a href="#smali是什么" class="headerlink" title="smali是什么"></a>smali是什么</h2><p>Smali是Dalvik的寄存器语言，它与Java的关系，简单理解就是汇编之于C。</p>
+<h2 id="smali文件是哪来的，获取方法"><a href="#smali文件是哪来的，获取方法" class="headerlink" title="smali文件是哪来的，获取方法"></a>smali文件是哪来的，获取方法</h2><p>Smali代码是安卓APK反编译而来的。Smali文件和Java文件一一对应。获取Smali文件，我们需要下载一个辅助工具：ApkTool 。apktool这个命令行工具，最常用的命令有：</p>
 <ul>
 <li>反编译decode：<br>  apktool d xxx.apk</li>
 <li>打包build：<br>  apktool b</li>
@@ -202,7 +202,8 @@ public class MainActivity extends AppCompatActivity {
 <pre><code>#interfaces
 .implements &lt;接口名&gt;
 </code></pre><p>同样，#interfaces是注释，.implements是接口关键字。</p>
-<h2 id="例如："><a href="#例如：" class="headerlink" title="例如："></a>例如：</h2><pre><code>//===================================================================
+<p>例如：</p>
+<pre><code>//===================================================================
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
     // ......
 }
@@ -210,9 +211,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 # interfaces
 .implements Landroid/view/View$OnClickListener;
 //===================================================================
-</code></pre><p>字段</p>
-<p>smali文件中，字段的声明使用.field指令，字段分为静态字段和实例字段。</p>
-<p>1、静态字段</p>
+</code></pre><h2 id="字段"><a href="#字段" class="headerlink" title="字段"></a>字段</h2><p>smali文件中，字段的声明使用.field指令，字段分为静态字段和实例字段。</p>
+<p>1 、静态字段</p>
 <pre><code>#static fields
 .field &lt;访问权限&gt; static [修饰关键字] &lt;字段名&gt;:&lt;字段类型&gt;
 </code></pre><p>可以看到，baksmali在生成smali文件时，会在静态字段声明的起始处添加注释”static fields”，注释是以#开头。</p>
@@ -224,7 +224,8 @@ private  static final String TAG = &quot;MainActivity&quot;;
 # static fields
 .field private static final TAG:Ljava/lang/String; = &quot;MainActivity&quot;
 //===================================================================
-</code></pre><p>2、实例字段<br>相比于静态自动就少了一个static的静态声明而已，其他都一样。</p>
+</code></pre><p>2、 实例字段 </p>
+<p>相比于静态自动就少了一个static的静态声明而已，其他都一样。</p>
 <pre><code>#instance fields
 .field &lt;访问权限&gt; [修饰关键字] &lt;字段名&gt;:&lt;字段类型&gt;
 </code></pre><p>例如：</p>
@@ -234,7 +235,7 @@ private Button mButton;
 # instance fields
 .field private mButton:Landroid/widget/Button;
 //===================================================================
-</code></pre><p>五、方法<br>smali的方法声明使用的.method指令，方法分为直接方法和虚方法两种。</p>
+</code></pre><h2 id="方法"><a href="#方法" class="headerlink" title="方法"></a>方法</h2><p>smali的方法声明使用的.method指令，方法分为直接方法和虚方法两种。</p>
 <p>1、直接方法<br>直接方法指的是该类中定义的方法。</p>
 <pre><code>#direct methods
 .method &lt;访问权限&gt; [修饰关键字] &lt;方法原型&gt;
@@ -314,7 +315,7 @@ public static void setTag(String str) {
     [注解字段 = 值]
 .end annotation
 </code></pre><p>注解的作用范围可以是类、方法或者字段。如果注解的作用范围是类，.annotation指令会直接定义在smali文件中，如果是方法或者字段，.annotation指令则会包含在方法或者字段的定义中。</p>
-<p>＋ 注解类</p>
+<p>1、  注解类</p>
 <pre><code>//===================================================================
 @BindInt(100)
 public class MainActivity extends AppCompatActivity {
@@ -326,7 +327,7 @@ public class MainActivity extends AppCompatActivity {
     value = 0x64
 .end annotation
 //===================================================================
-</code></pre><p>＋ 注解字段</p>
+</code></pre><p>2、  注解字段</p>
 <pre><code>//===================================================================
 @BindView(R.id.button)
 public Button mButton;
@@ -338,7 +339,7 @@ public Button mButton;
     .end annotation
 .end field
 //===================================================================
-</code></pre><p>＋ 注解方法</p>
+</code></pre><p>3、  注解方法</p>
 <pre><code>//===================================================================
 @OnClick(R.id.button)
 public void click() {
@@ -375,7 +376,8 @@ public void click() {
 <h2 id="代码安全，防解密"><a href="#代码安全，防解密" class="headerlink" title="代码安全，防解密"></a>代码安全，防解密</h2><p>完全避免破解是不可能的，尽最大可能提高破解成本。</p>
 <ul>
 <li>混淆代码。代码混淆后，Smali更加晦涩难懂，逻辑也更难掌握。</li>
-<li>解读汇编比解读Smali难度大的多得多。重要的逻辑可以放到C/C++层去处理就不要放在Java层上去处理。<br>＋ 多用连续调用的方式。这样出来的效果是Java只有一行，Smali可能有好几十行，增加查看难度。在一些关键的点上，比如支付，多绕一下。不要直接在Java内用中文显示标注等</li>
+<li>解读汇编比解读Smali难度大的多得多。重要的逻辑可以放到C/C++层去处理就不要放在Java层上去处理。</li>
+<li>多用连续调用的方式。这样出来的效果是Java只有一行，Smali可能有好几十行，增加查看难度。在一些关键的点上，比如支付，多绕一下。不要直接在Java内用中文显示标注等</li>
 </ul>
 <p>﻿﻿### <em>参考链接</em></p>
 <ul>
@@ -386,7 +388,7 @@ public void click() {
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/03/29/smali-语法/" data-id="cjfertvz2000bit7qf2zgruaf" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2018/03/29/smali-语法/" data-id="cjfetg1z0001ke27q2qa9gxs1" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Android/">Android</a></li></ul>
@@ -507,7 +509,7 @@ mysql_close($con);
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2017/11/01/阿里云ECS-CentOS系统搭建LAMP/" data-id="cjfertw0m001wit7qhhw6a6w8" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2017/11/01/阿里云ECS-CentOS系统搭建LAMP/" data-id="cjfetg1za001ye27q2clmks5k" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/环境搭建/">环境搭建</a></li></ul>
@@ -599,7 +601,7 @@ mysql_close($con);
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2017/03/09/Gradle-for-Android/" data-id="cjfertvz10009it7qcdykar0h" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2017/03/09/Gradle-for-Android/" data-id="cjfetg1x80005e27q2elay6zz" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Android/">Android</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Gradle/">Gradle</a></li></ul>
@@ -676,7 +678,7 @@ public void request(Context context, String url, final BaseCallback callback) {
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2017/02/24/手机如何伪装成电脑上网/" data-id="cjfertw0l001vit7qe14k804k" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2017/02/24/手机如何伪装成电脑上网/" data-id="cjfetg1z4001re27qdi3vzyn3" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/android/">android</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/其他/">其他</a></li></ul>
@@ -723,7 +725,7 @@ String IMEI = telephonyManager.getDeviceId();
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2017/02/04/Android快捷获取设备IMEI号/" data-id="cjfertvyw0005it7qvtr8p8yz" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2017/02/04/Android快捷获取设备IMEI号/" data-id="cjfetg1xb0007e27qggf0lprn" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Android/">Android</a></li></ul>
@@ -770,7 +772,7 @@ String IMEI = telephonyManager.getDeviceId();
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2017/01/21/使用Runtime代码中安装APP/" data-id="cjfertvzc000iit7qlalfrau6" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2017/01/21/使用Runtime代码中安装APP/" data-id="cjfetg1yt001ee27qfqbrboj5" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Android/">Android</a></li></ul>
@@ -845,7 +847,7 @@ String IMEI = telephonyManager.getDeviceId();
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2017/01/20/终端常用命令/" data-id="cjfertw0n001yit7q65zi1obx" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2017/01/20/终端常用命令/" data-id="cjfetg1z7001ve27qeg2dxn1p" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/其他/">其他</a></li></ul>
@@ -928,7 +930,7 @@ String IMEI = telephonyManager.getDeviceId();
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2016/10/27/Weex学习索引/" data-id="cjfertvyy0007it7q24ycwm71" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2016/10/27/Weex学习索引/" data-id="cjfetg1xg000be27qj6lawhu4" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/weex/">weex</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/编程语言/">编程语言</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/资料索引/">资料索引</a></li></ul>
@@ -996,7 +998,7 @@ String IMEI = telephonyManager.getDeviceId();
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2016/07/28/Android之代码性能优化/" data-id="cjfertvyv0004it7ql34wtogv" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2016/07/28/Android之代码性能优化/" data-id="cjfetg1x70004e27qtmtgzw1u" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/android/">android</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/代码/">代码</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/优化/">优化</a></li></ul>
@@ -1059,7 +1061,7 @@ String IMEI = telephonyManager.getDeviceId();
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2016/07/04/2016个人阅读书单/" data-id="cjfertvyo0001it7qrfrm0lve" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2016/07/04/2016个人阅读书单/" data-id="cjfetg1x10001e27qzdaw4is2" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/书籍/">书籍</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/阅读/">阅读</a></li></ul>
