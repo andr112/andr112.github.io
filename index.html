@@ -182,7 +182,270 @@ if-lez vA, :cond_** 如果vA小于等于0则跳转到:cond_**相当于if (VA&lt;
 if-gtz vA, :cond_** 如果vA大于0则跳转到:cond_**相当于if (VA&gt;0)
 if-gez vA, :cond_** 如果vA大于等于0则跳转到:cond_**相当于if (VA&gt;=0)
 </code></pre><h3 id="循环语句"><a href="#循环语句" class="headerlink" title="循环语句"></a>循环语句</h3><p>常用的循环结构有：迭代器循环，for循环，do while循环。</p>
-<h3 id="switch分支语句"><a href="#switch分支语句" class="headerlink" title="switch分支语句"></a>switch分支语句</h3><h3 id="try-catch语句"><a href="#try-catch语句" class="headerlink" title="try/catch语句"></a>try/catch语句</h3><h2 id="头信息——类的主体信息"><a href="#头信息——类的主体信息" class="headerlink" title="头信息——类的主体信息"></a>头信息——类的主体信息</h2><p>在打开smali文件的时候，它的头三行描述了当前类的一些信息。<br>    .class &lt;访问权限&gt; [关键修饰字] &lt;类名&gt;;<br>    .super &lt;父类名&gt;;<br>    .source &lt;源文件名&gt;</p>
+<pre><code>import java.util.*;
+
+public class demo{
+    public static void main(String[]args)
+    {
+        Scanner s=new Scanner(System.in);
+        int[] arr=new int[5];
+        for(int i=0;i&lt;5;i++)
+        {
+            arr[i]=s.nextInt();
+        }  
+        for (int i:arr)
+        {
+            System.out.println(i);
+        }
+
+    }
+}
+
+.class public Ldemo;
+.super Ljava/lang/Object;
+.source &quot;demo.java&quot;
+
+
+# direct methods
+.method public constructor &lt;init&gt;()V
+    .registers 1
+
+    .prologue
+    .line 3
+    invoke-direct {p0}, Ljava/lang/Object;-&gt;&lt;init&gt;()V
+
+    return-void
+.end method
+
+.method public static main([Ljava/lang/String;)V
+    .registers 7
+
+    .prologue
+    const/4 v5, 0x5
+
+    const/4 v0, 0x0
+
+    .line 6
+    new-instance v2, Ljava/util/Scanner;
+
+    sget-object v1, Ljava/lang/System;-&gt;in:Ljava/io/InputStream;
+
+    invoke-direct {v2, v1}, Ljava/util/Scanner;-&gt;&lt;init&gt;(Ljava/io/InputStream;)V
+
+    .line 7
+    new-array v3, v5, [I
+
+    move v1, v0
+
+    .line 8
+    :goto_c
+    if-ge v1, v5, :cond_17
+
+    .line 10
+    invoke-virtual {v2}, Ljava/util/Scanner;-&gt;nextInt()I
+
+    move-result v4
+
+    aput v4, v3, v1
+
+    .line 8
+    add-int/lit8 v1, v1, 0x1
+
+    goto :goto_c
+
+    .line 12
+    :cond_17
+    array-length v1, v3
+
+    :goto_18
+    if-ge v0, v1, :cond_24
+
+    aget v2, v3, v0
+
+    .line 14
+    sget-object v4, Ljava/lang/System;-&gt;out:Ljava/io/PrintStream;
+
+    invoke-virtual {v4, v2}, Ljava/io/PrintStream;-&gt;println(I)V
+
+    .line 12
+    add-int/lit8 v0, v0, 0x1
+
+    goto :goto_18
+
+    .line 17
+    :cond_24
+    return-void
+.end method
+</code></pre><h3 id="switch分支语句"><a href="#switch分支语句" class="headerlink" title="switch分支语句"></a>switch分支语句</h3><p>1、case值递增的有规律 switch</p>
+<pre><code>private String packedSwitch(int i) {  
+    String str = null;  
+    switch (i) {  
+        case 0:  
+            str = &quot;she is a baby&quot;;  
+            break;  
+        case 1:  
+            str = &quot;she is a girl&quot;;  
+            break;  
+        case 2:  
+            str = &quot;she is a woman&quot;;  
+            break;  
+        case 3:  
+            str = &quot;she is an obasan&quot;;  
+            break;  
+        default:  
+            str = &quot;she is a person&quot;;  
+            break;  
+    }  
+    return str;  
+}  
+
+.method private packedSwitch(I)Ljava/lang/String;  
+    .locals 1  
+    .parameter &quot;i&quot;  
+    .prologue  
+    .line 21  
+    const/4 v0, 0x0  
+    .line 22  
+    .local v0, str:Ljava/lang/String;  #v0为字符串，0表示null  
+    packed-switch p1, :pswitch_data_0  #packed-switch分支，pswitch_data_0指定case区域  
+    .line 36  
+    const-string v0, &quot;she is a person&quot;  #default分支  
+    .line 39  
+    :goto_0      #所有case的出口  
+    return-object v0 #返回字符串v0  
+    .line 24  
+    :pswitch_0    #case 0  
+    const-string v0, &quot;she is a baby&quot;  
+    .line 25  
+    goto :goto_0  #跳转到goto_0标号处  
+    .line 27  
+    :pswitch_1    #case 1  
+    const-string v0, &quot;she is a girl&quot;  
+    .line 28  
+    goto :goto_0  #跳转到goto_0标号处  
+    .line 30  
+    :pswitch_2    #case 2  
+    const-string v0, &quot;she is a woman&quot;  
+    .line 31  
+    goto :goto_0  #跳转到goto_0标号处  
+    .line 33  
+    :pswitch_3    #case 3  
+    const-string v0, &quot;she is an obasan&quot;  
+    .line 34  
+    goto :goto_0  #跳转到goto_0标号处  
+    .line 22  
+    nop  
+    :pswitch_data_0  
+    .packed-switch 0x0    #case  区域，从0开始，依次递增  
+        :pswitch_0  #case 0  
+        :pswitch_1  #case 1  
+        :pswitch_2  #case 2  
+        :pswitch_3  #case 3  
+    .end packed-switch  
+.end method
+</code></pre><p>2、无规律的switch</p>
+<pre><code>private String sparseSwitch(int age) {  
+    String str = null;  
+    switch (age) {  
+        case 5:  
+            str = &quot;he is a baby&quot;;  
+            break;  
+        case 15:  
+            str = &quot;he is a student&quot;;  
+            break;  
+        case 35:  
+            str = &quot;he is a father&quot;;  
+            break;  
+        case 65:  
+            str = &quot;he is a grandpa&quot;;  
+            break;  
+        default:  
+            str = &quot;he is a person&quot;;  
+            break;  
+    }  
+    return str;  
+} 
+
+.method private sparseSwitch(I)Ljava/lang/String;  
+    .locals 1  
+    .parameter &quot;age&quot;  
+    .prologue  
+    .line 43  
+    const/4 v0, 0x0  
+    .line 44  
+    .local v0, str:Ljava/lang/String;  
+    sparse-switch p1, :sswitch_data_0  # sparse-switch分支，sswitch_data_0指定case区域  
+    .line 58  
+    const-string v0, &quot;he is a person&quot;  #case default  
+    .line 61  
+    :goto_0    #case 出口  
+    return-object v0  #返回字符串  
+    .line 46  
+    :sswitch_0    #case 5  
+    const-string v0, &quot;he is a baby&quot;  
+    .line 47  
+    goto :goto_0 #跳转到goto_0标号处  
+    .line 49  
+    :sswitch_1    #case 15  
+    const-string v0, &quot;he is a student&quot;  
+    .line 50  
+    goto :goto_0 #跳转到goto_0标号处  
+    .line 52  
+    :sswitch_2    #case 35  
+    const-string v0, &quot;he is a father&quot;  
+    .line 53  
+    goto :goto_0 #跳转到goto_0标号处  
+    .line 55  
+    :sswitch_3    #case 65  
+    const-string v0, &quot;he is a grandpa&quot;  
+    .line 56  
+    goto :goto_0 #跳转到goto_0标号处  
+    .line 44  
+    nop  
+    :sswitch_data_0  
+    .sparse-switch            #case 区域  
+        0x5 -&gt; :sswitch_0     #case 5(0x5)  
+        0xf -&gt; :sswitch_1     #case 15(0xf)  
+        0x23 -&gt; :sswitch_2    #case 35(0x23)  
+        0x41 -&gt; :sswitch_3    #case 65(0x41)  
+    .end sparse-switch  
+.end method 
+</code></pre><h3 id="try-catch语句"><a href="#try-catch语句" class="headerlink" title="try/catch语句"></a>try/catch语句</h3><pre><code>private void throw2() {
+    try {
+        throw new Exception(&quot;test throw runtime exception&quot;);
+    } catch (Exception e) {
+        e.printStackTrace();
+    }
+}
+
+.method private throw2()V
+    .locals 3
+
+    .prologue
+    .line 31
+    :try_start_0
+    new-instance v1, Ljava/lang/Exception;
+
+    const-string v2, &quot;test throw runtime exception&quot;
+
+    invoke-direct {v1, v2}, Ljava/lang/Exception;-&gt;&lt;init&gt;(Ljava/lang/String;)V
+
+    throw v1
+    :try_end_0
+    .catch Ljava/lang/Exception; {:try_start_0 .. :try_end_0} :catch_0
+
+    .line 32
+    :catch_0
+    move-exception v0
+
+    .line 33
+    .local v0, &quot;e&quot;:Ljava/lang/Exception;
+    invoke-virtual {v0}, Ljava/lang/Exception;-&gt;printStackTrace()V
+
+    .line 35
+    return-void
+.end method
+</code></pre><h2 id="头信息——类的主体信息"><a href="#头信息——类的主体信息" class="headerlink" title="头信息——类的主体信息"></a>头信息——类的主体信息</h2><p>在打开smali文件的时候，它的头三行描述了当前类的一些信息。<br>    .class &lt;访问权限&gt; [关键修饰字] &lt;类名&gt;;<br>    .super &lt;父类名&gt;;<br>    .source &lt;源文件名&gt;</p>
 <p>例如：</p>
 <pre><code>//===================================================================
 public class MainActivity extends AppCompatActivity {
@@ -383,12 +646,14 @@ public void click() {
 <ul>
 <li><a href="https://blog.csdn.net/hp910315/article/details/51823236" target="_blank" rel="external">静态分析Android程序——smali文件解析</a></li>
 <li><a href="https://blog.csdn.net/lkgmfjk/article/details/51202095" target="_blank" rel="external">Smali和逆向分析</a></li>
+<li><a href="https://blog.csdn.net/qq_36869808/article/details/79111845" target="_blank" rel="external">Android逆向-java代码基础</a></li>
+<li><a href="https://blog.csdn.net/l25000/article/details/46842013" target="_blank" rel="external">android逆向分析之smali语法</a></li>
 </ul>
 
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/03/29/smali-语法/" data-id="cjfetg1z0001ke27q2qa9gxs1" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2018/03/29/smali-语法/" data-id="cjfi41ffc0009i37q5d3oji0x" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Android/">Android</a></li></ul>
@@ -509,7 +774,7 @@ mysql_close($con);
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2017/11/01/阿里云ECS-CentOS系统搭建LAMP/" data-id="cjfetg1za001ye27q2clmks5k" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2017/11/01/阿里云ECS-CentOS系统搭建LAMP/" data-id="cjfi41fgz0023i37qfdlutr3y" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/环境搭建/">环境搭建</a></li></ul>
@@ -601,7 +866,7 @@ mysql_close($con);
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2017/03/09/Gradle-for-Android/" data-id="cjfetg1x80005e27q2elay6zz" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2017/03/09/Gradle-for-Android/" data-id="cjfi41ff60005i37qv2kx9b4n" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Android/">Android</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Gradle/">Gradle</a></li></ul>
@@ -678,7 +943,7 @@ public void request(Context context, String url, final BaseCallback callback) {
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2017/02/24/手机如何伪装成电脑上网/" data-id="cjfetg1z4001re27qdi3vzyn3" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2017/02/24/手机如何伪装成电脑上网/" data-id="cjfi41fgy0021i37qvy0b5swg" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/android/">android</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/其他/">其他</a></li></ul>
@@ -725,7 +990,7 @@ String IMEI = telephonyManager.getDeviceId();
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2017/02/04/Android快捷获取设备IMEI号/" data-id="cjfetg1xb0007e27qggf0lprn" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2017/02/04/Android快捷获取设备IMEI号/" data-id="cjfi41ffe000bi37qa4cq2j9y" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Android/">Android</a></li></ul>
@@ -772,7 +1037,7 @@ String IMEI = telephonyManager.getDeviceId();
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2017/01/21/使用Runtime代码中安装APP/" data-id="cjfetg1yt001ee27qfqbrboj5" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2017/01/21/使用Runtime代码中安装APP/" data-id="cjfi41fgu001yi37qudavaw8x" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Android/">Android</a></li></ul>
@@ -847,7 +1112,7 @@ String IMEI = telephonyManager.getDeviceId();
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2017/01/20/终端常用命令/" data-id="cjfetg1z7001ve27qeg2dxn1p" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2017/01/20/终端常用命令/" data-id="cjfi41fgs001xi37qe7upx9j3" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/其他/">其他</a></li></ul>
@@ -930,7 +1195,7 @@ String IMEI = telephonyManager.getDeviceId();
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2016/10/27/Weex学习索引/" data-id="cjfetg1xg000be27qj6lawhu4" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2016/10/27/Weex学习索引/" data-id="cjfi41ff80007i37qsny1v91z" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/weex/">weex</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/编程语言/">编程语言</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/资料索引/">资料索引</a></li></ul>
@@ -998,7 +1263,7 @@ String IMEI = telephonyManager.getDeviceId();
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2016/07/28/Android之代码性能优化/" data-id="cjfetg1x70004e27qtmtgzw1u" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2016/07/28/Android之代码性能优化/" data-id="cjfi41ff50004i37q382mg8oe" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/android/">android</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/代码/">代码</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/优化/">优化</a></li></ul>
@@ -1061,7 +1326,7 @@ String IMEI = telephonyManager.getDeviceId();
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2016/07/04/2016个人阅读书单/" data-id="cjfetg1x10001e27qzdaw4is2" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2016/07/04/2016个人阅读书单/" data-id="cjfi41fep0000i37q8kslsapr" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/书籍/">书籍</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/阅读/">阅读</a></li></ul>
