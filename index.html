@@ -68,6 +68,82 @@
       <div class="outer">
         <section id="main">
   
+    <article id="post-彻底搞懂Android文件存储-内部存储，外部存储以及各种存储路径" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2018/04/03/彻底搞懂Android文件存储-内部存储，外部存储以及各种存储路径/" class="article-date">
+  <time datetime="2018-04-03T09:51:41.000Z" itemprop="datePublished">2018-04-03</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/programming/">编程</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2018/04/03/彻底搞懂Android文件存储-内部存储，外部存储以及各种存储路径/">彻底搞懂Android文件存储(内部存储，外部存储以及各种存储路径)</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>  今天有人问我“外部存储是单指sd卡么?”“手机内部存储是看不到的, 对吧?”（其他程序是否可访问获取）。存取文件，开发中大家都会用，功能都能实现。但很多都说不清楚。诸如，设置里面应用清除数据、清除缓存数据，都是清除的什么数据；各个安卓系统版本不同，外部存储路径不同，等等。关于文件存取相关的东西比较多，做为开发是需要梳理清楚的。</p>
+<h2 id="内存"><a href="#内存" class="headerlink" title="内存"></a>内存</h2><p>内存与PC的内存是一样的，是用来运行程序，不能用来永久存储数据，手机一旦关机，在内存中的所有数据都将会丢失，内存也是现在人类制造的所有电子设备所必需拥有的。</p>
+<h2 id="内部存储"><a href="#内部存储" class="headerlink" title="内部存储"></a>内部存储</h2><p>内部存储是内存吗？不是。内部存储是用于存储Andoid 设备的操作系统和应用程序的存储介质。也就是说，Android设备中的Android系统和应用程序（APK文件）都是存在内部存储区的。例如手机的/system/目录、/data/目录等。是可以永久保存数据的。</p>
+<p>将文件存储于内部存储中，文件默认只能被你的应用访问到，且一个应用所创建的所有文件都在和应用包名相同的目录下。也就是说应用创建于内部存储的文件，与这个应用是关联起来的。当一个应用卸载之后，内部存储中的这些文件也被删除。从技术上来讲如果你在创建内部存储文件的时候将文件属性设置成可读，其他app能够访问自己应用的数据，前提是他知道你这个应用的包名，如果一个文件的属性是私有（private），那么即使知道包名其他应用也无法访问。</p>
+<p>内部存储空间十分有限，我们要尽量避免使用。</p>
+<p>Shared Preferences和SQLite数据库都是存储在内部存储空间上的。内部存储一般用Context来获取和操作。 </p>
+<p>访问内部存储的API方法：<br>1、Environment.getDataDirectory()<br>2、getFilesDir().getAbsolutePath()<br>3、getCacheDir().getAbsolutePath()<br>4、getDir(“myFile”, MODE_PRIVATE).getAbsolutePath() </p>
+<h2 id="外部存储"><a href="#外部存储" class="headerlink" title="外部存储"></a>外部存储</h2><p>pc机（电脑）自带的硬盘算是内部存储，U盘或者移动硬盘就是外部存储。</p>
+<p>安卓4.4（API19）以前的手机，内置存储（机身存储：手机自身带的存储卡）就是内部存储，外部存储就是扩展的SD卡。</p>
+<p>但从4.4的系统开始，很多的中高端机器都将自己的机身存储扩展到了8G以上、16G、32G等。4.4系统及以上的手机将机身存储存储（手机自身带的存储叫做机身存储）在概念上分成了”内部存储internal” 和”外部存储external” 两部分。如果4.4系统及以上的手机插SD卡，SD卡也是外部存储。4.4系统及以上的手机的外部存储可能包含两部分，一是机身存储的外部存储部分，一是SD卡部分。在4.4以后的系统中，API提供了这样一个方法来遍历手机的外部存储路径：<br>    File[] files;<br>    if (Build.VERSION.SDK_INT &gt;= Build.VERSION_CODES.KITKAT) {<br>        files = getExternalFilesDirs(Environment.MEDIA_MOUNTED);<br>        for(File file:files){<br>            Log.e(“main”,file);<br>        }<br>    }<br>访问外部存储的API方法：<br>1、Environment.getExternalStorageDirectory().getAbsolutePath()<br>2、Environment.getExternalStoragePublicDirectory(“”).getAbsolutePath()<br>3、getExternalFilesDir(“”).getAbsolutePath()<br>4、getExternalCacheDir().getAbsolutePath() </p>
+<h2 id="存储路径"><a href="#存储路径" class="headerlink" title="存储路径"></a>存储路径</h2><p>不同的Android版本，存在一些差异。</p>
+<p>基于荣耀7的（系统版本6.0）路径：<br>1、Environment.getDataDirectory() = /data<br>这个方法是获取内部存储的根路径<br>2、getFilesDir().getAbsolutePath() = /data/user/0/packname/files<br>这个方法是获取某个应用在内部存储中的files路径<br>3、getCacheDir().getAbsolutePath() = /data/user/0/packname/cache<br>这个方法是获取某个应用在内部存储中的cache路径<br>4、getDir(“myFile”, MODE_PRIVATE).getAbsolutePath() = /data/user/0/packname/app_myFile<br>这个方法是获取某个应用在内部存储中的自定义路径<br>方法2,3,4的路径中都带有包名，说明他们是属于某个应用<br>…………………………………………………………………………………………<br>5、Environment.getExternalStorageDirectory().getAbsolutePath() = /storage/emulated/0<br>这个方法是获取外部存储的根路径<br>6、Environment.getExternalStoragePublicDirectory(“”).getAbsolutePath() = /storage/emulated/0<br>这个方法是获取外部存储的根路径<br>7、getExternalFilesDir(“”).getAbsolutePath() = /storage/emulated/0/Android/data/packname/files<br>这个方法是获取某个应用在外部存储中的files路径<br>8、getExternalCacheDir().getAbsolutePath() = /storage/emulated/0/Android/data/packname/cache<br>这个方法是获取某个应用在外部存储中的cache路径<br>注意：其中方法7和方法8如果在4.4以前的系统中getExternalFilesDir(“”)和getExternalCacheDir()将返回null，即4.4以前的系统没插SD卡的话，就没有外部存储；而4.4及以后的系统外部存储包括两部分，getExternalFilesDir(“”)和getExternalCacheDir()获取的是机身存储的外部存储部分，即4.4及以后的系统你不插SD卡，它也有外部存储，既然getExternalFilesDir(“”)和getExternalCacheDir()获取的是机身存储的外部存储部分，那么怎么获取SD卡的存储路径呢，通过上面提到的getExternalFilesDirs(Environment.MEDIA_MOUNTED)方法来获取。<br>…………………………………………………………………………………………<br>Environment.getDownloadCacheDirectory() = /cache<br>Environment.getRootDirectory() = /system<br>这两个方法，每个版本的android系统都一样<br>………………………………………………………………………………………… </p>
+<p>/data目录下的文件物理上存放在我们通常所说的内部存储里面<br>/storage目录下的文件物理上存放在我们通常所说的外部存储里面 ，API方法都带了一个External<br>/system用于存放系统文件，/cache用于存放一些缓存文件，物理上它们也是存放在内部存储里面的 </p>
+<h2 id="设置里面应用清除数据、清除缓存数据，都是清除的什么数据"><a href="#设置里面应用清除数据、清除缓存数据，都是清除的什么数据" class="headerlink" title="设置里面应用清除数据、清除缓存数据，都是清除的什么数据"></a>设置里面应用清除数据、清除缓存数据，都是清除的什么数据</h2><p>1.清除缓存：应用程序在运行过程中需要经过很多过程，如读入程序，计算，输入输出等等，这些过程中会产生很多的数据，它们在内存中，以供程序运行时调用。清除缓存清除的是APP运行过程中所产生的临时数据。 </p>
+<ol>
+<li>清除数据：清除数据是真正的删除了我们保存在文件中的数据（永久性数据）,当我们在设置里面清除了某个应用的数据，那么/data/user/0/packname/和/storage/emulated/0/Android/data/packname/下的文件里面的数据会全部删除，包括cache，files，lib，shared_prefs等等。</li>
+</ol>
+<h2 id="内部存储本身就比较小，而且已经存储了一些系统的文件，我们因尽量不要使用。一般做法："><a href="#内部存储本身就比较小，而且已经存储了一些系统的文件，我们因尽量不要使用。一般做法：" class="headerlink" title="内部存储本身就比较小，而且已经存储了一些系统的文件，我们因尽量不要使用。一般做法："></a>内部存储本身就比较小，而且已经存储了一些系统的文件，我们因尽量不要使用。一般做法：</h2><pre><code>public static String getFilePath(Context context,String dir) {
+    String directoryPath=&quot;dirName&quot;;
+    if (MEDIA_MOUNTED.equals(Environment.getExternalStorageState()) ) {//判断外部存储是否可用 
+        directoryPath =context.getExternalFilesDir(dir).getAbsolutePath();
+        }else{//没外部存储就使用内部存储  
+        directoryPath=context.getFilesDir()+File.separator+dir;
+        }
+        File file = new File(directoryPath);
+        if(!file.exists()){//判断文件目录是否存在
+        file.mkdirs();
+        }
+    return directoryPath;
+}
+</code></pre><h2 id="参考文章"><a href="#参考文章" class="headerlink" title="参考文章"></a>参考文章</h2><ul>
+<li><a href="https://blog.csdn.net/kenvin0124/article/details/52281856" target="_blank" rel="external">Android中内存、内部存储及外部存储的区别</a></li>
+<li><a href="https://blog.csdn.net/u010937230/article/details/73303034" target="_blank" rel="external">彻底搞懂Android文件存储—内部存储，外部存储以及各种存储路径解惑</a></li>
+</ul>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2018/04/03/彻底搞懂Android文件存储-内部存储，外部存储以及各种存储路径/" data-id="cjfthdfck000fvz7qyj52huyu" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Android/">Android</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+  
     <article id="post-smali-语法" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
     <a href="/2018/03/29/smali-语法/" class="article-date">
@@ -653,7 +729,7 @@ public void click() {
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/03/29/smali-语法/" data-id="cjfi41ffc0009i37q5d3oji0x" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2018/03/29/smali-语法/" data-id="cjfthdfco000ivz7qbquzwzh9" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Android/">Android</a></li></ul>
@@ -774,7 +850,7 @@ mysql_close($con);
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2017/11/01/阿里云ECS-CentOS系统搭建LAMP/" data-id="cjfi41fgz0023i37qfdlutr3y" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2017/11/01/阿里云ECS-CentOS系统搭建LAMP/" data-id="cjfthdfdb0014vz7q6x19320a" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/环境搭建/">环境搭建</a></li></ul>
@@ -866,7 +942,7 @@ mysql_close($con);
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2017/03/09/Gradle-for-Android/" data-id="cjfi41ff60005i37qv2kx9b4n" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2017/03/09/Gradle-for-Android/" data-id="cjfthdfc80007vz7qmqr98dm8" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Android/">Android</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Gradle/">Gradle</a></li></ul>
@@ -943,7 +1019,7 @@ public void request(Context context, String url, final BaseCallback callback) {
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2017/02/24/手机如何伪装成电脑上网/" data-id="cjfi41fgy0021i37qvy0b5swg" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2017/02/24/手机如何伪装成电脑上网/" data-id="cjfthdfd8000yvz7qy299arns" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/android/">android</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/其他/">其他</a></li></ul>
@@ -990,7 +1066,7 @@ String IMEI = telephonyManager.getDeviceId();
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2017/02/04/Android快捷获取设备IMEI号/" data-id="cjfi41ffe000bi37qa4cq2j9y" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2017/02/04/Android快捷获取设备IMEI号/" data-id="cjfthdfc70005vz7qj2gvrnbi" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Android/">Android</a></li></ul>
@@ -1037,7 +1113,7 @@ String IMEI = telephonyManager.getDeviceId();
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2017/01/21/使用Runtime代码中安装APP/" data-id="cjfi41fgu001yi37qudavaw8x" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2017/01/21/使用Runtime代码中安装APP/" data-id="cjfthdfd4000svz7q9nh2hsgt" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Android/">Android</a></li></ul>
@@ -1112,7 +1188,7 @@ String IMEI = telephonyManager.getDeviceId();
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2017/01/20/终端常用命令/" data-id="cjfi41fgs001xi37qe7upx9j3" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2017/01/20/终端常用命令/" data-id="cjfthdfda0011vz7q5zcjd74j" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/其他/">其他</a></li></ul>
@@ -1195,7 +1271,7 @@ String IMEI = telephonyManager.getDeviceId();
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2016/10/27/Weex学习索引/" data-id="cjfi41ff80007i37qsny1v91z" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2016/10/27/Weex学习索引/" data-id="cjfthdfcb0009vz7q423wpa86" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/weex/">weex</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/编程语言/">编程语言</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/资料索引/">资料索引</a></li></ul>
@@ -1263,73 +1339,10 @@ String IMEI = telephonyManager.getDeviceId();
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2016/07/28/Android之代码性能优化/" data-id="cjfi41ff50004i37q382mg8oe" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2016/07/28/Android之代码性能优化/" data-id="cjfthdfbz0001vz7qbi2v42j5" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/android/">android</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/代码/">代码</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/优化/">优化</a></li></ul>
-
-    </footer>
-  </div>
-  
-</article>
-
-
-  
-    <article id="post-2016个人阅读书单" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2016/07/04/2016个人阅读书单/" class="article-date">
-  <time datetime="2016-07-04T09:55:00.000Z" itemprop="datePublished">2016-07-04</time>
-</a>
-    
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/life/">生活</a>
-  </div>
-
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2016/07/04/2016个人阅读书单/">2016个人阅读书单</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>  读书是让自己长知识明事理的一种很好的途径。可是，我们的大脑不大能记住很多东西。很多时候看过的学过的随着时间的流逝就会逐渐模糊忘记。好些时候一本好书看过了，想再翻来 看看时，书名都不记得了。挺遗憾的，甚至还会对自己懊恼一会。每年列个书单，这样的情况应该就可避免了。</p>
-<h2 id="值得推荐"><a href="#值得推荐" class="headerlink" title="值得推荐"></a>值得推荐</h2><ul>
-<li><p>《我看电商》黄若</p>
-<p><em>电子商务日益发展对我们的生活已产生很大影响。本书推荐给所有从事互联网或电商运营的企业和个人、投资电商或服务电商的相关业界人士、有志进军电商领域的年轻学生、创业者</em></p>
-</li>
-<li><p>《从你的全世界路过》张嘉佳</p>
-<p><em>作家、编剧张嘉佳于2013年编著。该书以故事的讲述方式，讲述33个真实的爱情故事。</em></p>
-</li>
-<li><p>《灵魂有香气的女子》李筱懿</p>
-<p><em>民国时期26位女神的故事。一本揭穿人生的启示录。有张幼仪 林徽因 唐瑛 江冬秀 宋美龄 孟小冬 胡蝶 潘素 孙多慈 ……</em></p>
-</li>
-<li><p>《三体》刘慈欣</p>
-<p><em>系列长篇科幻小说，以文化大革命为背景、叶文洁、“红岸工程”、游戏与现实世界、科技和环境保护，还有对文明、人生观的思考</em></p>
-</li>
-<li><p>《你在天堂里遇见的五个人》（美）米奇.阿尔博姆</p>
-<p><em>故事的讲述视角很独特，是一本积极的，强调爱和生活的书，同时一定程度地揭示了人生活处境的无奈。</em></p>
-</li>
-</ul>
-<h2 id="不推荐"><a href="#不推荐" class="headerlink" title="不推荐"></a>不推荐</h2><ul>
-<li>略</li>
-</ul>
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://yoursite.com/2016/07/04/2016个人阅读书单/" data-id="cjfi41fep0000i37q8kslsapr" class="article-share-link">Share</a>
-      
-      
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/书籍/">书籍</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/阅读/">阅读</a></li></ul>
 
     </footer>
   </div>
@@ -1380,7 +1393,7 @@ String IMEI = telephonyManager.getDeviceId();
   <div class="widget-wrap">
     <h3 class="widget-title">归档</h3>
     <div class="widget">
-      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/03/">三月 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/11/">十一月 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/03/">三月 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/02/">二月 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/01/">一月 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/10/">十月 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/07/">七月 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/06/">六月 2016</a></li></ul>
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/04/">四月 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/03/">三月 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/11/">十一月 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/03/">三月 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/02/">二月 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/01/">一月 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/10/">十月 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/07/">七月 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/06/">六月 2016</a></li></ul>
     </div>
   </div>
 
@@ -1391,6 +1404,10 @@ String IMEI = telephonyManager.getDeviceId();
     <h3 class="widget-title">最新文章</h3>
     <div class="widget">
       <ul>
+        
+          <li>
+            <a href="/2018/04/03/彻底搞懂Android文件存储-内部存储，外部存储以及各种存储路径/">彻底搞懂Android文件存储(内部存储，外部存储以及各种存储路径)</a>
+          </li>
         
           <li>
             <a href="/2018/03/29/smali-语法/">smali 语法</a>
@@ -1406,10 +1423,6 @@ String IMEI = telephonyManager.getDeviceId();
         
           <li>
             <a href="/2017/02/24/手机如何伪装成电脑上网/">手机如何伪装成电脑上网</a>
-          </li>
-        
-          <li>
-            <a href="/2017/02/04/Android快捷获取设备IMEI号/">Android快捷获取设备IMEI号</a>
           </li>
         
       </ul>

@@ -1,0 +1,285 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>彻底搞懂Android文件存储(内部存储，外部存储以及各种存储路径) | 胖墩记忆</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="今天有人问我“外部存储是单指sd卡么?”“手机内部存储是看不到的, 对吧?”（其他程序是否可访问获取）。存取文件，开发中大家都会用，功能都能实现。但很多都说不清楚。诸如，设置里面应用清除数据、清除缓存数据，都是清除的什么数据；各个安卓系统版本不同，外部存储路径不同，等等。关于文件存取相关的东西比较多，做为开发是需要梳理清楚的。
+内存内存与PC的内存是一样的，是用来运行程序，不能用来永久存储数据">
+<meta property="og:type" content="article">
+<meta property="og:title" content="彻底搞懂Android文件存储(内部存储，外部存储以及各种存储路径)">
+<meta property="og:url" content="http://yoursite.com/2018/04/03/彻底搞懂Android文件存储-内部存储，外部存储以及各种存储路径/index.html">
+<meta property="og:site_name" content="胖墩记忆">
+<meta property="og:description" content="今天有人问我“外部存储是单指sd卡么?”“手机内部存储是看不到的, 对吧?”（其他程序是否可访问获取）。存取文件，开发中大家都会用，功能都能实现。但很多都说不清楚。诸如，设置里面应用清除数据、清除缓存数据，都是清除的什么数据；各个安卓系统版本不同，外部存储路径不同，等等。关于文件存取相关的东西比较多，做为开发是需要梳理清楚的。
+内存内存与PC的内存是一样的，是用来运行程序，不能用来永久存储数据">
+<meta property="og:updated_time" content="2018-04-10T09:48:12.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="彻底搞懂Android文件存储(内部存储，外部存储以及各种存储路径)">
+<meta name="twitter:description" content="今天有人问我“外部存储是单指sd卡么?”“手机内部存储是看不到的, 对吧?”（其他程序是否可访问获取）。存取文件，开发中大家都会用，功能都能实现。但很多都说不清楚。诸如，设置里面应用清除数据、清除缓存数据，都是清除的什么数据；各个安卓系统版本不同，外部存储路径不同，等等。关于文件存取相关的东西比较多，做为开发是需要梳理清楚的。
+内存内存与PC的内存是一样的，是用来运行程序，不能用来永久存储数据">
+  
+    <link rel="alternate" href="/atom.xml" title="胖墩记忆" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  <link rel="stylesheet" href="/css/style.css">
+  
+
+</head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">胖墩记忆</a>
+      </h1>
+      
+        <h2 id="subtitle-wrap">
+          <a href="/" id="subtitle">小胖胖的学习、工作和生活...</a>
+        </h2>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="搜索"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" results="0" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://yoursite.com"></form>
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main"><article id="post-彻底搞懂Android文件存储-内部存储，外部存储以及各种存储路径" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2018/04/03/彻底搞懂Android文件存储-内部存储，外部存储以及各种存储路径/" class="article-date">
+  <time datetime="2018-04-03T09:51:41.000Z" itemprop="datePublished">2018-04-03</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/programming/">编程</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      彻底搞懂Android文件存储(内部存储，外部存储以及各种存储路径)
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>  今天有人问我“外部存储是单指sd卡么?”“手机内部存储是看不到的, 对吧?”（其他程序是否可访问获取）。存取文件，开发中大家都会用，功能都能实现。但很多都说不清楚。诸如，设置里面应用清除数据、清除缓存数据，都是清除的什么数据；各个安卓系统版本不同，外部存储路径不同，等等。关于文件存取相关的东西比较多，做为开发是需要梳理清楚的。</p>
+<h2 id="内存"><a href="#内存" class="headerlink" title="内存"></a>内存</h2><p>内存与PC的内存是一样的，是用来运行程序，不能用来永久存储数据，手机一旦关机，在内存中的所有数据都将会丢失，内存也是现在人类制造的所有电子设备所必需拥有的。</p>
+<h2 id="内部存储"><a href="#内部存储" class="headerlink" title="内部存储"></a>内部存储</h2><p>内部存储是内存吗？不是。内部存储是用于存储Andoid 设备的操作系统和应用程序的存储介质。也就是说，Android设备中的Android系统和应用程序（APK文件）都是存在内部存储区的。例如手机的/system/目录、/data/目录等。是可以永久保存数据的。</p>
+<p>将文件存储于内部存储中，文件默认只能被你的应用访问到，且一个应用所创建的所有文件都在和应用包名相同的目录下。也就是说应用创建于内部存储的文件，与这个应用是关联起来的。当一个应用卸载之后，内部存储中的这些文件也被删除。从技术上来讲如果你在创建内部存储文件的时候将文件属性设置成可读，其他app能够访问自己应用的数据，前提是他知道你这个应用的包名，如果一个文件的属性是私有（private），那么即使知道包名其他应用也无法访问。</p>
+<p>内部存储空间十分有限，我们要尽量避免使用。</p>
+<p>Shared Preferences和SQLite数据库都是存储在内部存储空间上的。内部存储一般用Context来获取和操作。 </p>
+<p>访问内部存储的API方法：<br>1、Environment.getDataDirectory()<br>2、getFilesDir().getAbsolutePath()<br>3、getCacheDir().getAbsolutePath()<br>4、getDir(“myFile”, MODE_PRIVATE).getAbsolutePath() </p>
+<h2 id="外部存储"><a href="#外部存储" class="headerlink" title="外部存储"></a>外部存储</h2><p>pc机（电脑）自带的硬盘算是内部存储，U盘或者移动硬盘就是外部存储。</p>
+<p>安卓4.4（API19）以前的手机，内置存储（机身存储：手机自身带的存储卡）就是内部存储，外部存储就是扩展的SD卡。</p>
+<p>但从4.4的系统开始，很多的中高端机器都将自己的机身存储扩展到了8G以上、16G、32G等。4.4系统及以上的手机将机身存储存储（手机自身带的存储叫做机身存储）在概念上分成了”内部存储internal” 和”外部存储external” 两部分。如果4.4系统及以上的手机插SD卡，SD卡也是外部存储。4.4系统及以上的手机的外部存储可能包含两部分，一是机身存储的外部存储部分，一是SD卡部分。在4.4以后的系统中，API提供了这样一个方法来遍历手机的外部存储路径：<br>    File[] files;<br>    if (Build.VERSION.SDK_INT &gt;= Build.VERSION_CODES.KITKAT) {<br>        files = getExternalFilesDirs(Environment.MEDIA_MOUNTED);<br>        for(File file:files){<br>            Log.e(“main”,file);<br>        }<br>    }<br>访问外部存储的API方法：<br>1、Environment.getExternalStorageDirectory().getAbsolutePath()<br>2、Environment.getExternalStoragePublicDirectory(“”).getAbsolutePath()<br>3、getExternalFilesDir(“”).getAbsolutePath()<br>4、getExternalCacheDir().getAbsolutePath() </p>
+<h2 id="存储路径"><a href="#存储路径" class="headerlink" title="存储路径"></a>存储路径</h2><p>不同的Android版本，存在一些差异。</p>
+<p>基于荣耀7的（系统版本6.0）路径：<br>1、Environment.getDataDirectory() = /data<br>这个方法是获取内部存储的根路径<br>2、getFilesDir().getAbsolutePath() = /data/user/0/packname/files<br>这个方法是获取某个应用在内部存储中的files路径<br>3、getCacheDir().getAbsolutePath() = /data/user/0/packname/cache<br>这个方法是获取某个应用在内部存储中的cache路径<br>4、getDir(“myFile”, MODE_PRIVATE).getAbsolutePath() = /data/user/0/packname/app_myFile<br>这个方法是获取某个应用在内部存储中的自定义路径<br>方法2,3,4的路径中都带有包名，说明他们是属于某个应用<br>…………………………………………………………………………………………<br>5、Environment.getExternalStorageDirectory().getAbsolutePath() = /storage/emulated/0<br>这个方法是获取外部存储的根路径<br>6、Environment.getExternalStoragePublicDirectory(“”).getAbsolutePath() = /storage/emulated/0<br>这个方法是获取外部存储的根路径<br>7、getExternalFilesDir(“”).getAbsolutePath() = /storage/emulated/0/Android/data/packname/files<br>这个方法是获取某个应用在外部存储中的files路径<br>8、getExternalCacheDir().getAbsolutePath() = /storage/emulated/0/Android/data/packname/cache<br>这个方法是获取某个应用在外部存储中的cache路径<br>注意：其中方法7和方法8如果在4.4以前的系统中getExternalFilesDir(“”)和getExternalCacheDir()将返回null，即4.4以前的系统没插SD卡的话，就没有外部存储；而4.4及以后的系统外部存储包括两部分，getExternalFilesDir(“”)和getExternalCacheDir()获取的是机身存储的外部存储部分，即4.4及以后的系统你不插SD卡，它也有外部存储，既然getExternalFilesDir(“”)和getExternalCacheDir()获取的是机身存储的外部存储部分，那么怎么获取SD卡的存储路径呢，通过上面提到的getExternalFilesDirs(Environment.MEDIA_MOUNTED)方法来获取。<br>…………………………………………………………………………………………<br>Environment.getDownloadCacheDirectory() = /cache<br>Environment.getRootDirectory() = /system<br>这两个方法，每个版本的android系统都一样<br>………………………………………………………………………………………… </p>
+<p>/data目录下的文件物理上存放在我们通常所说的内部存储里面<br>/storage目录下的文件物理上存放在我们通常所说的外部存储里面 ，API方法都带了一个External<br>/system用于存放系统文件，/cache用于存放一些缓存文件，物理上它们也是存放在内部存储里面的 </p>
+<h2 id="设置里面应用清除数据、清除缓存数据，都是清除的什么数据"><a href="#设置里面应用清除数据、清除缓存数据，都是清除的什么数据" class="headerlink" title="设置里面应用清除数据、清除缓存数据，都是清除的什么数据"></a>设置里面应用清除数据、清除缓存数据，都是清除的什么数据</h2><p>1.清除缓存：应用程序在运行过程中需要经过很多过程，如读入程序，计算，输入输出等等，这些过程中会产生很多的数据，它们在内存中，以供程序运行时调用。清除缓存清除的是APP运行过程中所产生的临时数据。 </p>
+<ol>
+<li>清除数据：清除数据是真正的删除了我们保存在文件中的数据（永久性数据）,当我们在设置里面清除了某个应用的数据，那么/data/user/0/packname/和/storage/emulated/0/Android/data/packname/下的文件里面的数据会全部删除，包括cache，files，lib，shared_prefs等等。</li>
+</ol>
+<h2 id="内部存储本身就比较小，而且已经存储了一些系统的文件，我们因尽量不要使用。一般做法："><a href="#内部存储本身就比较小，而且已经存储了一些系统的文件，我们因尽量不要使用。一般做法：" class="headerlink" title="内部存储本身就比较小，而且已经存储了一些系统的文件，我们因尽量不要使用。一般做法："></a>内部存储本身就比较小，而且已经存储了一些系统的文件，我们因尽量不要使用。一般做法：</h2><pre><code>public static String getFilePath(Context context,String dir) {
+    String directoryPath=&quot;dirName&quot;;
+    if (MEDIA_MOUNTED.equals(Environment.getExternalStorageState()) ) {//判断外部存储是否可用 
+        directoryPath =context.getExternalFilesDir(dir).getAbsolutePath();
+        }else{//没外部存储就使用内部存储  
+        directoryPath=context.getFilesDir()+File.separator+dir;
+        }
+        File file = new File(directoryPath);
+        if(!file.exists()){//判断文件目录是否存在
+        file.mkdirs();
+        }
+    return directoryPath;
+}
+</code></pre><h2 id="参考文章"><a href="#参考文章" class="headerlink" title="参考文章"></a>参考文章</h2><ul>
+<li><a href="https://blog.csdn.net/kenvin0124/article/details/52281856" target="_blank" rel="external">Android中内存、内部存储及外部存储的区别</a></li>
+<li><a href="https://blog.csdn.net/u010937230/article/details/73303034" target="_blank" rel="external">彻底搞懂Android文件存储—内部存储，外部存储以及各种存储路径解惑</a></li>
+</ul>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2018/04/03/彻底搞懂Android文件存储-内部存储，外部存储以及各种存储路径/" data-id="cjfthdfck000fvz7qyj52huyu" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Android/">Android</a></li></ul>
+
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+  
+    <a href="/2018/03/29/smali-语法/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">smali 语法</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+
+  <section id="comments">
+    <!-- 多说评论框 start -->
+    <div class="ds-thread" data-thread-key="post-彻底搞懂Android文件存储-内部存储，外部存储以及各种存储路径" data-title="彻底搞懂Android文件存储(内部存储，外部存储以及各种存储路径)" data-url="http://yoursite.com/2018/04/03/彻底搞懂Android文件存储-内部存储，外部存储以及各种存储路径/"></div>
+    <!-- 多说评论框 end -->
+    <!-- 多说公共JS代码 start (一个网页只需插入一次) -->
+    <script type="text/javascript">
+    var duoshuoQuery = {short_name:'andr112'};
+      (function() {
+        var ds = document.createElement('script');
+        ds.type = 'text/javascript';ds.async = true;
+        ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+        ds.charset = 'UTF-8';
+        (document.getElementsByTagName('head')[0] 
+         || document.getElementsByTagName('body')[0]).appendChild(ds);
+      })();
+      </script>
+    <!-- 多说公共JS代码 end -->
+  </section>
+  </section>
+        
+          <aside id="sidebar">
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">分类</h3>
+    <div class="widget">
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/other/">其他</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/life/">生活</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/programming/">编程</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/programming/life/">生活</a></li></ul></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">标签</h3>
+    <div class="widget">
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Android/">Android</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Gradle/">Gradle</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/JNI/">JNI</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/android/">android</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/weex/">weex</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/书籍/">书籍</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/代码/">代码</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/优化/">优化</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/其他/">其他</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/实践/">实践</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/环境搭建/">环境搭建</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/生活美物/">生活美物</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/经验/">经验</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/编程语言/">编程语言</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/资料索引/">资料索引</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/问题/">问题</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/阅读/">阅读</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">标签云</h3>
+    <div class="widget tagcloud">
+      <a href="/tags/Android/" style="font-size: 20px;">Android</a> <a href="/tags/Gradle/" style="font-size: 10px;">Gradle</a> <a href="/tags/JNI/" style="font-size: 10px;">JNI</a> <a href="/tags/android/" style="font-size: 15px;">android</a> <a href="/tags/weex/" style="font-size: 10px;">weex</a> <a href="/tags/书籍/" style="font-size: 10px;">书籍</a> <a href="/tags/代码/" style="font-size: 10px;">代码</a> <a href="/tags/优化/" style="font-size: 10px;">优化</a> <a href="/tags/其他/" style="font-size: 15px;">其他</a> <a href="/tags/实践/" style="font-size: 10px;">实践</a> <a href="/tags/环境搭建/" style="font-size: 15px;">环境搭建</a> <a href="/tags/生活美物/" style="font-size: 10px;">生活美物</a> <a href="/tags/经验/" style="font-size: 15px;">经验</a> <a href="/tags/编程语言/" style="font-size: 10px;">编程语言</a> <a href="/tags/资料索引/" style="font-size: 10px;">资料索引</a> <a href="/tags/问题/" style="font-size: 15px;">问题</a> <a href="/tags/阅读/" style="font-size: 10px;">阅读</a>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">归档</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/04/">四月 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/03/">三月 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/11/">十一月 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/03/">三月 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/02/">二月 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/01/">一月 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/10/">十月 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/07/">七月 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/06/">六月 2016</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">最新文章</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2018/04/03/彻底搞懂Android文件存储-内部存储，外部存储以及各种存储路径/">彻底搞懂Android文件存储(内部存储，外部存储以及各种存储路径)</a>
+          </li>
+        
+          <li>
+            <a href="/2018/03/29/smali-语法/">smali 语法</a>
+          </li>
+        
+          <li>
+            <a href="/2017/11/01/阿里云ECS-CentOS系统搭建LAMP/">阿里云ECS CentOS系统搭建LAMP</a>
+          </li>
+        
+          <li>
+            <a href="/2017/03/09/Gradle-for-Android/">Gradle for Android</a>
+          </li>
+        
+          <li>
+            <a href="/2017/02/24/手机如何伪装成电脑上网/">手机如何伪装成电脑上网</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2018 Zhangdan<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  <script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/js/script.js"></script>
+
+  </div>
+</body>
+</html>
