@@ -3,27 +3,45 @@
 <head>
   <meta charset="utf-8">
   
-  <title>Kotlin初步学习和简单编程 | 胖墩记忆</title>
+  <title>字符匹配_Pattern_Matcher | 胖墩记忆</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="在2017年，Google在IO大会上宣布，将Android开发的官方语言更换为Kotlin，作为跟着Google玩儿Android的人，我们必须了解和学会使用Kotlin语言。
-入门文章链接
-写给Android开发者的Kotlin入门
-Swift is like Kotlin">
+  <meta name="description" content="正则表达式 正则表达式是处理字符串的特殊字符串，用途：
+
+字符串匹配(字符匹配)
+字符串查找(是建立在匹配之上的查找)
+字符串替换(是建立在查找的结果之后的替换)相关类：
+
+java.lang.String 
+java.util.regex.Pattern
+java.util.regex.Matcher 
+实例体会String str = “ab1cdeabcff2efg”; //“aaa1a”">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Kotlin初步学习和简单编程">
-<meta property="og:url" content="http://yoursite.com/2018/04/10/Kotlin初步学习和简单编程/index.html">
+<meta property="og:title" content="字符匹配_Pattern_Matcher">
+<meta property="og:url" content="http://yoursite.com/2018/04/11/字符匹配-Pattern-Matcher/index.html">
 <meta property="og:site_name" content="胖墩记忆">
-<meta property="og:description" content="在2017年，Google在IO大会上宣布，将Android开发的官方语言更换为Kotlin，作为跟着Google玩儿Android的人，我们必须了解和学会使用Kotlin语言。
-入门文章链接
-写给Android开发者的Kotlin入门
-Swift is like Kotlin">
-<meta property="og:updated_time" content="2018-04-10T10:28:07.000Z">
+<meta property="og:description" content="正则表达式 正则表达式是处理字符串的特殊字符串，用途：
+
+字符串匹配(字符匹配)
+字符串查找(是建立在匹配之上的查找)
+字符串替换(是建立在查找的结果之后的替换)相关类：
+
+java.lang.String 
+java.util.regex.Pattern
+java.util.regex.Matcher 
+实例体会String str = “ab1cdeabcff2efg”; //“aaa1a”">
+<meta property="og:updated_time" content="2018-04-11T10:31:26.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Kotlin初步学习和简单编程">
-<meta name="twitter:description" content="在2017年，Google在IO大会上宣布，将Android开发的官方语言更换为Kotlin，作为跟着Google玩儿Android的人，我们必须了解和学会使用Kotlin语言。
-入门文章链接
-写给Android开发者的Kotlin入门
-Swift is like Kotlin">
+<meta name="twitter:title" content="字符匹配_Pattern_Matcher">
+<meta name="twitter:description" content="正则表达式 正则表达式是处理字符串的特殊字符串，用途：
+
+字符串匹配(字符匹配)
+字符串查找(是建立在匹配之上的查找)
+字符串替换(是建立在查找的结果之后的替换)相关类：
+
+java.lang.String 
+java.util.regex.Pattern
+java.util.regex.Matcher 
+实例体会String str = “ab1cdeabcff2efg”; //“aaa1a”">
   
     <link rel="alternate" href="/atom.xml" title="胖墩记忆" type="application/atom+xml">
   
@@ -76,10 +94,10 @@ Swift is like Kotlin">
   </div>
 </header>
       <div class="outer">
-        <section id="main"><article id="post-Kotlin初步学习和简单编程" class="article article-type-post" itemscope itemprop="blogPost">
+        <section id="main"><article id="post-字符匹配-Pattern-Matcher" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
-    <a href="/2018/04/10/Kotlin初步学习和简单编程/" class="article-date">
-  <time datetime="2018-04-10T09:55:56.000Z" itemprop="datePublished">2018-04-10</time>
+    <a href="/2018/04/11/字符匹配-Pattern-Matcher/" class="article-date">
+  <time datetime="2018-04-11T02:44:39.000Z" itemprop="datePublished">2018-04-11</time>
 </a>
     
   <div class="article-category">
@@ -94,7 +112,7 @@ Swift is like Kotlin">
         
   
     <h1 class="article-title" itemprop="name">
-      Kotlin初步学习和简单编程
+      字符匹配_Pattern_Matcher
     </h1>
   
 
@@ -102,19 +120,48 @@ Swift is like Kotlin">
     
     <div class="article-entry" itemprop="articleBody">
       
-        <p>在2017年，Google在IO大会上宣布，将Android开发的官方语言更换为Kotlin，作为跟着Google玩儿Android的人，我们必须了解和学会使用Kotlin语言。</p>
-<h2 id="入门文章链接"><a href="#入门文章链接" class="headerlink" title="入门文章链接"></a>入门文章链接</h2><ul>
-<li><a href="https://www.jianshu.com/p/bb53cba6c8f4" target="_blank" rel="external">写给Android开发者的Kotlin入门</a></li>
-<li><a href="http://nilhcem.com/swift-is-like-kotlin/" target="_blank" rel="external">Swift is like Kotlin</a></li>
+        <h2 id="正则表达式"><a href="#正则表达式" class="headerlink" title="正则表达式"></a>正则表达式</h2><p> 正则表达式是处理字符串的特殊字符串，用途：</p>
+<ul>
+<li>字符串匹配(字符匹配)</li>
+<li>字符串查找(是建立在匹配之上的查找)</li>
+<li><p>字符串替换(是建立在查找的结果之后的替换)<br>相关类：</p>
+<ul>
+<li>java.lang.String </li>
+<li>java.util.regex.Pattern</li>
+<li><p>java.util.regex.Matcher </p>
+<h2 id="实例体会"><a href="#实例体会" class="headerlink" title="实例体会"></a>实例体会</h2><p>String str = “ab1cdeabcff2efg”; //“aaa1a” “aaa123aaa123” “aaaa5aaaa6a” “aaaa5aaaaa6” “aaaabaaaaab6”</p>
+<p>/*</p>
+<ul>
+<li>贪婪的</li>
+<li>首次会取最多的10字符开始匹配，会匹配到满足要求的嘴唇字段<br>*/<br>String regex1 = “.{3,10}[0-9]”; //3到10个任意字符，加一个数字结尾<br>Matcher m1 = Pattern.compile(regex1).matcher(str);<br>if (m1.find()) {<br> Log.d(“xixitest”, m1.start() + “-“ + m1.end());<br> Log.d(“xixitest”, m1.group());<br>} else<br> Log.d(“xixitest”, “1 not match!”);</li>
+</ul>
+<p>/*</p>
+<ul>
+<li>非贪婪的</li>
+<li>一次吃进最少的3个字符＋1个,开始匹配，</li>
+<li>不匹配，就再吞一个<br>*/<br>regex1 = “.{3,10}?[0-9]”;<br>m1 = Pattern.compile(regex1).matcher(str);<br>if (m1.find()) {<br> Log.d(“xixitest”, m1.start() + “-“ + m1.end());<br> Log.d(“xixitest”, m1.group());<br>} else<br> Log.d(“xixitest”, “2 not match!”);</li>
+</ul>
+<p>/*</p>
+<ul>
+<li>独占的</li>
+<li>取 最多的 10个字符,先匹配＋号前面的正则，前面的匹配则再看后面字符是否匹配后面正则<br>*/<br>regex1 = “.{3,10}+[0-9]”;<br>m1 = Pattern.compile(regex1).matcher(str);<br>if (m1.find()) {<br> Log.d(“xixitest”, m1.start() + “-“ + m1.end());<br> Log.d(“xixitest”, m1.group());<br>} else<br> Log.d(“xixitest”, “3 not match!”);</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h2 id="参考学习"><a href="#参考学习" class="headerlink" title="参考学习"></a>参考学习</h2><ul>
+<li><a href="https://www.cnblogs.com/sparkbj/articles/6207103.html" target="_blank" rel="external">Java学习笔记之Pattern类的用法详解(正则表达式)</a></li>
+<li><a href="https://blog.csdn.net/itlwc/article/details/10145987" target="_blank" rel="external">Java - 正则表达式 - Pattern - Matcher</a></li>
 </ul>
 
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/04/10/Kotlin初步学习和简单编程/" data-id="cjfuygnf100078i7q5j0twqh9" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2018/04/11/字符匹配-Pattern-Matcher/" data-id="cjfuygnfl000o8i7q7ntqs6oj" class="article-share-link">Share</a>
       
       
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/android/">android</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/kotlin/">kotlin</a></li></ul>
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/android/">android</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/代码/">代码</a></li></ul>
 
     </footer>
   </div>
@@ -122,19 +169,10 @@ Swift is like Kotlin">
     
 <nav id="article-nav">
   
-    <a href="/2018/04/11/字符匹配-Pattern-Matcher/" id="article-nav-newer" class="article-nav-link-wrap">
-      <strong class="article-nav-caption">Newer</strong>
-      <div class="article-nav-title">
-        
-          字符匹配_Pattern_Matcher
-        
-      </div>
-    </a>
   
-  
-    <a href="/2018/04/03/彻底搞懂Android文件存储-内部存储，外部存储以及各种存储路径/" id="article-nav-older" class="article-nav-link-wrap">
+    <a href="/2018/04/10/Kotlin初步学习和简单编程/" id="article-nav-older" class="article-nav-link-wrap">
       <strong class="article-nav-caption">Older</strong>
-      <div class="article-nav-title">彻底搞懂Android文件存储(内部存储，外部存储以及各种存储路径)</div>
+      <div class="article-nav-title">Kotlin初步学习和简单编程</div>
     </a>
   
 </nav>
@@ -145,7 +183,7 @@ Swift is like Kotlin">
 
   <section id="comments">
     <!-- 多说评论框 start -->
-    <div class="ds-thread" data-thread-key="post-Kotlin初步学习和简单编程" data-title="Kotlin初步学习和简单编程" data-url="http://yoursite.com/2018/04/10/Kotlin初步学习和简单编程/"></div>
+    <div class="ds-thread" data-thread-key="post-字符匹配-Pattern-Matcher" data-title="字符匹配_Pattern_Matcher" data-url="http://yoursite.com/2018/04/11/字符匹配-Pattern-Matcher/"></div>
     <!-- 多说评论框 end -->
     <!-- 多说公共JS代码 start (一个网页只需插入一次) -->
     <script type="text/javascript">
