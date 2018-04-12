@@ -7,41 +7,50 @@
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
   <meta name="description" content="正则表达式 正则表达式是处理字符串的特殊字符串，用途：
 
-字符串匹配(字符匹配)
-字符串查找(是建立在匹配之上的查找)
-字符串替换(是建立在查找的结果之后的替换)相关类：
+字符串匹配(字符匹配) 
+字符串查找(是建立在匹配之上的查找) 
+字符串替换(是建立在查找的结果之后的替换) 
+相关类：
 
 java.lang.String 
-java.util.regex.Pattern
+java.util.regex.Pattern 
 java.util.regex.Matcher 
-实例体会String str = “ab1cdeabcff2efg”; //“aaa1a”">
+正则表达式的构造摘要
+
+非捕获组(格式：构造    匹配，如“x    字符 x”">
 <meta property="og:type" content="article">
 <meta property="og:title" content="字符匹配_Pattern_Matcher">
 <meta property="og:url" content="http://yoursite.com/2018/04/11/字符匹配-Pattern-Matcher/index.html">
 <meta property="og:site_name" content="胖墩记忆">
 <meta property="og:description" content="正则表达式 正则表达式是处理字符串的特殊字符串，用途：
 
-字符串匹配(字符匹配)
-字符串查找(是建立在匹配之上的查找)
-字符串替换(是建立在查找的结果之后的替换)相关类：
+字符串匹配(字符匹配) 
+字符串查找(是建立在匹配之上的查找) 
+字符串替换(是建立在查找的结果之后的替换) 
+相关类：
 
 java.lang.String 
-java.util.regex.Pattern
+java.util.regex.Pattern 
 java.util.regex.Matcher 
-实例体会String str = “ab1cdeabcff2efg”; //“aaa1a”">
-<meta property="og:updated_time" content="2018-04-11T10:33:43.000Z">
+正则表达式的构造摘要
+
+非捕获组(格式：构造    匹配，如“x    字符 x”">
+<meta property="og:updated_time" content="2018-04-12T03:11:10.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="字符匹配_Pattern_Matcher">
 <meta name="twitter:description" content="正则表达式 正则表达式是处理字符串的特殊字符串，用途：
 
-字符串匹配(字符匹配)
-字符串查找(是建立在匹配之上的查找)
-字符串替换(是建立在查找的结果之后的替换)相关类：
+字符串匹配(字符匹配) 
+字符串查找(是建立在匹配之上的查找) 
+字符串替换(是建立在查找的结果之后的替换) 
+相关类：
 
 java.lang.String 
-java.util.regex.Pattern
+java.util.regex.Pattern 
 java.util.regex.Matcher 
-实例体会String str = “ab1cdeabcff2efg”; //“aaa1a”">
+正则表达式的构造摘要
+
+非捕获组(格式：构造    匹配，如“x    字符 x”">
   
     <link rel="alternate" href="/atom.xml" title="胖墩记忆" type="application/atom+xml">
   
@@ -122,35 +131,166 @@ java.util.regex.Matcher
       
         <h2 id="正则表达式"><a href="#正则表达式" class="headerlink" title="正则表达式"></a>正则表达式</h2><p> 正则表达式是处理字符串的特殊字符串，用途：</p>
 <ul>
-<li>字符串匹配(字符匹配)</li>
-<li>字符串查找(是建立在匹配之上的查找)</li>
-<li><p>字符串替换(是建立在查找的结果之后的替换)<br>相关类：</p>
-<ul>
+<li>字符串匹配(字符匹配) </li>
+<li>字符串查找(是建立在匹配之上的查找) </li>
+<li><p>字符串替换(是建立在查找的结果之后的替换) </p>
+<p>相关类：</p>
+</li>
 <li>java.lang.String </li>
-<li>java.util.regex.Pattern</li>
+<li>java.util.regex.Pattern </li>
 <li><p>java.util.regex.Matcher </p>
-<h2 id="实例体会"><a href="#实例体会" class="headerlink" title="实例体会"></a>实例体会</h2><p>String str = “ab1cdeabcff2efg”; //“aaa1a” “aaa123aaa123” “aaaa5aaaa6a” “aaaa5aaaaa6” “aaaabaaaaab6”</p>
-<p>/*</p>
-<ul>
-<li>贪婪的</li>
-<li>首次会取最多的10字符开始匹配，会匹配到满足要求的嘴唇字段<br>*/<br>String regex1 = “.{3,10}[0-9]”; //3到10个任意字符，加一个数字结尾<br>Matcher m1 = Pattern.compile(regex1).matcher(str);<br>if (m1.find()) {<br> Log.d(“xixitest”, m1.start() + “-“ + m1.end());<br> Log.d(“xixitest”, m1.group());<br>} else<br> Log.d(“xixitest”, “1 not match!”);</li>
+<h2 id="正则表达式的构造摘要"><a href="#正则表达式的构造摘要" class="headerlink" title="正则表达式的构造摘要"></a>正则表达式的构造摘要</h2></li>
 </ul>
-<p>/*</p>
-<ul>
-<li>非贪婪的</li>
-<li>一次吃进最少的3个字符＋1个,开始匹配，</li>
-<li>不匹配，就再吞一个<br>*/<br>regex1 = “.{3,10}?[0-9]”;<br>m1 = Pattern.compile(regex1).matcher(str);<br>if (m1.find()) {<br> Log.d(“xixitest”, m1.start() + “-“ + m1.end());<br> Log.d(“xixitest”, m1.group());<br>} else<br> Log.d(“xixitest”, “2 not match!”);</li>
-</ul>
-<p>/*</p>
-<ul>
-<li>独占的</li>
-<li>取 最多的 10个字符,先匹配＋号前面的正则，前面的匹配则再看后面字符是否匹配后面正则<br>*/<br>regex1 = “.{3,10}+[0-9]”;<br>m1 = Pattern.compile(regex1).matcher(str);<br>if (m1.find()) {<br> Log.d(“xixitest”, m1.start() + “-“ + m1.end());<br> Log.d(“xixitest”, m1.group());<br>} else<br> Log.d(“xixitest”, “3 not match!”);</li>
-</ul>
-</li>
-</ul>
-</li>
-</ul>
-<h2 id="参考学习"><a href="#参考学习" class="headerlink" title="参考学习"></a>参考学习</h2><ul>
+<h3 id="非捕获组-格式：构造-匹配，如“x-字符-x”，正则构造“x”，匹配“字符-x”"><a href="#非捕获组-格式：构造-匹配，如“x-字符-x”，正则构造“x”，匹配“字符-x”" class="headerlink" title="非捕获组(格式：构造    匹配，如“x    字符 x”，正则构造“x”，匹配“字符 x”)"></a>非捕获组(格式：构造    匹配，如“x    字符 x”，正则构造“x”，匹配“字符 x”)</h3><p> 字符</p>
+<pre><code>x    字符 x
+//    反斜线字符
+/0n    带有八进制值 0 的字符 n (0 &lt;= n &lt;= 7)
+/0nn    带有八进制值 0 的字符 nn (0 &lt;= n &lt;= 7)
+/0mnn    带有八进制值 0 的字符 mnn（0 &lt;= m &lt;= 3、0 &lt;= n &lt;= 7）
+/xhh    带有十六进制值 0x 的字符 hh
+/uhhhh    带有十六进制值 0x 的字符 hhhh
+/t    制表符 (&apos;/u0009&apos;)
+/n    新行（换行）符 (&apos;/u000A&apos;)
+/r    回车符 (&apos;/u000D&apos;)
+/f    换页符 (&apos;/u000C&apos;)
+/a    报警 (bell) 符 (&apos;/u0007&apos;)
+/e    转义符 (&apos;/u001B&apos;)
+/cx    对应于 x 的控制符
+</code></pre><p>字符类</p>
+<pre><code>[abc]    a、b 或 c（简单类）
+[^abc]    任何字符，除了 a、b 或 c（否定）
+[a-zA-Z]    a 到 z 或 A 到 Z，两头的字母包括在内（范围）
+[a-d[m-p]]    a 到 d 或 m 到 p：[a-dm-p]（并集）
+[a-z&amp;&amp;[def]]    d、e 或 f（交集）
+[a-z&amp;&amp;[^bc]]    a 到 z，除了 b 和 c：[ad-z]（减去）
+[a-z&amp;&amp;[^m-p]]    a 到 z，而非 m 到 p：[a-lq-z]（减去）
+</code></pre><p>预定义字符类</p>
+<pre><code>.    任何字符（与行结束符可能匹配也可能不匹配）
+/d    数字：[0-9]
+/D    非数字： [^0-9]
+/s    空白字符：[ /t/n/x0B/f/r]
+/S    非空白字符：[^/s]
+/w    单词字符：[a-zA-Z_0-9]
+/W    非单词字符：[^/w]
+</code></pre><p>POSIX 字符类（仅 US-ASCII）</p>
+<pre><code>/p{Lower}    小写字母字符：[a-z]
+/p{Upper}    大写字母字符：[A-Z]
+/p{ASCII}    所有 ASCII：[/x00-/x7F]
+/p{Alpha}    字母字符：[/p{Lower}/p{Upper}]
+/p{Digit}    十进制数字：[0-9]
+/p{Alnum}    字母数字字符：[/p{Alpha}/p{Digit}]
+/p{Punct}    标点符号：!&quot;#$%&amp;&apos;()*+,-./:;&lt;=&gt;?@[/]^_`{|}~
+/p{Graph}    可见字符：[/p{Alnum}/p{Punct}]
+/p{Print}    可打印字符：[/p{Graph}/x20]
+/p{Blank}    空格或制表符：[ /t]
+/p{Cntrl}    控制字符：[/x00-/x1F/x7F]
+/p{XDigit}    十六进制数字：[0-9a-fA-F]
+/p{Space}    空白字符：[ /t/n/x0B/f/r]
+</code></pre><p>java.lang.Character 类（简单的 java 字符类型）</p>
+<pre><code>/p{javaLowerCase}    等效于 java.lang.Character.isLowerCase()
+/p{javaUpperCase}    等效于 java.lang.Character.isUpperCase()
+/p{javaWhitespace}    等效于 java.lang.Character.isWhitespace()
+/p{javaMirrored}    等效于 java.lang.Character.isMirrored()
+</code></pre><p>Unicode 块和类别的类</p>
+<pre><code>/p{InGreek}    Greek 块（简单块）中的字符
+/p{Lu}    大写字母（简单类别）
+/p{Sc}    货币符号
+/P{InGreek}    所有字符，Greek 块中的除外（否定）
+[/p{L}&amp;&amp;[^/p{Lu}]]     所有字母，大写字母除外（减去）
+</code></pre><p>边界匹配器</p>
+<pre><code>$    行的结尾
+/b    单词边界
+/B    非单词边界
+/A    输入的开头
+/G    上一个匹配的结尾
+/Z    输入的结尾，仅用于最后的结束符（如果有的话）
+/z    输入的结尾
+</code></pre><p>Greedy 数量词</p>
+<pre><code>X?    X，一次或一次也没有
+X*    X，零次或多次
+X+    X，一次或多次
+X{n}    X，恰好 n 次
+X{n,}    X，至少 n 次
+X{n,m}    X，至少 n 次，但是不超过 m 次
+</code></pre><p> Reluctant 数量词</p>
+<pre><code> X??    X，一次或一次也没有
+X*?    X，零次或多次
+X+?    X，一次或多次
+X{n}?    X，恰好 n 次
+X{n,}?    X，至少 n 次
+X{n,m}?    X，至少 n 次，但是不超过 m 次
+</code></pre><p>Possessive 数量词</p>
+<pre><code>X?+    X，一次或一次也没有
+X*+    X，零次或多次
+X++    X，一次或多次
+X{n}+    X，恰好 n 次
+X{n,}+    X，至少 n 次
+X{n,m}+    X，至少 n 次，但是不超过 m 次
+</code></pre><p>Logical 运算符</p>
+<pre><code>XY    X 后跟 Y
+X|Y    X 或 Y
+(X)    X，作为捕获组
+</code></pre><p>Back 引用</p>
+<pre><code>/n    任何匹配的 nth 捕获组
+</code></pre><p>引用</p>
+<pre><code>/    Nothing，但是引用以下字符
+/Q    Nothing，但是引用所有字符，直到 /E
+/E    Nothing，但是结束从 /Q 开始的引用
+</code></pre><p>特殊构造（非捕获）</p>
+<pre><code>(?:X)    X，作为非捕获组
+(?idmsux-idmsux)     Nothing，但是将匹配标志i d m s u x on - off
+(?idmsux-idmsux:X)      X，作为带有给定标志 i d m s u x on - off
+(?=X)    X，通过零宽度的正 lookahead
+(?!X)    X，通过零宽度的负 lookahead
+(?&lt;=X)    X，通过零宽度的正 lookbehind
+(?&lt;!X)    X，通过零宽度的负 lookbehind
+(?&gt;X)    X，作为独立的非捕获组
+</code></pre><h3 id="反斜线、转义和引用"><a href="#反斜线、转义和引用" class="headerlink" title="反斜线、转义和引用"></a>反斜线、转义和引用</h3><p>反斜线字符 (‘/‘) 用于引用转义构造，如上表所定义的，同时还用于引用其他将被解释为非转义构造的字符。因此，表达式 // 与单个反斜线匹配，而 /{与左括号匹配。</p>
+<p>在不表示转义构造的任何字母字符前使用反斜线都是错误的；它们是为将来扩展正则表达式语言保留的。可以在非字母字符前使用反斜线，不管该字符是否非转义构造的一部分。</p>
+<p>根据 Java Language Specification 的要求，Java 源代码的字符串中的反斜线被解释为 Unicode 转义或其他字符转义。因此必须在字符串字面值中使用两个反斜线，表示正则表达式受到保护，不被 Java 字节码编译器解释。例如，当解释为正则表达式时，字符串字面值 “/b” 与单个退格字符匹配，而 “//b” 与单词边界匹配。字符串字面值 “/(hello/)” 是非法的，将导致编译时错误；要与字符串 (hello) 匹配，必须使用字符串字面值 “//(hello//)”。</p>
+<h3 id="字符类"><a href="#字符类" class="headerlink" title="字符类"></a>字符类</h3><p>字符类可以出现在其他字符类中，并且可以包含并集运算符（隐式）和交集运算符 (&amp;&amp;)。并集运算符表示至少包含其某个操作数类中所有字符的类。交集运算符表示包含同时位于其两个操作数类中所有字符的类。</p>
+<p>字符类运算符的优先级如下所示，按从最高到最低的顺序排列：</p>
+<p>1        字面值转义        /x<br>2        分组    […]<br>3        范围    a-z<br>4        并集    [a-e][i-u]<br>5        交集    [a-z&amp;&amp;[aeiou]]<br>注意，元字符的不同集合实际上位于字符类的内部，而非字符类的外部。例如，正则表达式 . 在字符类内部就失去了其特殊意义，而表达式 - 变成了形成元字符的范围。</p>
+<h3 id="行结束符"><a href="#行结束符" class="headerlink" title="行结束符"></a>行结束符</h3><p>行结束符是一个或两个字符的序列，标记输入字符序列的行结尾。以下代码被识别为行结束符：</p>
+<p>新行（换行）符 (‘/n’)、<br>后面紧跟新行符的回车符 (“/r/n”)、<br>单独的回车符 (‘/r’)、<br>下一行字符 (‘/u0085’)、<br>行分隔符 (‘/u2028’) 或<br>段落分隔符 (‘/u2029)。<br>如果激活 #UNIX_LINES模式，则新行符是唯一识别的行结束符。</p>
+<p>如果未指定 #DOTALL 标志，则正则表达式 .可以与任何字符（行结束符除外）匹配。</p>
+<p>默认情况下，正则表达式 ^ 和 $ 忽略行结束符，仅分别与整个输入序列的开头和结尾匹配。如果激活 #MULTILINE 模式，则 ^ 在输入的开头和行结束符之后（输入的结尾）才发生匹配。处于 #MULTILINE 模式中时，$ 仅在行结束符之前或输入序列的结尾处匹配。</p>
+<h3 id="组和捕获"><a href="#组和捕获" class="headerlink" title="组和捕获"></a>组和捕获</h3><p>捕获组可以通过从左到右计算其开括号来编号。例如，在表达式 ((A)(B(C))) 中，存在四个这样的组：</p>
+<p>1        ((A)(B(C)))<br>2        /A<br>3        (B(C))<br>4        (C)<br>组零始终代表整个表达式。</p>
+<p>之所以这样命名捕获组是因为在匹配中，保存了与这些组匹配的输入序列的每个子序列。捕获的子序列稍后可以通过 Back 引用在表达式中使用，也可以在匹配操作完成后从匹配器获取。</p>
+<p>与组关联的捕获输入始终是与组最近匹配的子序列。如果由于量化的缘故再次计算了组，则在第二次计算失败时将保留其以前捕获的值（如果有的话）例如，将字符串 “aba” 与表达式 (a(b)?)+ 相匹配，会将第二组设置为 “b”。在每个匹配的开头，所有捕获的输入都会被丢弃。</p>
+<p>以 (?) 开头的组是纯的非捕获组，它不捕获文本，也不针对组合计进行计数。</p>
+<h2 id="实例体会"><a href="#实例体会" class="headerlink" title="实例体会"></a>实例体会</h2><pre><code>String str = &quot;ab1cdeabcff2efg&quot;; //&quot;aaa1a&quot; &quot;aaa123aaa123&quot; &quot;aaaa5aaaa6a&quot; &quot;aaaa5aaaaa6&quot; &quot;aaaabaaaaab6&quot;
+ // 贪婪的
+ //首次会取最多的10字符开始匹配，会匹配到满足要求的嘴唇字段
+String regex1 = &quot;.{3,10}[0-9]&quot;; //3到10个任意字符，加一个数字结尾
+Matcher m1 = Pattern.compile(regex1).matcher(str);
+if (m1.find()) {
+    Log.d(&quot;xixitest&quot;, m1.start() + &quot;-&quot; + m1.end());
+    Log.d(&quot;xixitest&quot;, m1.group());
+} else
+    Log.d(&quot;xixitest&quot;, &quot;1 not match!&quot;);
+
+// 非贪婪的, 一次吃进最少的3个字符＋1个,开始匹配，
+// 不匹配，就再吞一个
+regex1 = &quot;.{3,10}?[0-9]&quot;;
+m1 = Pattern.compile(regex1).matcher(str);
+if (m1.find()) {
+    Log.d(&quot;xixitest&quot;, m1.start() + &quot;-&quot; + m1.end());
+    Log.d(&quot;xixitest&quot;, m1.group());
+} else
+    Log.d(&quot;xixitest&quot;, &quot;2 not match!&quot;);
+
+// 独占的
+// 取 最多的 10个字符,先匹配＋号前面的正则，前面的匹配则再看后面字符是否匹配后面正则
+regex1 = &quot;.{3,10}+[0-9]&quot;;
+m1 = Pattern.compile(regex1).matcher(str);
+if (m1.find()) {
+    Log.d(&quot;xixitest&quot;, m1.start() + &quot;-&quot; + m1.end());
+    Log.d(&quot;xixitest&quot;, m1.group());
+} else
+    Log.d(&quot;xixitest&quot;, &quot;3 not match!&quot;);
+</code></pre><h2 id="参考学习"><a href="#参考学习" class="headerlink" title="参考学习"></a>参考学习</h2><ul>
 <li><a href="https://www.cnblogs.com/sparkbj/articles/6207103.html" target="_blank" rel="external">Java学习笔记之Pattern类的用法详解(正则表达式)</a></li>
 <li><a href="https://blog.csdn.net/itlwc/article/details/10145987" target="_blank" rel="external">Java - 正则表达式 - Pattern - Matcher</a></li>
 </ul>
@@ -158,7 +298,7 @@ java.util.regex.Matcher
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/04/11/字符匹配-Pattern-Matcher/" data-id="cjfuyiz5g00109d7qu1m10i47" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2018/04/11/字符匹配-Pattern-Matcher/" data-id="cjfvxc5nm000sck7qyoh8ybdo" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/android/">android</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/代码/">代码</a></li></ul>
